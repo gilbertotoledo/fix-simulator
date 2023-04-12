@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Initiator
 {
-    public class InitiatorFixApp : IApplication
+    public class InitiatorFixApp : MessageCracker, IApplication
     {
         private readonly ILogger _logger;
         private readonly List<Session> _sessions = new();
@@ -26,7 +26,8 @@ namespace Initiator
 
         public void FromApp(Message message, SessionID sessionID)
         {
-            _logger.Information($"FromApp {message}");
+            //_logger.Information($"FromApp {message}");
+            Crack(message, sessionID);
         }
 
         public void OnCreate(SessionID sessionID)
@@ -65,6 +66,11 @@ namespace Initiator
         public void ToApp(Message message, SessionID sessionId)
         {
             _logger.Information($"ToApp {message}");
+        }
+
+        public void OnMessage(QuickFix.FIX44.ExecutionReport executionReport, SessionID sessionID)
+        {
+            _logger.Information($"OnMessage_ExecutionReport {executionReport}");
         }
 
         public void SendMessage(Message message, SessionID sessionID)
