@@ -65,10 +65,6 @@ namespace Initiator.Controllers
             }
         }
 
-        [HttpGet]
-        public int GetNextMsgSeqNum()
-        {
-            return ((InitiatorFixApp)_application).GetNextSeqNum();
-        }
+        
     }
 }

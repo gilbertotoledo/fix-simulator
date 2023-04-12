@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using QuickFix;
 using Serilog;
 
 namespace Acceptor.Controllers
@@ -8,18 +9,18 @@ namespace Acceptor.Controllers
     public class FixController : ControllerBase
     {
         private readonly ILogger _logger;
+        private readonly IApplication _application;
 
-        public FixController(ILogger logger)
+        public FixController(ILogger logger, IApplication application)
         {
             _logger = logger;
+            _application = application;
         }
 
-        [HttpPost]
-        public bool DisconnectAll()
+        [HttpGet("GetNextMsgSeqNum")]
+        public int GetNextMsgSeqNum()
         {
-            _logger.Information("Disconnecting all...");
-
-            return true;
+            return ((AcceptorFixApp)_application).GetNextSeqNum();
         }
     }
 }

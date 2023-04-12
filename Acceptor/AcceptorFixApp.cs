@@ -3,6 +3,7 @@ using QuickFix.Fields;
 using Serilog;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Acceptor
 {
@@ -72,6 +73,11 @@ namespace Acceptor
         {
             _logger.Information($"OnMessage_NewOrderSingle {newOrderSingle}");
             SendExecutionReport(newOrderSingle, sessionID);
+        }
+
+        public int GetNextSeqNum()
+        {
+            return _sessions.FirstOrDefault()?.NextTargetMsgSeqNum ?? 0;
         }
 
         private void SendExecutionReport(QuickFix.FIX44.NewOrderSingle newOrderSingle, SessionID session)
