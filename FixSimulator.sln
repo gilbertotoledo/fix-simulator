@@ -3,9 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acceptor", "Acceptor\Acceptor.csproj", "{62A30A5B-97F9-48D7-A2FD-7AE47236AE0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acceptor", "Acceptor\Acceptor.csproj", "{62A30A5B-97F9-48D7-A2FD-7AE47236AE0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Initiator", "Initiator\Initiator.csproj", "{4D7C7D0E-95A4-4455-A0C5-5301D96BE2E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Initiator", "Initiator\Initiator.csproj", "{4D7C7D0E-95A4-4455-A0C5-5301D96BE2E6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3422A329-CC6C-47AD-AC5A-386E185041D8}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
