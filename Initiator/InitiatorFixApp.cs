@@ -82,7 +82,13 @@ namespace Initiator
         {
             _sessions.ForEach(session =>
             {
-                session.Send(message);
+                try
+                {
+                    session.Send(message);
+                } catch(Exception e)
+                {
+                    _logger.Error(e, "Error to send message: {message}", message);
+                }
             });
         }
 

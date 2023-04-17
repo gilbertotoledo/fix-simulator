@@ -2,6 +2,7 @@
 using QuickFix;
 using Serilog;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -31,7 +32,8 @@ namespace Acceptor
                     _socketAcceptor = new ThreadedSocketAcceptor(_fixApplication, storeFactory, settings, logFactory);
 
                     _socketAcceptor.Start();
-                    _logger.Information("Acceptor started...");
+                    _logger.Information("------------ ACCEPTOR STARTED ------------");
+                    LogFixConfiguration(settings);
 
                 }, stoppingToken);
             }
@@ -51,6 +53,25 @@ namespace Acceptor
             }
 
             return base.StopAsync(cancellationToken);
+        }
+
+
+        private void LogFixConfiguration(SessionSettings settings)
+        {
+            var default_settings = settings.Get().GetEnumerator();
+            while (default_settings.MoveNext())
+            {
+                _logger.Information("[FIX CONFIG] DEFAULT: {default}", default_settings.Current);
+            }
+
+            settings.GetSessions().ToList().ForEach(s =>
+            {
+                var config = settings.Get(s).GetEnumerator();
+                while (config.MoveNext())
+                {
+                    _logger.Information("[FIX CONFIG] SESSION {session}: {config}", s, config.Current);
+                }
+            });
         }
     }
 }

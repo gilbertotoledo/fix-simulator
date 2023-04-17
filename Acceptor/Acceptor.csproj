@@ -9,6 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="log\**" />
+    <Compile Remove="store\**" />
+    <Content Remove="log\**" />
+    <Content Remove="store\**" />
+    <EmbeddedResource Remove="log\**" />
+    <EmbeddedResource Remove="store\**" />
+    <None Remove="log\**" />
+    <None Remove="store\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
     <PackageReference Include="QuickFix.Net.NETCore.FIX44" Version="1.8.1" />
     <PackageReference Include="Serilog" Version="2.12.0" />
@@ -33,12 +44,6 @@
     <None Update="FixConfig\fix_system.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  
-  <ItemGroup>
-    <Folder Include="log\" />
-    <Folder Include="store\" />
   </ItemGroup>
 
 </Project>

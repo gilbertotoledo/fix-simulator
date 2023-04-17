@@ -3,6 +3,7 @@ using QuickFix;
 using QuickFix.Transport;
 using Serilog;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -32,7 +33,8 @@ namespace Initiator
                     _socketInitiator = new SocketInitiator(_fixApplication, storeFactory, settings, logFactory);
 
                     _socketInitiator.Start();
-                    _logger.Information("Initiator started...");
+                    _logger.Information("------------ INITIATOR STARTED ------------");
+                    LogFixConfiguration(settings);
 
                 }, stoppingToken);
             }
@@ -52,6 +54,24 @@ namespace Initiator
             }
 
             return base.StopAsync(cancellationToken);
+        }
+
+        private void LogFixConfiguration(SessionSettings settings)
+        {
+            var default_settings = settings.Get().GetEnumerator();
+            while (default_settings.MoveNext())
+            {
+                _logger.Information("[FIX CONFIG] DEFAULT: {default}", default_settings.Current);
+            }
+
+            settings.GetSessions().ToList().ForEach(s =>
+            {
+                var config = settings.Get(s).GetEnumerator();
+                while (config.MoveNext())
+                {
+                    _logger.Information("[FIX CONFIG] SESSION {session}: {config}", s, config.Current);
+                }
+            });
         }
     }
 }
