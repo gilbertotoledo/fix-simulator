@@ -324,6 +324,7 @@
             MessagesDg.ShowEditingIcon = false;
             MessagesDg.Size = new Size(679, 697);
             MessagesDg.TabIndex = 2;
+            MessagesDg.CellDoubleClick += MessagesDg_CellDoubleClick;
             // 
             // Direction
             // 
@@ -391,6 +392,7 @@
             // 
             FixMsg.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             FixMsg.HeaderText = "FixMsg";
+            FixMsg.MinimumWidth = 1500;
             FixMsg.Name = "FixMsg";
             FixMsg.ReadOnly = true;
             // 

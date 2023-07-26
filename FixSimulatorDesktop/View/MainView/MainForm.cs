@@ -3,6 +3,7 @@ using FixSimulatorDesktop.FixApplication;
 using FixSimulatorDesktop.FixApplication.Order;
 using FixSimulatorDesktop.Helper;
 using FixSimulatorDesktop.View;
+using FixSimulatorDesktop.View.FixMessageView;
 
 namespace FixSimulatorDesktop
 {
@@ -177,12 +178,12 @@ namespace FixSimulatorDesktop
 
         private void ExecutionReportBtn_Click(object sender, EventArgs e)
         {
-            _fixManager.AcceptorFixApp.SendErToLastMessage();
+            _fixManager.AcceptorFixApp.SendErNewToLastMessage();
         }
 
         private void ExecutionReportFilledBtn_Click(object sender, EventArgs e)
         {
-
+            _fixManager.AcceptorFixApp.SendErFilledToLastMessage();
         }
 
         private void AcceptorMacrosClb_ItemCheck(object sender, ItemCheckEventArgs e)
@@ -229,5 +230,10 @@ namespace FixSimulatorDesktop
             }
         }
 
+        private void MessagesDg_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var messageViewer = new FixMessageViewerForm(MessagesDg.Rows[e.RowIndex].Cells[8].Value.ToString());
+            messageViewer.ShowDialog();
+        }
     }
 }

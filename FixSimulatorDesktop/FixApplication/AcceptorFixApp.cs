@@ -128,9 +128,14 @@ namespace Acceptor
             return _sessions.FirstOrDefault()?.NextTargetMsgSeqNum ?? 0;
         }
 
-        public void SendErToLastMessage()
+        public void SendErNewToLastMessage()
         {
             var er = ExecutionReportBuilder.NewFromNewOrderSingle(_lastMessageReceived);
+            Send(er, _sessions.FirstOrDefault()?.SessionID);
+        }
+        public void SendErFilledToLastMessage()
+        {
+            var er = ExecutionReportBuilder.FilledFromNewOrderSingle(_lastMessageReceived);
             Send(er, _sessions.FirstOrDefault()?.SessionID);
         }
 
