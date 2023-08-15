@@ -5,7 +5,6 @@ namespace FixSimulatorDesktop.Controller
     public static class StateManager
     {
         public static AcceptorMacros AcceptorMacrosEnabled { get; set; } = new AcceptorMacros();
-        public static bool ShowLogonLogoutMessages { get; set; } = false;
 
         public static bool IsAcceptorRunning { get; set; } = false;
         public static bool IsInitiatorRunning { get; set; } = false;
