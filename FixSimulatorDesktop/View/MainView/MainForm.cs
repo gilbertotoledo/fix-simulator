@@ -1,9 +1,14 @@
 using FixSimulatorDesktop.Controller;
+using FixSimulatorDesktop.FixApp;
 using FixSimulatorDesktop.FixApplication;
 using FixSimulatorDesktop.FixApplication.Order;
 using FixSimulatorDesktop.Helper;
 using FixSimulatorDesktop.View;
 using FixSimulatorDesktop.View.FixMessageView;
+using QuickFix.Fields;
+using QuickFix.FIX44;
+using System.Configuration;
+using System.Xml;
 
 namespace FixSimulatorDesktop
 {
@@ -11,13 +16,14 @@ namespace FixSimulatorDesktop
     {
         delegate void SetAcceptorLogTextDelegatorType(string texto);
         delegate void SetInitiatorLogTextDelegatorType(string texto);
-        delegate void SetOnMessageDelegatorType(object col0, object col1, object col2, object col3, object col4, object col5, object col6, object col7, object col8);
+        delegate void SetOnMessageDelegatorType(object col0, object col1, object col2, object col3, object col4, object col5, object col6, object col7, object col8, object col9);
 
         private readonly FixApplicationManager _fixManager;
 
         public MainForm()
         {
             InitializeComponent();
+            LoadState();
 
             var loggerInitiator = (string message) =>
             {
@@ -31,45 +37,77 @@ namespace FixSimulatorDesktop
 
             var onMessageHandler = (QuickFix.Message message) =>
             {
-                OnMessageHandler(message);
+                AddMessageToDataGrid(message);
             };
 
             _fixManager = new FixApplicationManager(loggerInitiator, loggerAcceptor, onMessageHandler);
+        }
 
+        private void LoadState()
+        {
+            InitiatorShowReceivedChb.Checked = StateManager.IsInitiatorShowMessagesReceived;
+            InitiatorShowSentChb.Checked = StateManager.IsInitiatorShowMessagesSent;
+            AcceptorShowReceivedChb.Checked = StateManager.IsAcceptorShowMessagesReceived;
+            AcceptorShowSentChb.Checked = StateManager.IsAcceptorShowMessagesSent;
+
+            AcceptorMacrosClb.SetItemCheckState(0, StateManager.AcceptorMacrosEnabled.ExecutionReportNew ? CheckState.Checked : CheckState.Unchecked);
+            AcceptorMacrosClb.SetItemCheckState(1, StateManager.AcceptorMacrosEnabled.ExecutionReportFilled ? CheckState.Checked : CheckState.Unchecked);
+            AcceptorMacrosClb.SetItemCheckState(2, StateManager.AcceptorMacrosEnabled.ExecutionReportPartiallyFilledUnique ? CheckState.Checked : CheckState.Unchecked);
+            AcceptorMacrosClb.SetItemCheckState(3, StateManager.AcceptorMacrosEnabled.ExecutionReportPartiallyFilledScheduled ? CheckState.Checked : CheckState.Unchecked);
+            AcceptorMacrosClb.SetItemCheckState(4, StateManager.AcceptorMacrosEnabled.ExecutionReportReplaced ? CheckState.Checked : CheckState.Unchecked);
+            AcceptorMacrosClb.SetItemCheckState(5, StateManager.AcceptorMacrosEnabled.ExecutionReportReplaceReject ? CheckState.Checked : CheckState.Unchecked);
+            AcceptorMacrosClb.SetItemCheckState(6, StateManager.AcceptorMacrosEnabled.ExecutionReportCanceled ? CheckState.Checked : CheckState.Unchecked);
+            AcceptorMacrosClb.SetItemCheckState(7, StateManager.AcceptorMacrosEnabled.ExecutionReportCancelReject ? CheckState.Checked : CheckState.Unchecked);
         }
 
         private void AcceptorAppendLog(string text)
         {
-            text = $"{DateTime.Now:HH:mm:ss.ffff} {text}\r\n".Replace("\u0001", "|");
-            if (this.AcceptorLogTxt.InvokeRequired)
+            try
             {
-                var del = new SetAcceptorLogTextDelegatorType((string txt) => AcceptorLogTxt?.AppendText(txt));
-                if (!AcceptorLogTxt.IsDisposed)
+                text = $"{DateTime.Now:HH:mm:ss.ffff} {text}\r\n".Replace("\u0001", "|");
+                if (this.AcceptorLogTxt.InvokeRequired)
                 {
-                    AcceptorLogTxt?.Invoke(del, text);
+                    var del = new SetAcceptorLogTextDelegatorType((string txt) => AcceptorLogTxt?.AppendText(txt));
+                    if (!AcceptorLogTxt.IsDisposed)
+                    {
+                        AcceptorLogTxt?.Invoke(del, text);
+                    }
+                }
+                else
+                {
+                    AcceptorLogTxt?.AppendText(text);
                 }
             }
-            else
+            catch
             {
-                AcceptorLogTxt?.AppendText(text);
+                //do nothing
             }
         }
 
         private void InitiatorAppendLog(string text)
         {
-            text = $"{DateTime.Now:HH:mm:ss.ffff} {text}\r\n".Replace("\u0001", "|");
-            if (this.InitiatorLogTxt.InvokeRequired)
+            try
             {
-                var del = new SetInitiatorLogTextDelegatorType((string txt) => InitiatorLogTxt?.AppendText(txt));
-
-                if (!InitiatorLogTxt.IsDisposed)
+                text = $"{DateTime.Now:HH:mm:ss.ffff} {text}\r\n".Replace("\u0001", "|");
+                if (this.InitiatorLogTxt.InvokeRequired)
                 {
-                    InitiatorLogTxt?.Invoke(del, text);
+                    var del = new SetInitiatorLogTextDelegatorType((string txt) => InitiatorLogTxt?.AppendText(txt));
+
+                    if (!InitiatorLogTxt.IsDisposed)
+                    {
+
+                        InitiatorLogTxt?.Invoke(del, text);
+
+                    }
+                }
+                else
+                {
+                    InitiatorLogTxt?.AppendText(text);
                 }
             }
-            else
+            catch
             {
-                InitiatorLogTxt?.AppendText(text);
+                //do nothing
             }
         }
 
@@ -173,7 +211,7 @@ namespace FixSimulatorDesktop
         private void InitiatorNewOrderSingleBtn_Click(object sender, EventArgs e)
         {
             var order = OrderBuilder.NewOrderSingle();
-            _fixManager.InitiatorFixApp.SendMessageToAllSessions(order);
+            _fixManager.InitiatorFixApp.Send(order);
         }
 
         private void ExecutionReportBtn_Click(object sender, EventArgs e)
@@ -198,31 +236,49 @@ namespace FixSimulatorDesktop
                     StateManager.AcceptorMacrosEnabled.ExecutionReportPartiallyFilledUnique = e.NewValue == CheckState.Checked; break;
                 case 3:
                     StateManager.AcceptorMacrosEnabled.ExecutionReportPartiallyFilledScheduled = e.NewValue == CheckState.Checked; break;
+                case 4:
+                    StateManager.AcceptorMacrosEnabled.ExecutionReportReplaced = e.NewValue == CheckState.Checked; break;
+                case 5:
+                    StateManager.AcceptorMacrosEnabled.ExecutionReportReplaceReject = e.NewValue == CheckState.Checked; break;
+                case 6:
+                    StateManager.AcceptorMacrosEnabled.ExecutionReportCanceled = e.NewValue == CheckState.Checked; break;
+                case 7:
+                    StateManager.AcceptorMacrosEnabled.ExecutionReportCancelReject = e.NewValue == CheckState.Checked; break;
             }
         }
 
 
-        private void OnMessageHandler(QuickFix.Message message)
+        private void AddMessageToDataGrid(QuickFix.Message message)
         {
             var senderCompId = message.Header.IsSetField(new QuickFix.Fields.SenderCompID().Tag) ? message.Header.GetString(new QuickFix.Fields.SenderCompID().Tag) : "";
             var direction = senderCompId.Contains("EXECUTOR") ? "<==" : "==>";
+            var msgType = message.Header.IsSetField(new QuickFix.Fields.MsgType().Tag) ? message.Header.GetString(new QuickFix.Fields.MsgType().Tag) : "";
+            msgType = FixDictionary.GetMsgTypeText(msgType);
+
+            var statusChar = message.IsSetField(new QuickFix.Fields.OrdStatus().Tag) ? message.GetChar(new QuickFix.Fields.OrdStatus().Tag) : '\0';
+            var statusString = FixDictionary.GetOrdStatus(statusChar);
+
+            var execTypeChar = message.IsSetField(new QuickFix.Fields.ExecType().Tag) ? message.GetChar(new QuickFix.Fields.ExecType().Tag) : '\0';
+            var execTypeString = FixDictionary.GetOrdStatus(execTypeChar);
+
             var row = new object[]{
                 direction,
-                message.Header.IsSetField(new QuickFix.Fields.MsgType().Tag) ? message.Header.GetString(new QuickFix.Fields.MsgType().Tag) : "",
+                msgType,
+                execTypeString,
+                statusString,
+                message.IsSetField(new QuickFix.Fields.OrderQty().Tag) ? message.GetDecimal(new QuickFix.Fields.OrderQty().Tag) : "",
+                message.IsSetField(new QuickFix.Fields.CumQty().Tag) ? message.GetDecimal(new QuickFix.Fields.CumQty().Tag) : "",
                 message.IsSetField(new QuickFix.Fields.ClOrdID().Tag) ? message.GetString(new QuickFix.Fields.ClOrdID().Tag) : "",
                 message.IsSetField(new QuickFix.Fields.OrigClOrdID().Tag) ? message.GetString(new QuickFix.Fields.OrigClOrdID().Tag) : "",
-                message.IsSetField(new QuickFix.Fields.OrdStatus().Tag) ? message.GetChar(new QuickFix.Fields.OrdStatus().Tag).ToString() : "",
                 message.IsSetField(new QuickFix.Fields.Symbol().Tag) ? message.GetString(new QuickFix.Fields.Symbol().Tag) : "",
-                message.IsSetField(new QuickFix.Fields.CumQty().Tag) ? message.GetString(new QuickFix.Fields.CumQty().Tag) : "",
-                message.IsSetField(new QuickFix.Fields.FillQty().Tag) ? message.GetString(new QuickFix.Fields.FillQty().Tag) : "",
                 message.ToString().Replace("\u0001", "|") //Msg
             };
             if (this.MessagesDg.InvokeRequired)
             {
                 var del = new SetOnMessageDelegatorType(
-                    (object col0, object col1, object col2, object col3, object col4, object col5, object col6, object col7, object col8) =>
-                        AddRow(col0, col1, col2, col3, col4, col5, col6, col7, col8));
-                MessagesDg?.Invoke(del, row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]);
+                    (object col0, object col1, object col2, object col3, object col4, object col5, object col6, object col7, object col8, object col9) =>
+                        AddRow(col0, col1, col2, col3, col4, col5, col6, col7, col8, col9));
+                MessagesDg?.Invoke(del, row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9]);
             }
             else
             {
@@ -232,8 +288,64 @@ namespace FixSimulatorDesktop
 
         private void MessagesDg_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            var messageViewer = new FixMessageViewerForm(MessagesDg.Rows[e.RowIndex].Cells[8].Value.ToString());
+            var messageViewer = new LongTextViewerForm(MessagesDg.Rows[e.RowIndex].Cells[9].Value.ToString());
             messageViewer.ShowDialog();
+        }
+
+        private void InitiatorOrderReplaceBtn_Click(object sender, EventArgs e)
+        {
+            var lastNewOrderSingle = (NewOrderSingle)this._fixManager.InitiatorFixApp.SentMessages
+                .LastOrDefault(m =>
+                    m.Header.GetString(new MsgType().Tag) == QuickFix.Fields.MsgType.NEWORDERSINGLE);
+
+            var replaceMessageForm = new ReplaceMessageForm(lastNewOrderSingle,
+                (int newQty, decimal newPrice) =>
+            {
+                var replaceMessage = OrderBuilder.OrderCancelReplaceRequest(lastNewOrderSingle, newQty, newPrice);
+                this._fixManager.InitiatorFixApp.Send(replaceMessage);
+            });
+            replaceMessageForm.ShowDialog();
+        }
+
+        private void InitiatorOrderCancelBtn_Click(object sender, EventArgs e)
+        {
+            var lastNewOrderSingle = (NewOrderSingle)this._fixManager.InitiatorFixApp.SentMessages
+                .LastOrDefault(m =>
+                    m.Header.GetString(new MsgType().Tag) == QuickFix.Fields.MsgType.NEWORDERSINGLE);
+            var replaceMessage = OrderBuilder.OrderCancelRequest(lastNewOrderSingle);
+            this._fixManager.InitiatorFixApp.Send(replaceMessage);
+        }
+
+        private void InitiatorLogTxt_DoubleClick(object sender, EventArgs e)
+        {
+            var textViewForm = new LongTextViewerForm(InitiatorLogTxt.Text);
+            textViewForm.ShowDialog();
+        }
+
+        private void AcceptorLogTxt_DoubleClick(object sender, EventArgs e)
+        {
+            var textViewForm = new LongTextViewerForm(AcceptorLogTxt.Text);
+            textViewForm.ShowDialog();
+        }
+
+        private void InitiatorShowReceivedChb_CheckedChanged(object sender, EventArgs e)
+        {
+            StateManager.IsInitiatorShowMessagesReceived = InitiatorShowReceivedChb.Checked;
+        }
+
+        private void InitiatorShowSentChb_CheckedChanged(object sender, EventArgs e)
+        {
+            StateManager.IsInitiatorShowMessagesSent = InitiatorShowSentChb.Checked;
+        }
+
+        private void AcceptorShowReceivedChb_CheckedChanged(object sender, EventArgs e)
+        {
+            StateManager.IsAcceptorShowMessagesReceived = AcceptorShowReceivedChb.Checked;
+        }
+
+        private void AcceptorShowSentChb_CheckedChanged(object sender, EventArgs e)
+        {
+            StateManager.IsAcceptorShowMessagesSent = AcceptorShowSentChb.Checked;
         }
     }
 }

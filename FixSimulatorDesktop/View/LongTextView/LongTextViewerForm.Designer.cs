@@ -1,6 +1,6 @@
 ﻿namespace FixSimulatorDesktop.View.FixMessageView
 {
-    partial class FixMessageViewerForm
+    partial class LongTextViewerForm
     {
         /// <summary>
         /// Required designer variable.
@@ -33,19 +33,21 @@
             // 
             // MessageTxt
             // 
+            MessageTxt.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            MessageTxt.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             MessageTxt.Location = new Point(12, 12);
             MessageTxt.Multiline = true;
             MessageTxt.Name = "MessageTxt";
-            MessageTxt.Size = new Size(776, 511);
+            MessageTxt.Size = new Size(1048, 569);
             MessageTxt.TabIndex = 0;
             // 
-            // FixMessageViewerForm
+            // LongTextViewerForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 535);
+            ClientSize = new Size(1072, 593);
             Controls.Add(MessageTxt);
-            Name = "FixMessageViewerForm";
+            Name = "LongTextViewerForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FixMessageViewerForm";
             ResumeLayout(false);

@@ -1,5 +1,4 @@
-﻿using Acceptor;
-using FixApplication;
+﻿using FixSimulatorDesktop.FixApp;
 using QuickFix;
 using QuickFix.Transport;
 

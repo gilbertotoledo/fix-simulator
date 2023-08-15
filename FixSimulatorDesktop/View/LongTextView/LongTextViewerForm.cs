@@ -1,8 +1,8 @@
 ﻿namespace FixSimulatorDesktop.View.FixMessageView
 {
-    public partial class FixMessageViewerForm : Form
+    public partial class LongTextViewerForm : Form
     {
-        public FixMessageViewerForm(string text)
+        public LongTextViewerForm(string text)
         {
             InitializeComponent();
             MessageTxt.Text = text;

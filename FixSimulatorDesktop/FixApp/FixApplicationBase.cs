@@ -1,27 +1,31 @@
-﻿using QuickFix;
+﻿using FixSimulatorDesktop.Controller;
+using QuickFix;
 using QuickFix.FIX44;
 using Message = QuickFix.Message;
 
-namespace FixApplication
+namespace FixSimulatorDesktop.FixApp
 {
-    public class InitiatorFixApp : MessageCracker, IApplication
+    public class FixApplicationBase : MessageCracker, IApplication
     {
-        private readonly Action<string> _logger;
-        private readonly Action<Message> _onMessageHandler;
-        private readonly List<Session> _sessions = new();
+        protected readonly Action<string> _logger;
+        protected readonly Action<Message> _onMessageHandler;
+        protected readonly List<Session> _sessions = new();
+        protected string ApplicationType { get; private set; }
+
+        public List<Message> SentMessages { get; } = new();
         public List<Message> ReceivedMessages { get; } = new();
-        
-        public InitiatorFixApp(Action<string> logHandler, Action<Message> onMessageHandler)
+
+        public FixApplicationBase(Action<string> logHandler, Action<Message> onMessageHandler, string applicationType)
         {
             _logger += logHandler;
             _onMessageHandler = onMessageHandler;
+            ApplicationType = applicationType;
         }
 
         public void FromAdmin(Message message, SessionID sessionID)
         {
             if (message.Header.GetString(35) == "0")
                 return;
-
             _logger.Invoke($"[FROM_ADMIN] NextTargetMsgSeqNum: {_sessions.FirstOrDefault()?.NextTargetMsgSeqNum} | NextSenderMsgSeqNum: {_sessions.FirstOrDefault()?.NextSenderMsgSeqNum}");
 
             _logger.Invoke($"FromAdmin {message}");
@@ -29,10 +33,16 @@ namespace FixApplication
 
         public void FromApp(Message message, SessionID sessionID)
         {
-            //_logger.Information($"FromApp {message}");
+            //_logger.Invoke($"FromApp {message}");
             _logger.Invoke($"[FROM_APP] NextTargetMsgSeqNum: {_sessions.FirstOrDefault()?.NextTargetMsgSeqNum} | NextSenderMsgSeqNum: {_sessions.FirstOrDefault()?.NextSenderMsgSeqNum}");
-            
-            _onMessageHandler(message);
+
+            if ( (ApplicationType.Equals("acceptor") && StateManager.IsAcceptorShowMessagesReceived) ||
+                 (ApplicationType.Equals("initiator") && StateManager.IsInitiatorShowMessagesReceived))
+            {
+                _onMessageHandler(message);
+            }
+
+            ReceivedMessages.Add(message);
             Crack(message, sessionID);
         }
 
@@ -49,7 +59,7 @@ namespace FixApplication
             }
             catch (Exception e)
             {
-                _logger.Invoke($"OnCreate error {e}");
+                _logger.Invoke($"OnCreate error {e.Message}");
             }
         }
 
@@ -74,43 +84,37 @@ namespace FixApplication
 
         public void ToApp(Message message, SessionID sessionId)
         {
-            _logger.Invoke($"[TO_APP] NextTargetMsgSeqNum: {_sessions.FirstOrDefault()?.NextTargetMsgSeqNum} | NextSenderMsgSeqNum: {_sessions.FirstOrDefault()?.NextSenderMsgSeqNum}");
+            if ((ApplicationType.Equals("acceptor") && StateManager.IsAcceptorShowMessagesSent) ||
+                 (ApplicationType.Equals("initiator") && StateManager.IsInitiatorShowMessagesSent))
+            {
+                _onMessageHandler(message);
+            }
+
+            SentMessages.Add(message);
             _logger.Invoke($"ToApp {message}");
         }
 
-        public void OnMessage(QuickFix.FIX44.ExecutionReport executionReport, SessionID sessionID)
+        public void Send(Message message)
         {
-            _logger.Invoke($"OnMessage_ExecutionReport {executionReport}");
-            this.ReceivedMessages.Add(executionReport);
+            _logger.Invoke($"[ANTES] NextTargetMsgSeqNum: {_sessions.FirstOrDefault()?.NextTargetMsgSeqNum} | NextSenderMsgSeqNum: {_sessions.FirstOrDefault()?.NextSenderMsgSeqNum}");
+            Send(message, _sessions.FirstOrDefault()?.SessionID);
+            _logger.Invoke($"[DEPOIS] NextTargetMsgSeqNum: {_sessions.FirstOrDefault()?.NextTargetMsgSeqNum} | NextSenderMsgSeqNum: {_sessions.FirstOrDefault()?.NextSenderMsgSeqNum}");
         }
 
-        public void SendMessage(Message message, SessionID sessionID)
+        public void Send(Message message, SessionID sessionID)
         {
-            _sessions.Find(s => s.SessionID.Equals(sessionID))?.Send(message);
-        }
-
-        public void SendMessageToAllSessions(Message message)
-        {
-            _sessions.ForEach(session =>
+            try
             {
-                try
-                {
-                    _logger.Invoke($"[ANTES] NextTargetMsgSeqNum: {_sessions.FirstOrDefault()?.NextTargetMsgSeqNum} | NextSenderMsgSeqNum: {_sessions.FirstOrDefault()?.NextSenderMsgSeqNum}");
-
-                    session.Send(message);
-
-                    _logger.Invoke($"[DEPOIS] NextTargetMsgSeqNum: {_sessions.FirstOrDefault()?.NextTargetMsgSeqNum} | NextSenderMsgSeqNum: {_sessions.FirstOrDefault()?.NextSenderMsgSeqNum}");
-                }
-                catch (Exception e)
-                {
-                    _logger.Invoke($"Error to send message: {message}");
-                }
-            });
-        }
-
-        public int GetNextSeqNum()
-        {
-            return _sessions.FirstOrDefault()?.NextTargetMsgSeqNum ?? 0;
+                Session.SendToTarget(message, sessionID);
+            }
+            catch (SessionNotFound ex)
+            {
+                _logger.Invoke($"SESSION NOT FOUND | {ex}");
+            }
+            catch (Exception ex)
+            {
+                _logger.Invoke($"EXCEPTION | {ex}");
+            }
         }
 
         public IEnumerable<string> GetExecutions(string clOrderId)
