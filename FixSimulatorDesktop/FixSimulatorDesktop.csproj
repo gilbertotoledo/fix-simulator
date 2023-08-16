@@ -31,9 +31,6 @@
     <None Update="FixConfig\Acceptor.cfg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="FixConfig\DefaultFixTags.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="FixConfig\Initiator.cfg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

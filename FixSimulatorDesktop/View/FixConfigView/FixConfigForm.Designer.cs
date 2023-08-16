@@ -36,6 +36,7 @@
             // ConfigTxt
             // 
             ConfigTxt.CausesValidation = false;
+            ConfigTxt.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
             ConfigTxt.Location = new Point(12, 34);
             ConfigTxt.Multiline = true;
             ConfigTxt.Name = "ConfigTxt";
@@ -63,7 +64,7 @@
             CancelBtn.UseVisualStyleBackColor = true;
             CancelBtn.Click += CancelBtn_Click;
             // 
-            // ConfigForm
+            // FixConfigForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -72,7 +73,7 @@
             Controls.Add(SaveBtn);
             Controls.Add(ConfigTxt);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
-            Name = "ConfigForm";
+            Name = "FixConfigForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Configurações Fix";
             ResumeLayout(false);

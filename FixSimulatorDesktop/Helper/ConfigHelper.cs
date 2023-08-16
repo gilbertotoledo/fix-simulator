@@ -1,4 +1,5 @@
 ﻿using System.Configuration;
+using System.Globalization;
 
 namespace FixSimulatorDesktop.Helper
 {
@@ -17,7 +18,7 @@ namespace FixSimulatorDesktop.Helper
             int.Parse(ConfigurationManager.AppSettings[key]);
 
         public static decimal GetDecimal(string key) =>
-            decimal.Parse(ConfigurationManager.AppSettings[key]);
+            decimal.Parse(ConfigurationManager.AppSettings[key], new CultureInfo("en-US"));
 
         public static void Persist(string key, char value) =>
             Persist(key, value.ToString());
@@ -26,7 +27,7 @@ namespace FixSimulatorDesktop.Helper
             Persist(key, value.ToString());
 
         public static void Persist(string key, decimal value) =>
-            Persist(key, value.ToString());
+            Persist(key, value.ToString(new CultureInfo("en-US")));
 
         public static void Persist(string key, bool value) =>
             Persist(key, value ? "true" : "false");

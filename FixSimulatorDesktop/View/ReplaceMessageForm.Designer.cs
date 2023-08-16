@@ -146,7 +146,7 @@
             Controls.Add(label1);
             Controls.Add(ConfirmBtn);
             Controls.Add(CancelBtn);
-            FormBorderStyle = FormBorderStyle.None;
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "ReplaceMessageForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ReplaceMessageForm";

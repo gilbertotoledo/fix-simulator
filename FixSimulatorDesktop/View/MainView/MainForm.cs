@@ -7,7 +7,6 @@ using FixSimulatorDesktop.View;
 using FixSimulatorDesktop.View.FixMessageView;
 using QuickFix.Fields;
 using QuickFix.FIX44;
-using System.Windows.Forms;
 
 namespace FixSimulatorDesktop
 {
@@ -15,7 +14,7 @@ namespace FixSimulatorDesktop
     {
         delegate void SetAcceptorLogTextDelegatorType(string texto);
         delegate void SetInitiatorLogTextDelegatorType(string texto);
-        delegate void SetOnMessageDelegatorType(object col0, object col1, object col2, object col3, object col4, object col5, object col6, object col7, object col8, object col9);
+        delegate void SetOnMessageDelegatorType(object col0, object col1, object col2, object col3, object col4, object col5, object col6, object col7, object col8, object col9, object col10);
 
         private readonly FixApplicationManager _fixManager;
 
@@ -50,6 +49,7 @@ namespace FixSimulatorDesktop
         private void ToggleInitiatorButtons(bool isRunning)
         {
             InitiatorCleanStoreToolStripMenuItem.Enabled = !isRunning;
+            InitiatorNewOrderSingleFastBtn.Enabled = isRunning;
             InitiatorNewOrderSingleBtn.Enabled = isRunning;
             InitiatorOrderReplaceBtn.Enabled = isRunning;
             InitiatorOrderCancelBtn.Enabled = isRunning;
@@ -170,25 +170,33 @@ namespace FixSimulatorDesktop
             }
         }
 
-        private void InitiatorFixFieldsConfigBtn_Click(object sender, EventArgs e)
-        {
-            var fixFieldsConfigForm = new FixFieldsConfigForm();
-            fixFieldsConfigForm.ShowDialog();
-        }
-
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             _fixManager.StopAcceptor();
             _fixManager.StopInitiator();
+            Thread.Sleep(2000);
+            Application.Exit();
+        }
+
+        private void InitiatorNewOrderSingleFastBtn_Click(object sender, EventArgs e)
+        {
+            Task.Run(() =>
+            {
+                var order = OrderBuilder.NewOrderSingle(StateManager.Account, StateManager.Symbol, StateManager.Side, StateManager.Operation, StateManager.Price, StateManager.Quantity);
+                _fixManager.InitiatorFixApp.Send(order);
+            });
         }
 
         private void InitiatorNewOrderSingleBtn_Click(object sender, EventArgs e)
         {
-            Task.Run(() =>
-            {
-                var order = OrderBuilder.NewOrderSingle(StateManager.Account, StateManager.Symbol, StateManager.Side, StateManager.Strategy, StateManager.Price, StateManager.Quantity);
-                _fixManager.InitiatorFixApp.Send(order);
+            var newOrderSingleForm = new NewOrderSingleForm(() => {
+                Task.Run(() =>
+                {
+                    var order = OrderBuilder.NewOrderSingle(StateManager.Account, StateManager.Symbol, StateManager.Side, StateManager.Operation, StateManager.Price, StateManager.Quantity);
+                    _fixManager.InitiatorFixApp.Send(order);
+                });
             });
+            newOrderSingleForm.ShowDialog();
         }
 
         private void ExecutionReportBtn_Click(object sender, EventArgs e)
@@ -245,6 +253,7 @@ namespace FixSimulatorDesktop
             var execTypeString = FixDictionary.GetOrdStatus(execTypeChar);
 
             var row = new object[]{
+                message.GetDateTime(new TransactTime().Tag).ToString("HH:mm:ss.ffff"),
                 direction,
                 msgType,
                 message.IsSetField(new Symbol().Tag) ? message.GetString(new Symbol().Tag) : "",
@@ -259,12 +268,12 @@ namespace FixSimulatorDesktop
             if (this.MessagesDg.InvokeRequired)
             {
                 var del = new SetOnMessageDelegatorType(
-                    (object col0, object col1, object col2, object col3, object col4, object col5, object col6, object col7, object col8, object col9) =>
+                    (object col0, object col1, object col2, object col3, object col4, object col5, object col6, object col7, object col8, object col9, object col10) =>
                     {
-                        AddRow(col0, col1, col2, col3, col4, col5, col6, col7, col8, col9);
+                        AddRow(col0, col1, col2, col3, col4, col5, col6, col7, col8, col9, col10);
                         MessagesDg.FirstDisplayedScrollingRowIndex = MessagesDg.RowCount - 1;
                     });
-                MessagesDg?.Invoke(del, row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9]);
+                MessagesDg?.Invoke(del, row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10]);
             }
             else
             {
@@ -275,7 +284,7 @@ namespace FixSimulatorDesktop
 
         private void MessagesDg_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            var messageViewer = new LongTextViewerForm(MessagesDg.Rows[e.RowIndex].Cells[9].Value.ToString());
+            var messageViewer = new LongTextViewerForm(MessagesDg.Rows[e.RowIndex].Cells[10].Value.ToString());
             messageViewer.ShowDialog();
         }
 
@@ -285,13 +294,16 @@ namespace FixSimulatorDesktop
                 .LastOrDefault(m =>
                     m.Header.GetString(new MsgType().Tag) == QuickFix.Fields.MsgType.NEWORDERSINGLE);
 
-            var replaceMessageForm = new ReplaceMessageForm(lastNewOrderSingle,
-                (int newQty, decimal newPrice) =>
+            if (lastNewOrderSingle != null )
             {
-                var replaceMessage = OrderBuilder.OrderCancelReplaceRequest(lastNewOrderSingle, newQty, newPrice);
-                this._fixManager.InitiatorFixApp.Send(replaceMessage);
-            });
-            replaceMessageForm.ShowDialog();
+                var replaceMessageForm = new ReplaceMessageForm(lastNewOrderSingle,
+                    (int newQty, decimal newPrice) =>
+                {
+                    var replaceMessage = OrderBuilder.OrderCancelReplaceRequest(lastNewOrderSingle, newQty, newPrice);
+                    this._fixManager.InitiatorFixApp.Send(replaceMessage);
+                });
+                replaceMessageForm.ShowDialog();
+            }
         }
 
         private void InitiatorOrderCancelBtn_Click(object sender, EventArgs e)
@@ -299,8 +311,11 @@ namespace FixSimulatorDesktop
             var lastNewOrderSingle = (NewOrderSingle)this._fixManager.InitiatorFixApp.SentMessages
                 .LastOrDefault(m =>
                     m.Header.GetString(new MsgType().Tag) == QuickFix.Fields.MsgType.NEWORDERSINGLE);
-            var replaceMessage = OrderBuilder.OrderCancelRequest(lastNewOrderSingle);
-            this._fixManager.InitiatorFixApp.Send(replaceMessage);
+            if (lastNewOrderSingle != null)
+            {
+                var replaceMessage = OrderBuilder.OrderCancelRequest(lastNewOrderSingle);
+                this._fixManager.InitiatorFixApp.Send(replaceMessage);
+            }
         }
 
         private void InitiatorLogTxt_DoubleClick(object sender, EventArgs e)
@@ -378,5 +393,21 @@ namespace FixSimulatorDesktop
             var acceptorConfigForm = new FixConfigForm("Acceptor");
             acceptorConfigForm.ShowDialog();
         }
+
+        private void ClearMessageListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessagesDg.Rows.Clear();
+        }
+
+        private void ClearLogToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            InitiatorLogTxt.Text = string.Empty;
+        }
+
+        private void AcceptorClearLogToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AcceptorLogTxt.Text = string.Empty;
+        }
+
     }
 }

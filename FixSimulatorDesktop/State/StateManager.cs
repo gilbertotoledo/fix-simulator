@@ -37,10 +37,10 @@ namespace FixSimulatorDesktop.State
             set => ConfigHelper.Persist("Quantity", value);
         }
 
-        public static string Strategy
+        public static string Operation
         {
-            get => ConfigHelper.GetString("Strategy");
-            set => ConfigHelper.Persist("Strategy", value);
+            get => ConfigHelper.GetString("Operation");
+            set => ConfigHelper.Persist("Operation", value);
         }
 
         public static bool IsInitiatorShowMessagesReceived

@@ -17,7 +17,7 @@ namespace FixSimulatorDesktop.FixApplication.Order
         /// <param name="quantity"></param>
         /// <param name="text"></param>
         /// <returns></returns>
-        public static NewOrderSingle NewOrderSingle(string account, string symbol, char side, string strategy, decimal price, decimal quantity, string text = "FIX_SIMULATOR")
+        public static NewOrderSingle NewOrderSingle(string account, string symbol, char side, string operation, decimal price, decimal quantity, string text = "FIX_SIMULATOR")
         {
             var order = new QuickFix.FIX44.NewOrderSingle(
                 new ClOrdID(Guid.NewGuid().ToString()),
@@ -35,7 +35,7 @@ namespace FixSimulatorDesktop.FixApplication.Order
                 TradeDate = new TradeDate(DateTime.Now.ToString("yyyyMMdd")),
                 Text = new Text(text),
             };
-            order.SetField(new StringField(10122, strategy));
+            order.SetField(new StringField(10122, operation));
             order.AddGroup(new QuickFix.FIX44.ExecutionReport.NoPartyIDsGroup()
             {
                 PartyRole = new PartyRole(36),
