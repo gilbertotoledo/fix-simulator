@@ -42,9 +42,9 @@
             label2 = new Label();
             label1 = new Label();
             InitiatorClearStoreBtn = new Button();
-            InitiatorStartStopBtn = new Button();
             InitiatorLogGroup = new GroupBox();
             InitiatorLogTxt = new TextBox();
+            InitiatorStartStopBtn = new Button();
             InitiatorFixConfigBtn = new Button();
             GroupBox2 = new GroupBox();
             groupBox8 = new GroupBox();
@@ -97,12 +97,12 @@
             GroupBox1.Controls.Add(groupBox7);
             GroupBox1.Controls.Add(groupBox4);
             GroupBox1.Controls.Add(InitiatorClearStoreBtn);
-            GroupBox1.Controls.Add(InitiatorStartStopBtn);
             GroupBox1.Controls.Add(InitiatorLogGroup);
+            GroupBox1.Controls.Add(InitiatorStartStopBtn);
             GroupBox1.Controls.Add(InitiatorFixConfigBtn);
             GroupBox1.Location = new Point(12, 12);
             GroupBox1.Name = "GroupBox1";
-            GroupBox1.Size = new Size(517, 738);
+            GroupBox1.Size = new Size(881, 434);
             GroupBox1.TabIndex = 0;
             GroupBox1.TabStop = false;
             GroupBox1.Text = "Initiator";
@@ -117,14 +117,14 @@
             groupBox7.Controls.Add(InitiatorNewOrderSingleBtn);
             groupBox7.Location = new Point(12, 51);
             groupBox7.Name = "groupBox7";
-            groupBox7.Size = new Size(499, 86);
+            groupBox7.Size = new Size(400, 86);
             groupBox7.TabIndex = 10;
             groupBox7.TabStop = false;
             groupBox7.Text = "Mensagens";
             // 
             // InitiatorFixFieldsConfigBtn
             // 
-            InitiatorFixFieldsConfigBtn.Location = new Point(407, 55);
+            InitiatorFixFieldsConfigBtn.Location = new Point(308, 17);
             InitiatorFixFieldsConfigBtn.Name = "InitiatorFixFieldsConfigBtn";
             InitiatorFixFieldsConfigBtn.Size = new Size(86, 23);
             InitiatorFixFieldsConfigBtn.TabIndex = 4;
@@ -188,13 +188,14 @@
             // 
             // groupBox4
             // 
+            groupBox4.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             groupBox4.Controls.Add(InitiatorNextTargetMsgSeqNumTxt);
             groupBox4.Controls.Add(InitiatorNextSenderMsgSeqNumText);
             groupBox4.Controls.Add(label2);
             groupBox4.Controls.Add(label1);
-            groupBox4.Location = new Point(12, 365);
+            groupBox4.Location = new Point(12, 363);
             groupBox4.Name = "groupBox4";
-            groupBox4.Size = new Size(499, 62);
+            groupBox4.Size = new Size(400, 62);
             groupBox4.TabIndex = 9;
             groupBox4.TabStop = false;
             groupBox4.Text = "Status";
@@ -237,7 +238,7 @@
             // 
             // InitiatorClearStoreBtn
             // 
-            InitiatorClearStoreBtn.Location = new Point(259, 22);
+            InitiatorClearStoreBtn.Location = new Point(93, 22);
             InitiatorClearStoreBtn.Name = "InitiatorClearStoreBtn";
             InitiatorClearStoreBtn.Size = new Size(93, 23);
             InitiatorClearStoreBtn.TabIndex = 8;
@@ -245,23 +246,13 @@
             InitiatorClearStoreBtn.UseVisualStyleBackColor = true;
             InitiatorClearStoreBtn.Click += InitiatorClearStoreBtn_Click;
             // 
-            // InitiatorStartStopBtn
-            // 
-            InitiatorStartStopBtn.Location = new Point(12, 22);
-            InitiatorStartStopBtn.Name = "InitiatorStartStopBtn";
-            InitiatorStartStopBtn.Size = new Size(75, 23);
-            InitiatorStartStopBtn.TabIndex = 7;
-            InitiatorStartStopBtn.Text = "Iniciar";
-            InitiatorStartStopBtn.UseVisualStyleBackColor = true;
-            InitiatorStartStopBtn.Click += InitiatorStartStopBtn_Click;
-            // 
             // InitiatorLogGroup
             // 
             InitiatorLogGroup.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             InitiatorLogGroup.Controls.Add(InitiatorLogTxt);
-            InitiatorLogGroup.Location = new Point(12, 433);
+            InitiatorLogGroup.Location = new Point(418, 51);
             InitiatorLogGroup.Name = "InitiatorLogGroup";
-            InitiatorLogGroup.Size = new Size(499, 299);
+            InitiatorLogGroup.Size = new Size(457, 374);
             InitiatorLogGroup.TabIndex = 6;
             InitiatorLogGroup.TabStop = false;
             InitiatorLogGroup.Text = "Log";
@@ -274,13 +265,23 @@
             InitiatorLogTxt.Name = "InitiatorLogTxt";
             InitiatorLogTxt.ReadOnly = true;
             InitiatorLogTxt.ScrollBars = ScrollBars.Vertical;
-            InitiatorLogTxt.Size = new Size(487, 271);
+            InitiatorLogTxt.Size = new Size(445, 346);
             InitiatorLogTxt.TabIndex = 0;
             InitiatorLogTxt.DoubleClick += InitiatorLogTxt_DoubleClick;
             // 
+            // InitiatorStartStopBtn
+            // 
+            InitiatorStartStopBtn.Location = new Point(12, 22);
+            InitiatorStartStopBtn.Name = "InitiatorStartStopBtn";
+            InitiatorStartStopBtn.Size = new Size(75, 23);
+            InitiatorStartStopBtn.TabIndex = 7;
+            InitiatorStartStopBtn.Text = "Iniciar";
+            InitiatorStartStopBtn.UseVisualStyleBackColor = true;
+            InitiatorStartStopBtn.Click += InitiatorStartStopBtn_Click;
+            // 
             // InitiatorFixConfigBtn
             // 
-            InitiatorFixConfigBtn.Location = new Point(358, 22);
+            InitiatorFixConfigBtn.Location = new Point(192, 22);
             InitiatorFixConfigBtn.Name = "InitiatorFixConfigBtn";
             InitiatorFixConfigBtn.Size = new Size(118, 23);
             InitiatorFixConfigBtn.TabIndex = 0;
@@ -298,22 +299,23 @@
             GroupBox2.Controls.Add(AcceptorLogGroup);
             GroupBox2.Controls.Add(AcceptorMacros);
             GroupBox2.Controls.Add(AcceptorFixConfigBtn);
-            GroupBox2.Location = new Point(1232, 12);
+            GroupBox2.Location = new Point(899, 12);
             GroupBox2.Name = "GroupBox2";
-            GroupBox2.Size = new Size(527, 738);
+            GroupBox2.Size = new Size(860, 434);
             GroupBox2.TabIndex = 1;
             GroupBox2.TabStop = false;
             GroupBox2.Text = "Acceptor";
             // 
             // groupBox8
             // 
+            groupBox8.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             groupBox8.Controls.Add(AcceptorShowSentChb);
             groupBox8.Controls.Add(ExecutionReportFilledBtn);
             groupBox8.Controls.Add(AcceptorShowReceivedChb);
             groupBox8.Controls.Add(ExecutionReportNewBtn);
-            groupBox8.Location = new Point(6, 51);
+            groupBox8.Location = new Point(454, 54);
             groupBox8.Name = "groupBox8";
-            groupBox8.Size = new Size(521, 86);
+            groupBox8.Size = new Size(400, 86);
             groupBox8.TabIndex = 13;
             groupBox8.TabStop = false;
             groupBox8.Text = "Mensagens";
@@ -364,13 +366,14 @@
             // 
             // groupBox6
             // 
+            groupBox6.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             groupBox6.Controls.Add(label3);
             groupBox6.Controls.Add(label4);
             groupBox6.Controls.Add(label5);
             groupBox6.Controls.Add(label6);
-            groupBox6.Location = new Point(12, 372);
+            groupBox6.Location = new Point(454, 363);
             groupBox6.Name = "groupBox6";
-            groupBox6.Size = new Size(499, 62);
+            groupBox6.Size = new Size(400, 62);
             groupBox6.TabIndex = 12;
             groupBox6.TabStop = false;
             groupBox6.Text = "Status";
@@ -413,7 +416,7 @@
             // 
             // AcceptorClearStoreBtn
             // 
-            AcceptorClearStoreBtn.Location = new Point(297, 19);
+            AcceptorClearStoreBtn.Location = new Point(87, 22);
             AcceptorClearStoreBtn.Name = "AcceptorClearStoreBtn";
             AcceptorClearStoreBtn.Size = new Size(93, 23);
             AcceptorClearStoreBtn.TabIndex = 9;
@@ -423,7 +426,7 @@
             // 
             // AcceptorStartStopBtn
             // 
-            AcceptorStartStopBtn.Location = new Point(12, 19);
+            AcceptorStartStopBtn.Location = new Point(6, 22);
             AcceptorStartStopBtn.Name = "AcceptorStartStopBtn";
             AcceptorStartStopBtn.Size = new Size(75, 23);
             AcceptorStartStopBtn.TabIndex = 8;
@@ -435,9 +438,9 @@
             // 
             AcceptorLogGroup.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             AcceptorLogGroup.Controls.Add(AcceptorLogTxt);
-            AcceptorLogGroup.Location = new Point(6, 440);
+            AcceptorLogGroup.Location = new Point(6, 54);
             AcceptorLogGroup.Name = "AcceptorLogGroup";
-            AcceptorLogGroup.Size = new Size(515, 292);
+            AcceptorLogGroup.Size = new Size(442, 371);
             AcceptorLogGroup.TabIndex = 7;
             AcceptorLogGroup.TabStop = false;
             AcceptorLogGroup.Text = "Log";
@@ -450,25 +453,27 @@
             AcceptorLogTxt.Name = "AcceptorLogTxt";
             AcceptorLogTxt.ReadOnly = true;
             AcceptorLogTxt.ScrollBars = ScrollBars.Vertical;
-            AcceptorLogTxt.Size = new Size(503, 264);
+            AcceptorLogTxt.Size = new Size(430, 343);
             AcceptorLogTxt.TabIndex = 1;
             AcceptorLogTxt.DoubleClick += AcceptorLogTxt_DoubleClick;
             // 
             // AcceptorMacros
             // 
+            AcceptorMacros.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             AcceptorMacros.Controls.Add(AcceptorIntervalTxt);
             AcceptorMacros.Controls.Add(label7);
             AcceptorMacros.Controls.Add(AcceptorMacrosClb);
-            AcceptorMacros.Location = new Point(6, 143);
+            AcceptorMacros.Location = new Point(454, 146);
             AcceptorMacros.Name = "AcceptorMacros";
-            AcceptorMacros.Size = new Size(515, 223);
+            AcceptorMacros.Size = new Size(400, 211);
             AcceptorMacros.TabIndex = 3;
             AcceptorMacros.TabStop = false;
             AcceptorMacros.Text = "Macros";
             // 
             // AcceptorIntervalTxt
             // 
-            AcceptorIntervalTxt.Location = new Point(456, 22);
+            AcceptorIntervalTxt.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            AcceptorIntervalTxt.Location = new Point(345, 22);
             AcceptorIntervalTxt.MaxLength = 10;
             AcceptorIntervalTxt.Name = "AcceptorIntervalTxt";
             AcceptorIntervalTxt.Size = new Size(49, 23);
@@ -477,8 +482,9 @@
             // 
             // label7
             // 
+            label7.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label7.AutoSize = true;
-            label7.Location = new Point(367, 25);
+            label7.Location = new Point(256, 25);
             label7.Name = "label7";
             label7.Size = new Size(83, 15);
             label7.TabIndex = 3;
@@ -486,17 +492,18 @@
             // 
             // AcceptorMacrosClb
             // 
+            AcceptorMacrosClb.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             AcceptorMacrosClb.FormattingEnabled = true;
-            AcceptorMacrosClb.Items.AddRange(new object[] { "ExecutionReport - New", "ExecutionReport - Filled", "ExecutionReport - Partially Filled (25%) Único", "ExecutionReport - Partially Filled (25%) A cada 5s, até 100%", "ExecutionReport - Replaced", "ExecutionReport - Replace Rejection", "ExecutionReport - Canceled", "ExecutionReport - Cancel Rejection" });
-            AcceptorMacrosClb.Location = new Point(6, 58);
+            AcceptorMacrosClb.Items.AddRange(new object[] { "ExecutionReport - New", "ExecutionReport - Filled", "ExecutionReport - Partially Filled (25%) Único", "ExecutionReport - Partially Filled (25%) A cada intervalo, até 100%", "ExecutionReport - Replaced", "ExecutionReport - Replace Rejection", "ExecutionReport - Canceled", "ExecutionReport - Cancel Rejection" });
+            AcceptorMacrosClb.Location = new Point(6, 51);
             AcceptorMacrosClb.Name = "AcceptorMacrosClb";
-            AcceptorMacrosClb.Size = new Size(503, 148);
+            AcceptorMacrosClb.Size = new Size(388, 148);
             AcceptorMacrosClb.TabIndex = 2;
             AcceptorMacrosClb.ItemCheck += AcceptorMacrosClb_ItemCheck;
             // 
             // AcceptorFixConfigBtn
             // 
-            AcceptorFixConfigBtn.Location = new Point(396, 19);
+            AcceptorFixConfigBtn.Location = new Point(186, 22);
             AcceptorFixConfigBtn.Name = "AcceptorFixConfigBtn";
             AcceptorFixConfigBtn.Size = new Size(119, 23);
             AcceptorFixConfigBtn.TabIndex = 1;
@@ -509,9 +516,9 @@
             GroupBox3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             GroupBox3.AutoSize = true;
             GroupBox3.Controls.Add(MessagesDg);
-            GroupBox3.Location = new Point(535, 12);
+            GroupBox3.Location = new Point(12, 452);
             GroupBox3.Name = "GroupBox3";
-            GroupBox3.Size = new Size(691, 738);
+            GroupBox3.Size = new Size(1747, 305);
             GroupBox3.TabIndex = 1;
             GroupBox3.TabStop = false;
             GroupBox3.Text = "Mensagens";
@@ -529,7 +536,7 @@
             MessagesDg.ReadOnly = true;
             MessagesDg.RowTemplate.Height = 25;
             MessagesDg.ShowEditingIcon = false;
-            MessagesDg.Size = new Size(679, 697);
+            MessagesDg.Size = new Size(1735, 276);
             MessagesDg.TabIndex = 2;
             MessagesDg.CellDoubleClick += MessagesDg_CellDoubleClick;
             // 
