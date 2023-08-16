@@ -1,5 +1,5 @@
-﻿using FixSimulatorDesktop.Controller;
-using FixSimulatorDesktop.FixApplication.Order;
+﻿using FixSimulatorDesktop.FixApplication.Order;
+using FixSimulatorDesktop.State;
 using QuickFix;
 using QuickFix.FIX44;
 using Message = QuickFix.Message;
@@ -9,88 +9,95 @@ namespace FixSimulatorDesktop.FixApp
     public class AcceptorFixApp : FixApplicationBase
     {
         public AcceptorFixApp(Action<string> logHandler, Action<Message> onMessageHandler)
-            :base(logHandler, onMessageHandler, "acceptor")
-        {}
+            : base(logHandler, onMessageHandler, "acceptor")
+        { }
 
         public void OnMessage(NewOrderSingle newOrderSingle, SessionID sessionID)
         {
             _logger.Invoke($"[NEW_ORDER_SINGLE] {newOrderSingle}");
-            if (StateManager.AcceptorMacrosEnabled.ExecutionReportNew)
+            Task.Run(() =>
             {
-                var er = ExecutionReportBuilder.NewFromNewOrderSingle(newOrderSingle);
-                Send(er, sessionID);
-            }
+                if (StateManager.AcceptorMacroExecutionReportNew)
+                {
+                    var er = ExecutionReportBuilder.NewFromNewOrderSingle(newOrderSingle);
+                    Send(er, sessionID);
+                }
 
-            if (StateManager.AcceptorMacrosEnabled.ExecutionReportFilled)
-            {
-                Thread.Sleep(2000);
-                var er = ExecutionReportBuilder.FilledFromNewOrderSingle(newOrderSingle);
-                Send(er, sessionID);
-            }
+                if (StateManager.AcceptorMacroExecutionReportFilled)
+                {
+                    Thread.Sleep(StateManager.AcceptorIntervalMilis);
+                    var er = ExecutionReportBuilder.FilledFromNewOrderSingle(newOrderSingle);
+                    Send(er, sessionID);
+                }
 
-            if (StateManager.AcceptorMacrosEnabled.ExecutionReportPartiallyFilledUnique)
-            {
-                Thread.Sleep(2000);
-                var er = ExecutionReportBuilder.PartiallyFilledFromNewOrderSingle(newOrderSingle, newOrderSingle.OrderQty.getValue() * 0.25m);
-                Send(er, sessionID);
-            }
+                if (StateManager.AcceptorMacroExecutionReportPartiallyFilledUnique)
+                {
+                    Thread.Sleep(StateManager.AcceptorIntervalMilis);
+                    var er = ExecutionReportBuilder.PartiallyFilledFromNewOrderSingle(newOrderSingle, newOrderSingle.OrderQty.getValue() * 0.25m);
+                    Send(er, sessionID);
+                }
 
-            if (StateManager.AcceptorMacrosEnabled.ExecutionReportPartiallyFilledScheduled)
-            {
-                Thread.Sleep(StateManager.AcceptorMacrosEnabled.ExecutionReportPartiallyFilledScheduledIntervalMilis);
-                var er = ExecutionReportBuilder.PartiallyFilledFromNewOrderSingle(newOrderSingle, newOrderSingle.OrderQty.getValue() * 0.25m);
-                Send(er, sessionID);
+                if (StateManager.AcceptorMacroExecutionReportPartiallyFilledScheduled)
+                {
+                    Thread.Sleep(StateManager.AcceptorIntervalMilis);
+                    var er = ExecutionReportBuilder.PartiallyFilledFromNewOrderSingle(newOrderSingle, newOrderSingle.OrderQty.getValue() * 0.25m);
+                    Send(er, sessionID);
 
-                Thread.Sleep(StateManager.AcceptorMacrosEnabled.ExecutionReportPartiallyFilledScheduledIntervalMilis);
-                er = ExecutionReportBuilder.PartiallyFilledFromNewOrderSingle(newOrderSingle, newOrderSingle.OrderQty.getValue() * 0.5m);
-                Send(er, sessionID);
+                    Thread.Sleep(StateManager.AcceptorIntervalMilis);
+                    er = ExecutionReportBuilder.PartiallyFilledFromNewOrderSingle(newOrderSingle, newOrderSingle.OrderQty.getValue() * 0.5m);
+                    Send(er, sessionID);
 
-                Thread.Sleep(StateManager.AcceptorMacrosEnabled.ExecutionReportPartiallyFilledScheduledIntervalMilis);
-                er = ExecutionReportBuilder.PartiallyFilledFromNewOrderSingle(newOrderSingle, newOrderSingle.OrderQty.getValue() * 0.75m);
-                Send(er, sessionID);
+                    Thread.Sleep(StateManager.AcceptorIntervalMilis);
+                    er = ExecutionReportBuilder.PartiallyFilledFromNewOrderSingle(newOrderSingle, newOrderSingle.OrderQty.getValue() * 0.75m);
+                    Send(er, sessionID);
 
-                Thread.Sleep(StateManager.AcceptorMacrosEnabled.ExecutionReportPartiallyFilledScheduledIntervalMilis);
-                er = ExecutionReportBuilder.PartiallyFilledFromNewOrderSingle(newOrderSingle, newOrderSingle.OrderQty.getValue());
-                Send(er, sessionID);
-            }
+                    Thread.Sleep(StateManager.AcceptorIntervalMilis);
+                    er = ExecutionReportBuilder.PartiallyFilledFromNewOrderSingle(newOrderSingle, newOrderSingle.OrderQty.getValue());
+                    Send(er, sessionID);
+                }
+            });
         }
 
         public void OnMessage(OrderCancelReplaceRequest orderCancelReplaceRequest, SessionID sessionID)
         {
             _logger.Invoke($"[REPLACE_REQUEST] {orderCancelReplaceRequest}");
-
-            if (StateManager.AcceptorMacrosEnabled.ExecutionReportReplaced)
+            Task.Run(() =>
             {
-                Thread.Sleep(2000);
-                var er = ExecutionReportBuilder.ReplacedFromCancelReplaceRequest(orderCancelReplaceRequest);
-                Send(er, sessionID);
-            }
+                if (StateManager.AcceptorMacroExecutionReportReplaced)
+                {
+                    Thread.Sleep(StateManager.AcceptorIntervalMilis);
+                    var er = ExecutionReportBuilder.ReplacedFromCancelReplaceRequest(orderCancelReplaceRequest);
+                    Send(er, sessionID);
+                }
 
-            if (StateManager.AcceptorMacrosEnabled.ExecutionReportReplaceReject)
-            {
-                Thread.Sleep(2000);
-                var er = ExecutionReportBuilder.ReplaceRejectionFromCancelReplaceRequest(orderCancelReplaceRequest);
-                Send(er, sessionID);
-            }
+                if (StateManager.AcceptorMacroExecutionReportReplaceReject)
+                {
+                    Thread.Sleep(StateManager.AcceptorIntervalMilis);
+                    var er = ExecutionReportBuilder.ReplaceRejectionFromCancelReplaceRequest(orderCancelReplaceRequest);
+                    Send(er, sessionID);
+                }
+            });
         }
 
         public void OnMessage(OrderCancelRequest orderCancelRequest, SessionID sessionID)
         {
             _logger.Invoke($"[CANCEL_REQUEST] {orderCancelRequest}");
-
-            if (StateManager.AcceptorMacrosEnabled.ExecutionReportCanceled)
+            Task.Run(() =>
             {
-                Thread.Sleep(2000);
-                var er = ExecutionReportBuilder.CanceledFromCancelRequest(orderCancelRequest);
-                Send(er, sessionID);
-            }
+                if (StateManager.AcceptorMacroExecutionReportCanceled)
+                {
+                    Thread.Sleep(StateManager.AcceptorIntervalMilis);
+                    var er = ExecutionReportBuilder.CanceledFromCancelRequest(orderCancelRequest);
+                    Send(er, sessionID);
+                }
 
-            if (StateManager.AcceptorMacrosEnabled.ExecutionReportCancelReject)
-            {
-                Thread.Sleep(2000);
-                var er = ExecutionReportBuilder.CancelRejectionFromCancelRequest(orderCancelRequest);
-                Send(er, sessionID);
-            }
+                if (StateManager.AcceptorMacroExecutionReportCancelReject)
+                {
+                    Thread.Sleep(StateManager.AcceptorIntervalMilis);
+                    var er = ExecutionReportBuilder.CancelRejectionFromCancelRequest(orderCancelRequest);
+                    Send(er, sessionID);
+                }
+            });
         }
 
         public void SendErNewToLastMessage()

@@ -6,8 +6,8 @@ namespace FixSimulatorDesktop.FixApp
     public class InitiatorFixApp : FixApplicationBase
     {
         public InitiatorFixApp(Action<string> logHandler, Action<Message> onMessageHandler)
-            :base(logHandler, onMessageHandler, "initiator")
-        {}
+            : base(logHandler, onMessageHandler, "initiator")
+        { }
 
         public void OnMessage(QuickFix.FIX44.ExecutionReport executionReport, SessionID sessionID)
         {

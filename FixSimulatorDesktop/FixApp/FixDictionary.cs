@@ -4,7 +4,6 @@
     {
         public static string GetMsgTypeText(string msgType) => msgType switch
         {
-            "" => msgType,
             QuickFix.Fields.MsgType.HEARTBEAT => "HEARTBEAT",
             QuickFix.Fields.MsgType.TESTREQUEST => "TEST_REQUEST",
             QuickFix.Fields.MsgType.RESENDREQUEST => "RESEND_REQUEST",
@@ -122,12 +121,12 @@
             QuickFix.Fields.MsgType.SECURITYTYPES => "w",
             QuickFix.Fields.MsgType.SECURITYLISTREQUEST => "x",
             QuickFix.Fields.MsgType.SECURITYLIST => "y",
-            QuickFix.Fields.MsgType.DERIVATIVESECURITYLISTREQUEST => "z"
+            QuickFix.Fields.MsgType.DERIVATIVESECURITYLISTREQUEST => "z",
+            _ => msgType
         };
 
         public static string GetOrdStatus(char status) => status switch
         {
-            '\0' => status.ToString(),
             QuickFix.Fields.OrdStatus.NEW => "NEW",
             QuickFix.Fields.OrdStatus.PARTIALLY_FILLED => "PARTIALLY_FILLED",
             QuickFix.Fields.OrdStatus.FILLED => "FILLED",
@@ -142,7 +141,8 @@
             QuickFix.Fields.OrdStatus.EXPIRED => "EXPIRED",
             QuickFix.Fields.OrdStatus.ACCEPTED_FOR_BIDDING => "ACCEPTED_FOR_BIDDING",
             QuickFix.Fields.OrdStatus.PENDING_REPLACE => "PENDING_REPLACE",
-            QuickFix.Fields.OrdStatus.REPLACED => "REPLACED"
+            QuickFix.Fields.OrdStatus.REPLACED => "REPLACED",
+            _ => status.ToString()
         };
     }
 }

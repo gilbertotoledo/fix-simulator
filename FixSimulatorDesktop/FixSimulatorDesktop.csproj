@@ -10,8 +10,6 @@
 
   <ItemGroup>
     <PackageReference Include="QuickFix.Net.NETCore.FIX44" Version="1.8.1" />
-    <PackageReference Include="Serilog" Version="3.0.1" />
-    <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
   </ItemGroup>
 
   <ItemGroup>

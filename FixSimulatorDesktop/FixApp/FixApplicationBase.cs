@@ -1,4 +1,4 @@
-﻿using FixSimulatorDesktop.Controller;
+﻿using FixSimulatorDesktop.State;
 using QuickFix;
 using QuickFix.FIX44;
 using Message = QuickFix.Message;
@@ -33,10 +33,9 @@ namespace FixSimulatorDesktop.FixApp
 
         public void FromApp(Message message, SessionID sessionID)
         {
-            //_logger.Invoke($"FromApp {message}");
             _logger.Invoke($"[FROM_APP] NextTargetMsgSeqNum: {_sessions.FirstOrDefault()?.NextTargetMsgSeqNum} | NextSenderMsgSeqNum: {_sessions.FirstOrDefault()?.NextSenderMsgSeqNum}");
 
-            if ( (ApplicationType.Equals("acceptor") && StateManager.IsAcceptorShowMessagesReceived) ||
+            if ((ApplicationType.Equals("acceptor") && StateManager.IsAcceptorShowMessagesReceived) ||
                  (ApplicationType.Equals("initiator") && StateManager.IsInitiatorShowMessagesReceived))
             {
                 _onMessageHandler(message);

@@ -1,5 +1,4 @@
-﻿using QuickFix;
-using QuickFix.Fields;
+﻿using QuickFix.Fields;
 using QuickFix.FIX44;
 using Message = QuickFix.FIX44.Message;
 

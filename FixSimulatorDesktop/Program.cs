@@ -1,5 +1,3 @@
-using Serilog;
-
 namespace FixSimulatorDesktop
 {
     internal static class Program

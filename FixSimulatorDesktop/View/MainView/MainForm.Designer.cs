@@ -30,8 +30,12 @@
         {
             GroupBox1 = new GroupBox();
             groupBox7 = new GroupBox();
+            InitiatorFixFieldsConfigBtn = new Button();
             InitiatorShowSentChb = new CheckBox();
+            InitiatorOrderCancelBtn = new Button();
             InitiatorShowReceivedChb = new CheckBox();
+            InitiatorOrderReplaceBtn = new Button();
+            InitiatorNewOrderSingleBtn = new Button();
             groupBox4 = new GroupBox();
             InitiatorNextTargetMsgSeqNumTxt = new Label();
             InitiatorNextSenderMsgSeqNumText = new Label();
@@ -41,11 +45,6 @@
             InitiatorStartStopBtn = new Button();
             InitiatorLogGroup = new GroupBox();
             InitiatorLogTxt = new TextBox();
-            GroupBox5 = new GroupBox();
-            InitiatorFixFieldsConfigBtn = new Button();
-            InitiatorOrderCancelBtn = new Button();
-            InitiatorNewOrderSingleBtn = new Button();
-            InitiatorOrderReplaceBtn = new Button();
             InitiatorFixConfigBtn = new Button();
             GroupBox2 = new GroupBox();
             groupBox8 = new GroupBox();
@@ -63,6 +62,8 @@
             AcceptorLogGroup = new GroupBox();
             AcceptorLogTxt = new TextBox();
             AcceptorMacros = new GroupBox();
+            AcceptorIntervalTxt = new TextBox();
+            label7 = new Label();
             AcceptorMacrosClb = new CheckedListBox();
             AcceptorFixConfigBtn = new Button();
             GroupBox3 = new GroupBox();
@@ -81,7 +82,6 @@
             groupBox7.SuspendLayout();
             groupBox4.SuspendLayout();
             InitiatorLogGroup.SuspendLayout();
-            GroupBox5.SuspendLayout();
             GroupBox2.SuspendLayout();
             groupBox8.SuspendLayout();
             groupBox6.SuspendLayout();
@@ -99,7 +99,6 @@
             GroupBox1.Controls.Add(InitiatorClearStoreBtn);
             GroupBox1.Controls.Add(InitiatorStartStopBtn);
             GroupBox1.Controls.Add(InitiatorLogGroup);
-            GroupBox1.Controls.Add(GroupBox5);
             GroupBox1.Controls.Add(InitiatorFixConfigBtn);
             GroupBox1.Location = new Point(12, 12);
             GroupBox1.Name = "GroupBox1";
@@ -110,14 +109,28 @@
             // 
             // groupBox7
             // 
+            groupBox7.Controls.Add(InitiatorFixFieldsConfigBtn);
             groupBox7.Controls.Add(InitiatorShowSentChb);
+            groupBox7.Controls.Add(InitiatorOrderCancelBtn);
             groupBox7.Controls.Add(InitiatorShowReceivedChb);
+            groupBox7.Controls.Add(InitiatorOrderReplaceBtn);
+            groupBox7.Controls.Add(InitiatorNewOrderSingleBtn);
             groupBox7.Location = new Point(12, 51);
             groupBox7.Name = "groupBox7";
-            groupBox7.Size = new Size(499, 49);
+            groupBox7.Size = new Size(499, 86);
             groupBox7.TabIndex = 10;
             groupBox7.TabStop = false;
             groupBox7.Text = "Mensagens";
+            // 
+            // InitiatorFixFieldsConfigBtn
+            // 
+            InitiatorFixFieldsConfigBtn.Location = new Point(407, 55);
+            InitiatorFixFieldsConfigBtn.Name = "InitiatorFixFieldsConfigBtn";
+            InitiatorFixFieldsConfigBtn.Size = new Size(86, 23);
+            InitiatorFixFieldsConfigBtn.TabIndex = 4;
+            InitiatorFixFieldsConfigBtn.Text = "Dados";
+            InitiatorFixFieldsConfigBtn.UseVisualStyleBackColor = true;
+            InitiatorFixFieldsConfigBtn.Click += InitiatorFixFieldsConfigBtn_Click;
             // 
             // InitiatorShowSentChb
             // 
@@ -129,6 +142,16 @@
             InitiatorShowSentChb.Text = "Exibir enviadas";
             InitiatorShowSentChb.UseVisualStyleBackColor = true;
             InitiatorShowSentChb.CheckedChanged += InitiatorShowSentChb_CheckedChanged;
+            // 
+            // InitiatorOrderCancelBtn
+            // 
+            InitiatorOrderCancelBtn.Location = new Point(212, 55);
+            InitiatorOrderCancelBtn.Name = "InitiatorOrderCancelBtn";
+            InitiatorOrderCancelBtn.Size = new Size(78, 23);
+            InitiatorOrderCancelBtn.TabIndex = 3;
+            InitiatorOrderCancelBtn.Text = "Cancel";
+            InitiatorOrderCancelBtn.UseVisualStyleBackColor = true;
+            InitiatorOrderCancelBtn.Click += InitiatorOrderCancelBtn_Click;
             // 
             // InitiatorShowReceivedChb
             // 
@@ -142,6 +165,26 @@
             InitiatorShowReceivedChb.Text = "Exibir recebidas";
             InitiatorShowReceivedChb.UseVisualStyleBackColor = true;
             InitiatorShowReceivedChb.CheckedChanged += InitiatorShowReceivedChb_CheckedChanged;
+            // 
+            // InitiatorOrderReplaceBtn
+            // 
+            InitiatorOrderReplaceBtn.Location = new Point(127, 55);
+            InitiatorOrderReplaceBtn.Name = "InitiatorOrderReplaceBtn";
+            InitiatorOrderReplaceBtn.Size = new Size(79, 23);
+            InitiatorOrderReplaceBtn.TabIndex = 2;
+            InitiatorOrderReplaceBtn.Text = "Replace";
+            InitiatorOrderReplaceBtn.UseVisualStyleBackColor = true;
+            InitiatorOrderReplaceBtn.Click += InitiatorOrderReplaceBtn_Click;
+            // 
+            // InitiatorNewOrderSingleBtn
+            // 
+            InitiatorNewOrderSingleBtn.Location = new Point(11, 55);
+            InitiatorNewOrderSingleBtn.Name = "InitiatorNewOrderSingleBtn";
+            InitiatorNewOrderSingleBtn.Size = new Size(110, 23);
+            InitiatorNewOrderSingleBtn.TabIndex = 1;
+            InitiatorNewOrderSingleBtn.Text = "NewOrderSingle";
+            InitiatorNewOrderSingleBtn.UseVisualStyleBackColor = true;
+            InitiatorNewOrderSingleBtn.Click += InitiatorNewOrderSingleBtn_Click;
             // 
             // groupBox4
             // 
@@ -234,59 +277,6 @@
             InitiatorLogTxt.Size = new Size(487, 271);
             InitiatorLogTxt.TabIndex = 0;
             InitiatorLogTxt.DoubleClick += InitiatorLogTxt_DoubleClick;
-            // 
-            // GroupBox5
-            // 
-            GroupBox5.Controls.Add(InitiatorFixFieldsConfigBtn);
-            GroupBox5.Controls.Add(InitiatorOrderCancelBtn);
-            GroupBox5.Controls.Add(InitiatorNewOrderSingleBtn);
-            GroupBox5.Controls.Add(InitiatorOrderReplaceBtn);
-            GroupBox5.Location = new Point(12, 106);
-            GroupBox5.Name = "GroupBox5";
-            GroupBox5.Size = new Size(499, 253);
-            GroupBox5.TabIndex = 3;
-            GroupBox5.TabStop = false;
-            GroupBox5.Text = "Ordens";
-            // 
-            // InitiatorFixFieldsConfigBtn
-            // 
-            InitiatorFixFieldsConfigBtn.Location = new Point(372, 22);
-            InitiatorFixFieldsConfigBtn.Name = "InitiatorFixFieldsConfigBtn";
-            InitiatorFixFieldsConfigBtn.Size = new Size(86, 23);
-            InitiatorFixFieldsConfigBtn.TabIndex = 4;
-            InitiatorFixFieldsConfigBtn.Text = "Campos Fix";
-            InitiatorFixFieldsConfigBtn.UseVisualStyleBackColor = true;
-            InitiatorFixFieldsConfigBtn.Click += InitiatorFixFieldsConfigBtn_Click;
-            // 
-            // InitiatorOrderCancelBtn
-            // 
-            InitiatorOrderCancelBtn.Location = new Point(207, 22);
-            InitiatorOrderCancelBtn.Name = "InitiatorOrderCancelBtn";
-            InitiatorOrderCancelBtn.Size = new Size(78, 23);
-            InitiatorOrderCancelBtn.TabIndex = 3;
-            InitiatorOrderCancelBtn.Text = "Cancel";
-            InitiatorOrderCancelBtn.UseVisualStyleBackColor = true;
-            InitiatorOrderCancelBtn.Click += InitiatorOrderCancelBtn_Click;
-            // 
-            // InitiatorNewOrderSingleBtn
-            // 
-            InitiatorNewOrderSingleBtn.Location = new Point(6, 22);
-            InitiatorNewOrderSingleBtn.Name = "InitiatorNewOrderSingleBtn";
-            InitiatorNewOrderSingleBtn.Size = new Size(110, 23);
-            InitiatorNewOrderSingleBtn.TabIndex = 1;
-            InitiatorNewOrderSingleBtn.Text = "NewOrderSingle";
-            InitiatorNewOrderSingleBtn.UseVisualStyleBackColor = true;
-            InitiatorNewOrderSingleBtn.Click += InitiatorNewOrderSingleBtn_Click;
-            // 
-            // InitiatorOrderReplaceBtn
-            // 
-            InitiatorOrderReplaceBtn.Location = new Point(122, 22);
-            InitiatorOrderReplaceBtn.Name = "InitiatorOrderReplaceBtn";
-            InitiatorOrderReplaceBtn.Size = new Size(79, 23);
-            InitiatorOrderReplaceBtn.TabIndex = 2;
-            InitiatorOrderReplaceBtn.Text = "Replace";
-            InitiatorOrderReplaceBtn.UseVisualStyleBackColor = true;
-            InitiatorOrderReplaceBtn.Click += InitiatorOrderReplaceBtn_Click;
             // 
             // InitiatorFixConfigBtn
             // 
@@ -466,6 +456,8 @@
             // 
             // AcceptorMacros
             // 
+            AcceptorMacros.Controls.Add(AcceptorIntervalTxt);
+            AcceptorMacros.Controls.Add(label7);
             AcceptorMacros.Controls.Add(AcceptorMacrosClb);
             AcceptorMacros.Location = new Point(6, 143);
             AcceptorMacros.Name = "AcceptorMacros";
@@ -474,13 +466,31 @@
             AcceptorMacros.TabStop = false;
             AcceptorMacros.Text = "Macros";
             // 
+            // AcceptorIntervalTxt
+            // 
+            AcceptorIntervalTxt.Location = new Point(456, 22);
+            AcceptorIntervalTxt.MaxLength = 10;
+            AcceptorIntervalTxt.Name = "AcceptorIntervalTxt";
+            AcceptorIntervalTxt.Size = new Size(49, 23);
+            AcceptorIntervalTxt.TabIndex = 4;
+            AcceptorIntervalTxt.TextChanged += AcceptorIntervalTxt_TextChanged;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(367, 25);
+            label7.Name = "label7";
+            label7.Size = new Size(83, 15);
+            label7.TabIndex = 3;
+            label7.Text = "Intervalo (ms):";
+            // 
             // AcceptorMacrosClb
             // 
             AcceptorMacrosClb.FormattingEnabled = true;
             AcceptorMacrosClb.Items.AddRange(new object[] { "ExecutionReport - New", "ExecutionReport - Filled", "ExecutionReport - Partially Filled (25%) Único", "ExecutionReport - Partially Filled (25%) A cada 5s, até 100%", "ExecutionReport - Replaced", "ExecutionReport - Replace Rejection", "ExecutionReport - Canceled", "ExecutionReport - Cancel Rejection" });
-            AcceptorMacrosClb.Location = new Point(6, 22);
+            AcceptorMacrosClb.Location = new Point(6, 58);
             AcceptorMacrosClb.Name = "AcceptorMacrosClb";
-            AcceptorMacrosClb.Size = new Size(503, 184);
+            AcceptorMacrosClb.Size = new Size(503, 148);
             AcceptorMacrosClb.TabIndex = 2;
             AcceptorMacrosClb.ItemCheck += AcceptorMacrosClb_ItemCheck;
             // 
@@ -621,7 +631,6 @@
             groupBox4.PerformLayout();
             InitiatorLogGroup.ResumeLayout(false);
             InitiatorLogGroup.PerformLayout();
-            GroupBox5.ResumeLayout(false);
             GroupBox2.ResumeLayout(false);
             groupBox8.ResumeLayout(false);
             groupBox8.PerformLayout();
@@ -630,6 +639,7 @@
             AcceptorLogGroup.ResumeLayout(false);
             AcceptorLogGroup.PerformLayout();
             AcceptorMacros.ResumeLayout(false);
+            AcceptorMacros.PerformLayout();
             GroupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)MessagesDg).EndInit();
             ResumeLayout(false);
@@ -648,7 +658,6 @@
         private Button InitiatorOrderCancelBtn;
         private Button InitiatorOrderReplaceBtn;
         private Button InitiatorNewOrderSingleBtn;
-        private GroupBox GroupBox5;
         private GroupBox InitiatorLogGroup;
         private Button InitiatorStartStopBtn;
         private GroupBox AcceptorLogGroup;
@@ -687,5 +696,7 @@
         private GroupBox groupBox8;
         private CheckBox AcceptorShowSentChb;
         private CheckBox AcceptorShowReceivedChb;
+        private TextBox AcceptorIntervalTxt;
+        private Label label7;
     }
 }

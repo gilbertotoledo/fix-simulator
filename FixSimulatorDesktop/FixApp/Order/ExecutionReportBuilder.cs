@@ -7,7 +7,7 @@ namespace FixSimulatorDesktop.FixApplication.Order
     {
         public static ExecutionReport NewFromNewOrderSingle(NewOrderSingle newOrderSingle)
         {
-            ExecutionReport exReport = new QuickFix.FIX44.ExecutionReport(
+            var exReport = new ExecutionReport(
                 new OrderID(Guid.NewGuid().ToString()),
                 new ExecID(Guid.NewGuid().ToString()),
                 new ExecType(ExecType.NEW),
@@ -33,7 +33,7 @@ namespace FixSimulatorDesktop.FixApplication.Order
 
         public static ExecutionReport FilledFromNewOrderSingle(NewOrderSingle newOrderSingle)
         {
-            ExecutionReport exReport = new QuickFix.FIX44.ExecutionReport(
+            var exReport = new ExecutionReport(
                 new OrderID(Guid.NewGuid().ToString()),
                 new ExecID(Guid.NewGuid().ToString()),
                 new ExecType(ExecType.FILL),
@@ -59,7 +59,7 @@ namespace FixSimulatorDesktop.FixApplication.Order
 
         public static ExecutionReport PartiallyFilledFromNewOrderSingle(NewOrderSingle newOrderSingle, decimal qty)
         {
-            ExecutionReport exReport = new QuickFix.FIX44.ExecutionReport(
+            var exReport = new ExecutionReport(
                 new OrderID(Guid.NewGuid().ToString()),
                 new ExecID(Guid.NewGuid().ToString()),
                 new ExecType(qty == newOrderSingle.OrderQty.getValue() ? ExecType.FILL : ExecType.PARTIAL_FILL),
@@ -85,7 +85,7 @@ namespace FixSimulatorDesktop.FixApplication.Order
 
         public static ExecutionReport ReplacedFromCancelReplaceRequest(OrderCancelReplaceRequest orderCancelReplaceRequest)
         {
-            ExecutionReport exReport = new QuickFix.FIX44.ExecutionReport(
+            var exReport = new ExecutionReport(
                 new OrderID(Guid.NewGuid().ToString()),
                 new ExecID(Guid.NewGuid().ToString()),
                 new ExecType(ExecType.REPLACED),
@@ -111,7 +111,7 @@ namespace FixSimulatorDesktop.FixApplication.Order
 
         public static ExecutionReport ReplaceRejectionFromCancelReplaceRequest(OrderCancelReplaceRequest orderCancelReplaceRequest)
         {
-            ExecutionReport exReport = new QuickFix.FIX44.ExecutionReport(
+            var exReport = new ExecutionReport(
                 new OrderID(Guid.NewGuid().ToString()),
                 new ExecID(Guid.NewGuid().ToString()),
                 new ExecType(ExecType.REJECTED),
@@ -137,7 +137,7 @@ namespace FixSimulatorDesktop.FixApplication.Order
 
         public static ExecutionReport CanceledFromCancelRequest(OrderCancelRequest orderCancelRequest)
         {
-            ExecutionReport exReport = new QuickFix.FIX44.ExecutionReport(
+            var exReport = new ExecutionReport(
                 new OrderID(Guid.NewGuid().ToString()),
                 new ExecID(Guid.NewGuid().ToString()),
                 new ExecType(ExecType.CANCELLED),
@@ -163,7 +163,7 @@ namespace FixSimulatorDesktop.FixApplication.Order
 
         public static ExecutionReport CancelRejectionFromCancelRequest(OrderCancelRequest orderCancelRequest)
         {
-            ExecutionReport exReport = new QuickFix.FIX44.ExecutionReport(
+            var exReport = new ExecutionReport(
                 new OrderID(Guid.NewGuid().ToString()),
                 new ExecID(Guid.NewGuid().ToString()),
                 new ExecType(ExecType.REJECTED),

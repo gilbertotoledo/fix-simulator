@@ -60,7 +60,7 @@ namespace FixSimulatorDesktop.FixApplication
                 _socketInitiator.Start();
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _initiatorLoggerHandler.Invoke($"ERROR {ex}");
                 return false;

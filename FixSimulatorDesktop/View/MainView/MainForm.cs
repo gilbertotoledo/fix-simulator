@@ -1,14 +1,13 @@
-using FixSimulatorDesktop.Controller;
 using FixSimulatorDesktop.FixApp;
 using FixSimulatorDesktop.FixApplication;
 using FixSimulatorDesktop.FixApplication.Order;
 using FixSimulatorDesktop.Helper;
+using FixSimulatorDesktop.State;
 using FixSimulatorDesktop.View;
 using FixSimulatorDesktop.View.FixMessageView;
 using QuickFix.Fields;
 using QuickFix.FIX44;
-using System.Configuration;
-using System.Xml;
+using System.Windows.Forms;
 
 namespace FixSimulatorDesktop
 {
@@ -24,23 +23,10 @@ namespace FixSimulatorDesktop
         {
             InitializeComponent();
             LoadState();
+            ToggleInitiatorButtons(false);
+            ToggleAcceptorButtons(false);
 
-            var loggerInitiator = (string message) =>
-            {
-                InitiatorAppendLog(message);
-            };
-
-            var loggerAcceptor = (string message) =>
-            {
-                AcceptorAppendLog(message);
-            };
-
-            var onMessageHandler = (QuickFix.Message message) =>
-            {
-                AddMessageToDataGrid(message);
-            };
-
-            _fixManager = new FixApplicationManager(loggerInitiator, loggerAcceptor, onMessageHandler);
+            _fixManager = new FixApplicationManager(InitiatorAppendLog, AcceptorAppendLog, AddMessageToDataGrid);
         }
 
         private void LoadState()
@@ -49,15 +35,31 @@ namespace FixSimulatorDesktop
             InitiatorShowSentChb.Checked = StateManager.IsInitiatorShowMessagesSent;
             AcceptorShowReceivedChb.Checked = StateManager.IsAcceptorShowMessagesReceived;
             AcceptorShowSentChb.Checked = StateManager.IsAcceptorShowMessagesSent;
+            AcceptorIntervalTxt.Text = StateManager.AcceptorIntervalMilis.ToString();
 
-            AcceptorMacrosClb.SetItemCheckState(0, StateManager.AcceptorMacrosEnabled.ExecutionReportNew ? CheckState.Checked : CheckState.Unchecked);
-            AcceptorMacrosClb.SetItemCheckState(1, StateManager.AcceptorMacrosEnabled.ExecutionReportFilled ? CheckState.Checked : CheckState.Unchecked);
-            AcceptorMacrosClb.SetItemCheckState(2, StateManager.AcceptorMacrosEnabled.ExecutionReportPartiallyFilledUnique ? CheckState.Checked : CheckState.Unchecked);
-            AcceptorMacrosClb.SetItemCheckState(3, StateManager.AcceptorMacrosEnabled.ExecutionReportPartiallyFilledScheduled ? CheckState.Checked : CheckState.Unchecked);
-            AcceptorMacrosClb.SetItemCheckState(4, StateManager.AcceptorMacrosEnabled.ExecutionReportReplaced ? CheckState.Checked : CheckState.Unchecked);
-            AcceptorMacrosClb.SetItemCheckState(5, StateManager.AcceptorMacrosEnabled.ExecutionReportReplaceReject ? CheckState.Checked : CheckState.Unchecked);
-            AcceptorMacrosClb.SetItemCheckState(6, StateManager.AcceptorMacrosEnabled.ExecutionReportCanceled ? CheckState.Checked : CheckState.Unchecked);
-            AcceptorMacrosClb.SetItemCheckState(7, StateManager.AcceptorMacrosEnabled.ExecutionReportCancelReject ? CheckState.Checked : CheckState.Unchecked);
+            AcceptorMacrosClb.SetItemCheckState(0, StateManager.AcceptorMacroExecutionReportNew ? CheckState.Checked : CheckState.Unchecked);
+            AcceptorMacrosClb.SetItemCheckState(1, StateManager.AcceptorMacroExecutionReportFilled ? CheckState.Checked : CheckState.Unchecked);
+            AcceptorMacrosClb.SetItemCheckState(2, StateManager.AcceptorMacroExecutionReportPartiallyFilledUnique ? CheckState.Checked : CheckState.Unchecked);
+            AcceptorMacrosClb.SetItemCheckState(3, StateManager.AcceptorMacroExecutionReportPartiallyFilledScheduled ? CheckState.Checked : CheckState.Unchecked);
+            AcceptorMacrosClb.SetItemCheckState(4, StateManager.AcceptorMacroExecutionReportReplaced ? CheckState.Checked : CheckState.Unchecked);
+            AcceptorMacrosClb.SetItemCheckState(5, StateManager.AcceptorMacroExecutionReportReplaceReject ? CheckState.Checked : CheckState.Unchecked);
+            AcceptorMacrosClb.SetItemCheckState(6, StateManager.AcceptorMacroExecutionReportCanceled ? CheckState.Checked : CheckState.Unchecked);
+            AcceptorMacrosClb.SetItemCheckState(7, StateManager.AcceptorMacroExecutionReportCancelReject ? CheckState.Checked : CheckState.Unchecked);
+        }
+
+        private void ToggleInitiatorButtons(bool isRunning)
+        {
+            InitiatorClearStoreBtn.Enabled = !isRunning;
+            InitiatorNewOrderSingleBtn.Enabled = isRunning;
+            InitiatorOrderReplaceBtn.Enabled = isRunning;
+            InitiatorOrderCancelBtn.Enabled = isRunning;
+        }
+
+        private void ToggleAcceptorButtons(bool isRunning)
+        {
+            AcceptorClearStoreBtn.Enabled = !isRunning;
+            ExecutionReportNewBtn.Enabled = isRunning;
+            ExecutionReportFilledBtn.Enabled = isRunning;
         }
 
         private void AcceptorAppendLog(string text)
@@ -139,6 +141,7 @@ namespace FixSimulatorDesktop
                     StateManager.IsInitiatorRunning = false;
                     InitiatorStartStopBtn.Text = "Ativar";
                     InitiatorAppendLog("Parando...");
+                    ToggleInitiatorButtons(false);
                 }
             }
             else
@@ -148,6 +151,7 @@ namespace FixSimulatorDesktop
                 {
                     InitiatorStartStopBtn.Text = "Desativar";
                     InitiatorAppendLog("Iniciando...");
+                    ToggleInitiatorButtons(true);
                 }
             }
         }
@@ -163,6 +167,7 @@ namespace FixSimulatorDesktop
                     StateManager.IsAcceptorRunning = false;
                     AcceptorStartStopBtn.Text = "Ativar";
                     AcceptorAppendLog("Parando...");
+                    ToggleAcceptorButtons(false);
                 }
             }
             else
@@ -172,6 +177,7 @@ namespace FixSimulatorDesktop
                 {
                     AcceptorStartStopBtn.Text = "Desativar";
                     AcceptorAppendLog("Iniciando...");
+                    ToggleAcceptorButtons(true);
                 }
             }
         }
@@ -210,18 +216,27 @@ namespace FixSimulatorDesktop
 
         private void InitiatorNewOrderSingleBtn_Click(object sender, EventArgs e)
         {
-            var order = OrderBuilder.NewOrderSingle();
-            _fixManager.InitiatorFixApp.Send(order);
+            Task.Run(() =>
+            {
+                var order = OrderBuilder.NewOrderSingle();
+                _fixManager.InitiatorFixApp.Send(order);
+            });
         }
 
         private void ExecutionReportBtn_Click(object sender, EventArgs e)
         {
-            _fixManager.AcceptorFixApp.SendErNewToLastMessage();
+            Task.Run(() =>
+            {
+                _fixManager.AcceptorFixApp.SendErNewToLastMessage();
+            });
         }
 
         private void ExecutionReportFilledBtn_Click(object sender, EventArgs e)
         {
-            _fixManager.AcceptorFixApp.SendErFilledToLastMessage();
+            Task.Run(() =>
+            {
+                _fixManager.AcceptorFixApp.SendErFilledToLastMessage();
+            });
         }
 
         private void AcceptorMacrosClb_ItemCheck(object sender, ItemCheckEventArgs e)
@@ -229,21 +244,21 @@ namespace FixSimulatorDesktop
             switch (e.Index)
             {
                 case 0:
-                    StateManager.AcceptorMacrosEnabled.ExecutionReportNew = e.NewValue == CheckState.Checked; break;
+                    StateManager.AcceptorMacroExecutionReportNew = e.NewValue == CheckState.Checked; break;
                 case 1:
-                    StateManager.AcceptorMacrosEnabled.ExecutionReportFilled = e.NewValue == CheckState.Checked; break;
+                    StateManager.AcceptorMacroExecutionReportFilled = e.NewValue == CheckState.Checked; break;
                 case 2:
-                    StateManager.AcceptorMacrosEnabled.ExecutionReportPartiallyFilledUnique = e.NewValue == CheckState.Checked; break;
+                    StateManager.AcceptorMacroExecutionReportPartiallyFilledUnique = e.NewValue == CheckState.Checked; break;
                 case 3:
-                    StateManager.AcceptorMacrosEnabled.ExecutionReportPartiallyFilledScheduled = e.NewValue == CheckState.Checked; break;
+                    StateManager.AcceptorMacroExecutionReportPartiallyFilledScheduled = e.NewValue == CheckState.Checked; break;
                 case 4:
-                    StateManager.AcceptorMacrosEnabled.ExecutionReportReplaced = e.NewValue == CheckState.Checked; break;
+                    StateManager.AcceptorMacroExecutionReportReplaced = e.NewValue == CheckState.Checked; break;
                 case 5:
-                    StateManager.AcceptorMacrosEnabled.ExecutionReportReplaceReject = e.NewValue == CheckState.Checked; break;
+                    StateManager.AcceptorMacroExecutionReportReplaceReject = e.NewValue == CheckState.Checked; break;
                 case 6:
-                    StateManager.AcceptorMacrosEnabled.ExecutionReportCanceled = e.NewValue == CheckState.Checked; break;
+                    StateManager.AcceptorMacroExecutionReportCanceled = e.NewValue == CheckState.Checked; break;
                 case 7:
-                    StateManager.AcceptorMacrosEnabled.ExecutionReportCancelReject = e.NewValue == CheckState.Checked; break;
+                    StateManager.AcceptorMacroExecutionReportCancelReject = e.NewValue == CheckState.Checked; break;
             }
         }
 
@@ -277,12 +292,16 @@ namespace FixSimulatorDesktop
             {
                 var del = new SetOnMessageDelegatorType(
                     (object col0, object col1, object col2, object col3, object col4, object col5, object col6, object col7, object col8, object col9) =>
-                        AddRow(col0, col1, col2, col3, col4, col5, col6, col7, col8, col9));
+                    {
+                        AddRow(col0, col1, col2, col3, col4, col5, col6, col7, col8, col9);
+                        MessagesDg.FirstDisplayedScrollingRowIndex = MessagesDg.RowCount - 1;
+                    });
                 MessagesDg?.Invoke(del, row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9]);
             }
             else
             {
                 AddRow(row);
+                MessagesDg.FirstDisplayedScrollingRowIndex = MessagesDg.RowCount - 1;
             }
         }
 
@@ -346,6 +365,18 @@ namespace FixSimulatorDesktop
         private void AcceptorShowSentChb_CheckedChanged(object sender, EventArgs e)
         {
             StateManager.IsAcceptorShowMessagesSent = AcceptorShowSentChb.Checked;
+        }
+
+        private void AcceptorIntervalTxt_TextChanged(object sender, EventArgs e)
+        {
+            if (int.TryParse(AcceptorIntervalTxt.Text, out var interval))
+            {
+                StateManager.AcceptorIntervalMilis = interval;
+            }
+            else
+            {
+                AcceptorIntervalTxt.Text = StateManager.AcceptorIntervalMilis.ToString();
+            }
         }
     }
 }

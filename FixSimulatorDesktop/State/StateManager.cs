@@ -1,32 +1,88 @@
-﻿using System.Configuration;
+﻿using FixSimulatorDesktop.Helper;
 
-namespace FixSimulatorDesktop.Controller
+namespace FixSimulatorDesktop.State
 {
     public static class StateManager
     {
-        public static AcceptorMacros AcceptorMacrosEnabled { get; set; } = new AcceptorMacros();
-
         public static bool IsAcceptorRunning { get; set; } = false;
         public static bool IsInitiatorRunning { get; set; } = false;
 
-        public static bool IsInitiatorShowMessagesReceived { get; set; } = ConfigurationManager.AppSettings["InitiatorShowMessagesReceived"] == "true";
-        public static bool IsInitiatorShowMessagesSent { get; set; } = ConfigurationManager.AppSettings["InitiatorShowMessagesSent"] == "true";
-        public static bool IsAcceptorShowMessagesReceived { get; set; } = ConfigurationManager.AppSettings["AcceptorShowMessagesReceived"] == "true";
-        public static bool IsAcceptorShowMessagesSent { get; set; } = ConfigurationManager.AppSettings["AcceptorShowMessagesSent"] == "true";
-    }
+        public static bool IsInitiatorShowMessagesReceived
+        {
+            get { return ConfigHelper.GetBool("InitiatorShowMessagesReceived"); }
+            set { ConfigHelper.Persist("InitiatorShowMessagesReceived", value); }
+        }
 
-    public class AcceptorMacros
-    {
-        public bool ExecutionReportNew { get; set; } = ConfigurationManager.AppSettings["AcceptorMacroExecutionReportNew"] == "true";
-        public bool ExecutionReportFilled { get; set; } = ConfigurationManager.AppSettings["AcceptorMacroExecutionReportFilled"] == "true";
-        public bool ExecutionReportPartiallyFilledUnique { get; set; } = ConfigurationManager.AppSettings["AcceptorMacroExecutionReportPartiallyFilledUnique"] == "true";
-        public bool ExecutionReportPartiallyFilledScheduled { get; set; } = ConfigurationManager.AppSettings["AcceptorMacroExecutionReportPartiallyFilledScheduled"] == "true";
-        public int ExecutionReportPartiallyFilledScheduledIntervalMilis { get; set; } = int.Parse(ConfigurationManager.AppSettings["AcceptorMacroExecutionReportPartiallyFilledScheduledIntervalMilis"]);
+        public static bool IsInitiatorShowMessagesSent
+        {
+            get { return ConfigHelper.GetBool("InitiatorShowMessagesSent"); }
+            set { ConfigHelper.Persist("InitiatorShowMessagesSent", value); }
+        }
 
-        public bool ExecutionReportReplaced { get; set; } = ConfigurationManager.AppSettings["AcceptorMacroExecutionReportReplaced"] == "true";
-        public bool ExecutionReportReplaceReject { get; set; } = ConfigurationManager.AppSettings["AcceptorMacroExecutionReportReplaceReject"] == "true";
+        public static bool IsAcceptorShowMessagesReceived
+        {
+            get { return ConfigHelper.GetBool("AcceptorShowMessagesReceived"); }
+            set { ConfigHelper.Persist("AcceptorShowMessagesReceived", value); }
+        }
 
-        public bool ExecutionReportCanceled { get; set; } = ConfigurationManager.AppSettings["AcceptorMacroExecutionReportCanceled"] == "true";
-        public bool ExecutionReportCancelReject { get; set; } = ConfigurationManager.AppSettings["AcceptorMacroExecutionReportCancelReject"] == "true";
+        public static bool IsAcceptorShowMessagesSent
+        {
+            get { return ConfigHelper.GetBool("AcceptorShowMessagesSent"); }
+            set { ConfigHelper.Persist("AcceptorShowMessagesSent", value); }
+        }
+
+        public static int AcceptorIntervalMilis
+        {
+            get { return ConfigHelper.GetInt("AcceptorIntervalMilis"); }
+            set { ConfigHelper.Persist("AcceptorIntervalMilis", value); }
+        }
+
+        public static bool AcceptorMacroExecutionReportNew
+        {
+            get { return ConfigHelper.GetBool("AcceptorMacroExecutionReportNew"); }
+            set { ConfigHelper.Persist("AcceptorMacroExecutionReportNew", value); }
+        }
+
+        public static bool AcceptorMacroExecutionReportFilled
+        {
+            get { return ConfigHelper.GetBool("AcceptorMacroExecutionReportFilled"); }
+            set { ConfigHelper.Persist("AcceptorMacroExecutionReportFilled", value); }
+        }
+
+        public static bool AcceptorMacroExecutionReportPartiallyFilledUnique
+        {
+            get { return ConfigHelper.GetBool("AcceptorMacroExecutionReportPartiallyFilledUnique"); }
+            set { ConfigHelper.Persist("AcceptorMacroExecutionReportPartiallyFilledUnique", value); }
+        }
+
+        public static bool AcceptorMacroExecutionReportPartiallyFilledScheduled
+        {
+            get { return ConfigHelper.GetBool("AcceptorMacroExecutionReportPartiallyFilledScheduled"); }
+            set { ConfigHelper.Persist("AcceptorMacroExecutionReportPartiallyFilledScheduled", value); }
+        }
+
+        public static bool AcceptorMacroExecutionReportReplaced
+        {
+            get { return ConfigHelper.GetBool("AcceptorMacroExecutionReportReplaced"); }
+            set { ConfigHelper.Persist("AcceptorMacroExecutionReportReplaced", value); }
+        }
+
+        public static bool AcceptorMacroExecutionReportReplaceReject
+        {
+            get { return ConfigHelper.GetBool("AcceptorMacroExecutionReportReplaceReject"); }
+            set { ConfigHelper.Persist("AcceptorMacroExecutionReportReplaceReject", value); }
+        }
+
+        public static bool AcceptorMacroExecutionReportCanceled
+        {
+            get { return ConfigHelper.GetBool("AcceptorMacroExecutionReportCanceled"); }
+            set { ConfigHelper.Persist("AcceptorMacroExecutionReportCanceled", value); }
+        }
+
+        public static bool AcceptorMacroExecutionReportCancelReject
+        {
+            get { return ConfigHelper.GetBool("AcceptorMacroExecutionReportCancelReject"); }
+            set { ConfigHelper.Persist("AcceptorMacroExecutionReportCancelReject", value); }
+        }
     }
 }
