@@ -41,11 +41,9 @@
             InitiatorNextSenderMsgSeqNumText = new Label();
             label2 = new Label();
             label1 = new Label();
-            InitiatorClearStoreBtn = new Button();
             InitiatorLogGroup = new GroupBox();
             InitiatorLogTxt = new TextBox();
             InitiatorStartStopBtn = new Button();
-            InitiatorFixConfigBtn = new Button();
             GroupBox2 = new GroupBox();
             groupBox8 = new GroupBox();
             AcceptorShowSentChb = new CheckBox();
@@ -57,7 +55,6 @@
             label4 = new Label();
             label5 = new Label();
             label6 = new Label();
-            AcceptorClearStoreBtn = new Button();
             AcceptorStartStopBtn = new Button();
             AcceptorLogGroup = new GroupBox();
             AcceptorLogTxt = new TextBox();
@@ -65,18 +62,24 @@
             AcceptorIntervalTxt = new TextBox();
             label7 = new Label();
             AcceptorMacrosClb = new CheckedListBox();
-            AcceptorFixConfigBtn = new Button();
             GroupBox3 = new GroupBox();
             MessagesDg = new DataGridView();
+            menuStrip1 = new MenuStrip();
+            acceptorToolStripMenuItem = new ToolStripMenuItem();
+            InitiatorCleanStoreToolStripMenuItem = new ToolStripMenuItem();
+            InitiatorFixConfigToolStripMenuItem = new ToolStripMenuItem();
+            acceptorToolStripMenuItem1 = new ToolStripMenuItem();
+            AcceptorClearStoreToolStripMenuItem1 = new ToolStripMenuItem();
+            AcceptorFixConfigToolStripMenuItem1 = new ToolStripMenuItem();
             Direction = new DataGridViewTextBoxColumn();
             MsgType = new DataGridViewTextBoxColumn();
+            Symbol = new DataGridViewTextBoxColumn();
             ExecType = new DataGridViewTextBoxColumn();
             Status = new DataGridViewTextBoxColumn();
             OrdQty = new DataGridViewTextBoxColumn();
             CumQty = new DataGridViewTextBoxColumn();
             ClOrderId = new DataGridViewTextBoxColumn();
             OrigClOrderId = new DataGridViewTextBoxColumn();
-            Symbol = new DataGridViewTextBoxColumn();
             FixMsg = new DataGridViewTextBoxColumn();
             GroupBox1.SuspendLayout();
             groupBox7.SuspendLayout();
@@ -89,6 +92,7 @@
             AcceptorMacros.SuspendLayout();
             GroupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)MessagesDg).BeginInit();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // GroupBox1
@@ -96,13 +100,11 @@
             GroupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             GroupBox1.Controls.Add(groupBox7);
             GroupBox1.Controls.Add(groupBox4);
-            GroupBox1.Controls.Add(InitiatorClearStoreBtn);
             GroupBox1.Controls.Add(InitiatorLogGroup);
             GroupBox1.Controls.Add(InitiatorStartStopBtn);
-            GroupBox1.Controls.Add(InitiatorFixConfigBtn);
-            GroupBox1.Location = new Point(12, 12);
+            GroupBox1.Location = new Point(12, 34);
             GroupBox1.Name = "GroupBox1";
-            GroupBox1.Size = new Size(881, 434);
+            GroupBox1.Size = new Size(881, 488);
             GroupBox1.TabIndex = 0;
             GroupBox1.TabStop = false;
             GroupBox1.Text = "Initiator";
@@ -193,7 +195,7 @@
             groupBox4.Controls.Add(InitiatorNextSenderMsgSeqNumText);
             groupBox4.Controls.Add(label2);
             groupBox4.Controls.Add(label1);
-            groupBox4.Location = new Point(12, 363);
+            groupBox4.Location = new Point(12, 417);
             groupBox4.Name = "groupBox4";
             groupBox4.Size = new Size(400, 62);
             groupBox4.TabIndex = 9;
@@ -236,23 +238,13 @@
             label1.TabIndex = 0;
             label1.Text = "NextSenderMsgSeqNum:";
             // 
-            // InitiatorClearStoreBtn
-            // 
-            InitiatorClearStoreBtn.Location = new Point(93, 22);
-            InitiatorClearStoreBtn.Name = "InitiatorClearStoreBtn";
-            InitiatorClearStoreBtn.Size = new Size(93, 23);
-            InitiatorClearStoreBtn.TabIndex = 8;
-            InitiatorClearStoreBtn.Text = "Limpar Store";
-            InitiatorClearStoreBtn.UseVisualStyleBackColor = true;
-            InitiatorClearStoreBtn.Click += InitiatorClearStoreBtn_Click;
-            // 
             // InitiatorLogGroup
             // 
             InitiatorLogGroup.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             InitiatorLogGroup.Controls.Add(InitiatorLogTxt);
             InitiatorLogGroup.Location = new Point(418, 51);
             InitiatorLogGroup.Name = "InitiatorLogGroup";
-            InitiatorLogGroup.Size = new Size(457, 374);
+            InitiatorLogGroup.Size = new Size(457, 428);
             InitiatorLogGroup.TabIndex = 6;
             InitiatorLogGroup.TabStop = false;
             InitiatorLogGroup.Text = "Log";
@@ -265,7 +257,7 @@
             InitiatorLogTxt.Name = "InitiatorLogTxt";
             InitiatorLogTxt.ReadOnly = true;
             InitiatorLogTxt.ScrollBars = ScrollBars.Vertical;
-            InitiatorLogTxt.Size = new Size(445, 346);
+            InitiatorLogTxt.Size = new Size(445, 400);
             InitiatorLogTxt.TabIndex = 0;
             InitiatorLogTxt.DoubleClick += InitiatorLogTxt_DoubleClick;
             // 
@@ -279,29 +271,17 @@
             InitiatorStartStopBtn.UseVisualStyleBackColor = true;
             InitiatorStartStopBtn.Click += InitiatorStartStopBtn_Click;
             // 
-            // InitiatorFixConfigBtn
-            // 
-            InitiatorFixConfigBtn.Location = new Point(192, 22);
-            InitiatorFixConfigBtn.Name = "InitiatorFixConfigBtn";
-            InitiatorFixConfigBtn.Size = new Size(118, 23);
-            InitiatorFixConfigBtn.TabIndex = 0;
-            InitiatorFixConfigBtn.Text = "Configurações Fix";
-            InitiatorFixConfigBtn.UseVisualStyleBackColor = true;
-            InitiatorFixConfigBtn.Click += InitiatorFixConfigBtn_Click;
-            // 
             // GroupBox2
             // 
             GroupBox2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             GroupBox2.Controls.Add(groupBox8);
             GroupBox2.Controls.Add(groupBox6);
-            GroupBox2.Controls.Add(AcceptorClearStoreBtn);
             GroupBox2.Controls.Add(AcceptorStartStopBtn);
             GroupBox2.Controls.Add(AcceptorLogGroup);
             GroupBox2.Controls.Add(AcceptorMacros);
-            GroupBox2.Controls.Add(AcceptorFixConfigBtn);
-            GroupBox2.Location = new Point(899, 12);
+            GroupBox2.Location = new Point(899, 34);
             GroupBox2.Name = "GroupBox2";
-            GroupBox2.Size = new Size(860, 434);
+            GroupBox2.Size = new Size(860, 488);
             GroupBox2.TabIndex = 1;
             GroupBox2.TabStop = false;
             GroupBox2.Text = "Acceptor";
@@ -371,7 +351,7 @@
             groupBox6.Controls.Add(label4);
             groupBox6.Controls.Add(label5);
             groupBox6.Controls.Add(label6);
-            groupBox6.Location = new Point(454, 363);
+            groupBox6.Location = new Point(454, 417);
             groupBox6.Name = "groupBox6";
             groupBox6.Size = new Size(400, 62);
             groupBox6.TabIndex = 12;
@@ -414,16 +394,6 @@
             label6.TabIndex = 0;
             label6.Text = "NextSenderMsgSeqNum:";
             // 
-            // AcceptorClearStoreBtn
-            // 
-            AcceptorClearStoreBtn.Location = new Point(87, 22);
-            AcceptorClearStoreBtn.Name = "AcceptorClearStoreBtn";
-            AcceptorClearStoreBtn.Size = new Size(93, 23);
-            AcceptorClearStoreBtn.TabIndex = 9;
-            AcceptorClearStoreBtn.Text = "Limpar Store";
-            AcceptorClearStoreBtn.UseVisualStyleBackColor = true;
-            AcceptorClearStoreBtn.Click += AcceptorClearStoreBtn_Click;
-            // 
             // AcceptorStartStopBtn
             // 
             AcceptorStartStopBtn.Location = new Point(6, 22);
@@ -440,7 +410,7 @@
             AcceptorLogGroup.Controls.Add(AcceptorLogTxt);
             AcceptorLogGroup.Location = new Point(6, 54);
             AcceptorLogGroup.Name = "AcceptorLogGroup";
-            AcceptorLogGroup.Size = new Size(442, 371);
+            AcceptorLogGroup.Size = new Size(442, 425);
             AcceptorLogGroup.TabIndex = 7;
             AcceptorLogGroup.TabStop = false;
             AcceptorLogGroup.Text = "Log";
@@ -453,7 +423,7 @@
             AcceptorLogTxt.Name = "AcceptorLogTxt";
             AcceptorLogTxt.ReadOnly = true;
             AcceptorLogTxt.ScrollBars = ScrollBars.Vertical;
-            AcceptorLogTxt.Size = new Size(430, 343);
+            AcceptorLogTxt.Size = new Size(430, 397);
             AcceptorLogTxt.TabIndex = 1;
             AcceptorLogTxt.DoubleClick += AcceptorLogTxt_DoubleClick;
             // 
@@ -501,24 +471,14 @@
             AcceptorMacrosClb.TabIndex = 2;
             AcceptorMacrosClb.ItemCheck += AcceptorMacrosClb_ItemCheck;
             // 
-            // AcceptorFixConfigBtn
-            // 
-            AcceptorFixConfigBtn.Location = new Point(186, 22);
-            AcceptorFixConfigBtn.Name = "AcceptorFixConfigBtn";
-            AcceptorFixConfigBtn.Size = new Size(119, 23);
-            AcceptorFixConfigBtn.TabIndex = 1;
-            AcceptorFixConfigBtn.Text = "Configurações Fix";
-            AcceptorFixConfigBtn.UseVisualStyleBackColor = true;
-            AcceptorFixConfigBtn.Click += AcceptorFixConfigBtn_Click;
-            // 
             // GroupBox3
             // 
             GroupBox3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             GroupBox3.AutoSize = true;
             GroupBox3.Controls.Add(MessagesDg);
-            GroupBox3.Location = new Point(12, 452);
+            GroupBox3.Location = new Point(12, 528);
             GroupBox3.Name = "GroupBox3";
-            GroupBox3.Size = new Size(1747, 305);
+            GroupBox3.Size = new Size(1747, 283);
             GroupBox3.TabIndex = 1;
             GroupBox3.TabStop = false;
             GroupBox3.Text = "Mensagens";
@@ -530,15 +490,66 @@
             MessagesDg.AllowUserToOrderColumns = true;
             MessagesDg.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             MessagesDg.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            MessagesDg.Columns.AddRange(new DataGridViewColumn[] { Direction, MsgType, ExecType, Status, OrdQty, CumQty, ClOrderId, OrigClOrderId, Symbol, FixMsg });
+            MessagesDg.Columns.AddRange(new DataGridViewColumn[] { Direction, MsgType, Symbol, ExecType, Status, OrdQty, CumQty, ClOrderId, OrigClOrderId, FixMsg });
             MessagesDg.Location = new Point(6, 22);
             MessagesDg.Name = "MessagesDg";
             MessagesDg.ReadOnly = true;
             MessagesDg.RowTemplate.Height = 25;
             MessagesDg.ShowEditingIcon = false;
-            MessagesDg.Size = new Size(1735, 276);
+            MessagesDg.Size = new Size(1735, 254);
             MessagesDg.TabIndex = 2;
             MessagesDg.CellDoubleClick += MessagesDg_CellDoubleClick;
+            // 
+            // menuStrip1
+            // 
+            menuStrip1.Items.AddRange(new ToolStripItem[] { acceptorToolStripMenuItem, acceptorToolStripMenuItem1 });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(1771, 24);
+            menuStrip1.TabIndex = 2;
+            menuStrip1.Text = "menuStrip1";
+            // 
+            // acceptorToolStripMenuItem
+            // 
+            acceptorToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { InitiatorCleanStoreToolStripMenuItem, InitiatorFixConfigToolStripMenuItem });
+            acceptorToolStripMenuItem.Name = "acceptorToolStripMenuItem";
+            acceptorToolStripMenuItem.Size = new Size(60, 20);
+            acceptorToolStripMenuItem.Text = "Initiator";
+            // 
+            // InitiatorCleanStoreToolStripMenuItem
+            // 
+            InitiatorCleanStoreToolStripMenuItem.Name = "InitiatorCleanStoreToolStripMenuItem";
+            InitiatorCleanStoreToolStripMenuItem.Size = new Size(169, 22);
+            InitiatorCleanStoreToolStripMenuItem.Text = "Limpar Store";
+            InitiatorCleanStoreToolStripMenuItem.Click += InitiatorCleanStoreToolStripMenuItem_Click;
+            // 
+            // InitiatorFixConfigToolStripMenuItem
+            // 
+            InitiatorFixConfigToolStripMenuItem.Name = "InitiatorFixConfigToolStripMenuItem";
+            InitiatorFixConfigToolStripMenuItem.Size = new Size(169, 22);
+            InitiatorFixConfigToolStripMenuItem.Text = "Configurações Fix";
+            InitiatorFixConfigToolStripMenuItem.Click += InitiatorFixConfigToolStripMenuItem_Click;
+            // 
+            // acceptorToolStripMenuItem1
+            // 
+            acceptorToolStripMenuItem1.DropDownItems.AddRange(new ToolStripItem[] { AcceptorClearStoreToolStripMenuItem1, AcceptorFixConfigToolStripMenuItem1 });
+            acceptorToolStripMenuItem1.Name = "acceptorToolStripMenuItem1";
+            acceptorToolStripMenuItem1.Size = new Size(67, 20);
+            acceptorToolStripMenuItem1.Text = "Acceptor";
+            // 
+            // AcceptorClearStoreToolStripMenuItem1
+            // 
+            AcceptorClearStoreToolStripMenuItem1.Name = "AcceptorClearStoreToolStripMenuItem1";
+            AcceptorClearStoreToolStripMenuItem1.Size = new Size(169, 22);
+            AcceptorClearStoreToolStripMenuItem1.Text = "Limpar store";
+            AcceptorClearStoreToolStripMenuItem1.Click += AcceptorClearStoreToolStripMenuItem1_Click;
+            // 
+            // AcceptorFixConfigToolStripMenuItem1
+            // 
+            AcceptorFixConfigToolStripMenuItem1.Name = "AcceptorFixConfigToolStripMenuItem1";
+            AcceptorFixConfigToolStripMenuItem1.Size = new Size(169, 22);
+            AcceptorFixConfigToolStripMenuItem1.Text = "Configurações Fix";
+            AcceptorFixConfigToolStripMenuItem1.Click += AcceptorFixConfigToolStripMenuItem1_Click;
             // 
             // Direction
             // 
@@ -553,6 +564,14 @@
             MsgType.Name = "MsgType";
             MsgType.ReadOnly = true;
             MsgType.Width = 79;
+            // 
+            // Symbol
+            // 
+            Symbol.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            Symbol.HeaderText = "Symbol";
+            Symbol.Name = "Symbol";
+            Symbol.ReadOnly = true;
+            Symbol.Width = 72;
             // 
             // ExecType
             // 
@@ -602,14 +621,6 @@
             OrigClOrderId.ReadOnly = true;
             OrigClOrderId.Width = 106;
             // 
-            // Symbol
-            // 
-            Symbol.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            Symbol.HeaderText = "Symbol";
-            Symbol.Name = "Symbol";
-            Symbol.ReadOnly = true;
-            Symbol.Width = 72;
-            // 
             // FixMsg
             // 
             FixMsg.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -622,11 +633,13 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1771, 762);
+            ClientSize = new Size(1771, 816);
             Controls.Add(GroupBox3);
             Controls.Add(GroupBox2);
             Controls.Add(GroupBox1);
+            Controls.Add(menuStrip1);
             ImeMode = ImeMode.Disable;
+            MainMenuStrip = menuStrip1;
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FixSimulatorDesktop";
@@ -649,6 +662,8 @@
             AcceptorMacros.PerformLayout();
             GroupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)MessagesDg).EndInit();
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -658,8 +673,6 @@
         private GroupBox GroupBox1;
         private GroupBox GroupBox2;
         private GroupBox GroupBox3;
-        private Button InitiatorFixConfigBtn;
-        private Button AcceptorFixConfigBtn;
         private CheckedListBox AcceptorMacrosClb;
         private GroupBox AcceptorMacros;
         private Button InitiatorOrderCancelBtn;
@@ -671,8 +684,6 @@
         private Button AcceptorStartStopBtn;
         private TextBox InitiatorLogTxt;
         private TextBox AcceptorLogTxt;
-        private Button InitiatorClearStoreBtn;
-        private Button AcceptorClearStoreBtn;
         private Button InitiatorFixFieldsConfigBtn;
         private DataGridView MessagesDg;
         private Button ExecutionReportNewBtn;
@@ -687,16 +698,6 @@
         private Label label4;
         private Label label5;
         private Label label6;
-        private DataGridViewTextBoxColumn Direction;
-        private DataGridViewTextBoxColumn MsgType;
-        private DataGridViewTextBoxColumn ExecType;
-        private DataGridViewTextBoxColumn Status;
-        private DataGridViewTextBoxColumn OrdQty;
-        private DataGridViewTextBoxColumn CumQty;
-        private DataGridViewTextBoxColumn ClOrderId;
-        private DataGridViewTextBoxColumn OrigClOrderId;
-        private DataGridViewTextBoxColumn Symbol;
-        private DataGridViewTextBoxColumn FixMsg;
         private GroupBox groupBox7;
         private CheckBox InitiatorShowSentChb;
         private CheckBox InitiatorShowReceivedChb;
@@ -705,5 +706,22 @@
         private CheckBox AcceptorShowReceivedChb;
         private TextBox AcceptorIntervalTxt;
         private Label label7;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem acceptorToolStripMenuItem;
+        private ToolStripMenuItem InitiatorCleanStoreToolStripMenuItem;
+        private ToolStripMenuItem InitiatorFixConfigToolStripMenuItem;
+        private ToolStripMenuItem acceptorToolStripMenuItem1;
+        private ToolStripMenuItem AcceptorClearStoreToolStripMenuItem1;
+        private ToolStripMenuItem AcceptorFixConfigToolStripMenuItem1;
+        private DataGridViewTextBoxColumn Direction;
+        private DataGridViewTextBoxColumn MsgType;
+        private DataGridViewTextBoxColumn Symbol;
+        private DataGridViewTextBoxColumn ExecType;
+        private DataGridViewTextBoxColumn Status;
+        private DataGridViewTextBoxColumn OrdQty;
+        private DataGridViewTextBoxColumn CumQty;
+        private DataGridViewTextBoxColumn ClOrderId;
+        private DataGridViewTextBoxColumn OrigClOrderId;
+        private DataGridViewTextBoxColumn FixMsg;
     }
 }

@@ -6,30 +6,40 @@ namespace FixSimulatorDesktop.FixApplication.Order
 {
     public static class OrderBuilder
     {
-
-        public static NewOrderSingle NewOrderSingle()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="account"></param>
+        /// <param name="symbol"></param>
+        /// <param name="side">BUY => 1 / SELL => 2</param>
+        /// <param name="strategy">POSITION / DAYTRADE</param>
+        /// <param name="price"></param>
+        /// <param name="quantity"></param>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static NewOrderSingle NewOrderSingle(string account, string symbol, char side, string strategy, decimal price, decimal quantity, string text = "FIX_SIMULATOR")
         {
             var order = new QuickFix.FIX44.NewOrderSingle(
                 new ClOrdID(Guid.NewGuid().ToString()),
-                new Symbol("PETR4"),
-                new Side(Side.BUY),
+                new Symbol(symbol),
+                new Side(side),
                 new TransactTime(DateTime.Now),
                 new OrdType(OrdType.MARKET))
             {
-                Account = new Account("840862"),
-                OrderQty = new OrderQty(100),
-                Price = new Price(5),
+                Account = new Account(account),
+                OrderQty = new OrderQty(quantity),
+                Price = new Price(price),
                 NoPartyIDs = new NoPartyIDs(1),
                 TimeInForce = new TimeInForce(TimeInForce.DAY),
                 ExpireDate = new ExpireDate(DateTime.Now.ToString("yyyyMMdd")),
                 TradeDate = new TradeDate(DateTime.Now.ToString("yyyyMMdd")),
-                Text = new Text("DEV_TEST"),
+                Text = new Text(text),
             };
-            order.SetField(new StringField(10122, "POSITION"));
+            order.SetField(new StringField(10122, strategy));
             order.AddGroup(new QuickFix.FIX44.ExecutionReport.NoPartyIDsGroup()
             {
                 PartyRole = new PartyRole(36),
-                PartyID = new PartyID("840862"),
+                PartyID = new PartyID(account),
                 PartyIDSource = new PartyIDSource('D')
             });
             order.AddGroup(new QuickFix.FIX44.ExecutionReport.NoPartyIDsGroup()
@@ -50,31 +60,31 @@ namespace FixSimulatorDesktop.FixApplication.Order
             return order;
         }
 
-        public static OrderCancelReplaceRequest OrderCancelReplaceRequest(Message message, int newQty, decimal newPrice)
+        public static OrderCancelReplaceRequest OrderCancelReplaceRequest(Message message, int newQty, decimal newPrice, string text = "FIX_SIMULATOR_REPLACE")
         {
             var order = new QuickFix.FIX44.OrderCancelReplaceRequest(
                 new OrigClOrdID(message.GetString(new ClOrdID().Tag)),
                 new ClOrdID(Guid.NewGuid().ToString()),
-                new Symbol("PETR4"),
-                new Side(Side.BUY),
+                new Symbol(message.GetString(new Symbol().Tag)),
+                new Side(message.GetChar(new Side().Tag)),
                 new TransactTime(DateTime.Now),
                 new OrdType(OrdType.MARKET))
             {
-                Account = new Account("840862"),
+                Account = new Account(message.GetString(new Account().Tag)),
                 OrderQty = new OrderQty(newQty),
-                OrdType = new OrdType('1'), //market
+                OrdType = new OrdType(OrdType.MARKET), //market
                 Price = new Price(newPrice),
                 NoPartyIDs = new NoPartyIDs(3),
                 TimeInForce = new TimeInForce(TimeInForce.DAY),
                 ExpireDate = new ExpireDate(DateTime.Now.ToString("yyyyMMdd")),
                 TradeDate = new TradeDate(DateTime.Now.ToString("yyyyMMdd")),
-                Text = new Text("REPLACE_DEV_TEST"),
+                Text = new Text(text),
             };
-            order.SetField(new StringField(10122, "POSITION"));
+            order.SetField(new StringField(10122, message.GetString(10122)));
             order.AddGroup(new QuickFix.FIX44.ExecutionReport.NoPartyIDsGroup()
             {
                 PartyRole = new PartyRole(36),
-                PartyID = new PartyID("840862"),
+                PartyID = new PartyID(message.GetString(new Account().Tag)),
                 PartyIDSource = new PartyIDSource('D')
             });
             order.AddGroup(new QuickFix.FIX44.ExecutionReport.NoPartyIDsGroup()
@@ -96,24 +106,24 @@ namespace FixSimulatorDesktop.FixApplication.Order
         }
 
 
-        public static OrderCancelRequest OrderCancelRequest(Message message)
+        public static OrderCancelRequest OrderCancelRequest(Message message, string text = "FIX_SIMULATOR_CANCEL")
         {
             var order = new QuickFix.FIX44.OrderCancelRequest(
                 new OrigClOrdID(message.GetString(new ClOrdID().Tag)),
                 new ClOrdID(Guid.NewGuid().ToString()),
-                new Symbol("PETR4"),
-                new Side(Side.BUY),
+                new Symbol(message.GetString(new Symbol().Tag)),
+                new Side(message.GetChar(new Side().Tag)),
                 new TransactTime(DateTime.Now))
             {
-                Account = new Account("840862"),
+                Account = new Account(message.GetString(new Account().Tag)),
                 NoPartyIDs = new NoPartyIDs(3),
-                Text = new Text("CANCEL_DEV_TEST"),
+                Text = new Text(text),
             };
-            order.SetField(new StringField(10122, "POSITION"));
+            order.SetField(new StringField(10122, message.GetString(10122)));
             order.AddGroup(new QuickFix.FIX44.ExecutionReport.NoPartyIDsGroup()
             {
                 PartyRole = new PartyRole(36),
-                PartyID = new PartyID("840862"),
+                PartyID = new PartyID(message.GetString(new Account().Tag)),
                 PartyIDSource = new PartyIDSource('D')
             });
             order.AddGroup(new QuickFix.FIX44.ExecutionReport.NoPartyIDsGroup()

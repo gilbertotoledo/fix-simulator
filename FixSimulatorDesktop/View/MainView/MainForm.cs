@@ -49,7 +49,7 @@ namespace FixSimulatorDesktop
 
         private void ToggleInitiatorButtons(bool isRunning)
         {
-            InitiatorClearStoreBtn.Enabled = !isRunning;
+            InitiatorCleanStoreToolStripMenuItem.Enabled = !isRunning;
             InitiatorNewOrderSingleBtn.Enabled = isRunning;
             InitiatorOrderReplaceBtn.Enabled = isRunning;
             InitiatorOrderCancelBtn.Enabled = isRunning;
@@ -57,7 +57,7 @@ namespace FixSimulatorDesktop
 
         private void ToggleAcceptorButtons(bool isRunning)
         {
-            AcceptorClearStoreBtn.Enabled = !isRunning;
+            AcceptorClearStoreToolStripMenuItem1.Enabled = !isRunning;
             ExecutionReportNewBtn.Enabled = isRunning;
             ExecutionReportFilledBtn.Enabled = isRunning;
         }
@@ -118,18 +118,6 @@ namespace FixSimulatorDesktop
             MessagesDg?.Rows?.Add(values);
         }
 
-        private void InitiatorFixConfigBtn_Click(object sender, EventArgs e)
-        {
-            var initiatorConfigForm = new FixConfigForm("Initiator");
-            initiatorConfigForm.ShowDialog();
-        }
-
-        private void AcceptorFixConfigBtn_Click(object sender, EventArgs e)
-        {
-            var acceptorConfigForm = new FixConfigForm("Acceptor");
-            acceptorConfigForm.ShowDialog();
-        }
-
         private void InitiatorStartStopBtn_Click(object sender, EventArgs e)
         {
             if (StateManager.IsInitiatorRunning)
@@ -182,26 +170,6 @@ namespace FixSimulatorDesktop
             }
         }
 
-        private void InitiatorClearStoreBtn_Click(object sender, EventArgs e)
-        {
-            var confirmDialog = MessageBox.Show("Confirma a exclusão de todos os arquivos da Store do Initiator?", "Confirmação", MessageBoxButtons.YesNo);
-            if (confirmDialog == DialogResult.Yes)
-            {
-                FileHelper.DeleteFiles("InitiatorStore\\");
-                InitiatorAppendLog("Arquivos da Store removidos!");
-            }
-        }
-
-        private void AcceptorClearStoreBtn_Click(object sender, EventArgs e)
-        {
-            var confirmDialog = MessageBox.Show("Confirma a exclusão de todos os arquivos da Store do Acceptor?", "Confirmação", MessageBoxButtons.YesNo);
-            if (confirmDialog == DialogResult.Yes)
-            {
-                FileHelper.DeleteFiles("AcceptorStore\\");
-                AcceptorAppendLog("Arquivos da Store removidos!");
-            }
-        }
-
         private void InitiatorFixFieldsConfigBtn_Click(object sender, EventArgs e)
         {
             var fixFieldsConfigForm = new FixFieldsConfigForm();
@@ -218,7 +186,7 @@ namespace FixSimulatorDesktop
         {
             Task.Run(() =>
             {
-                var order = OrderBuilder.NewOrderSingle();
+                var order = OrderBuilder.NewOrderSingle(StateManager.Account, StateManager.Symbol, StateManager.Side, StateManager.Strategy, StateManager.Price, StateManager.Quantity);
                 _fixManager.InitiatorFixApp.Send(order);
             });
         }
@@ -265,27 +233,27 @@ namespace FixSimulatorDesktop
 
         private void AddMessageToDataGrid(QuickFix.Message message)
         {
-            var senderCompId = message.Header.IsSetField(new QuickFix.Fields.SenderCompID().Tag) ? message.Header.GetString(new QuickFix.Fields.SenderCompID().Tag) : "";
+            var senderCompId = message.Header.IsSetField(new SenderCompID().Tag) ? message.Header.GetString(new SenderCompID().Tag) : "";
             var direction = senderCompId.Contains("EXECUTOR") ? "<==" : "==>";
-            var msgType = message.Header.IsSetField(new QuickFix.Fields.MsgType().Tag) ? message.Header.GetString(new QuickFix.Fields.MsgType().Tag) : "";
+            var msgType = message.Header.IsSetField(new MsgType().Tag) ? message.Header.GetString(new MsgType().Tag) : "";
             msgType = FixDictionary.GetMsgTypeText(msgType);
 
-            var statusChar = message.IsSetField(new QuickFix.Fields.OrdStatus().Tag) ? message.GetChar(new QuickFix.Fields.OrdStatus().Tag) : '\0';
+            var statusChar = message.IsSetField(new OrdStatus().Tag) ? message.GetChar(new OrdStatus().Tag) : '\0';
             var statusString = FixDictionary.GetOrdStatus(statusChar);
 
-            var execTypeChar = message.IsSetField(new QuickFix.Fields.ExecType().Tag) ? message.GetChar(new QuickFix.Fields.ExecType().Tag) : '\0';
+            var execTypeChar = message.IsSetField(new ExecType().Tag) ? message.GetChar(new ExecType().Tag) : '\0';
             var execTypeString = FixDictionary.GetOrdStatus(execTypeChar);
 
             var row = new object[]{
                 direction,
                 msgType,
+                message.IsSetField(new Symbol().Tag) ? message.GetString(new Symbol().Tag) : "",
                 execTypeString,
                 statusString,
-                message.IsSetField(new QuickFix.Fields.OrderQty().Tag) ? message.GetDecimal(new QuickFix.Fields.OrderQty().Tag) : "",
-                message.IsSetField(new QuickFix.Fields.CumQty().Tag) ? message.GetDecimal(new QuickFix.Fields.CumQty().Tag) : "",
-                message.IsSetField(new QuickFix.Fields.ClOrdID().Tag) ? message.GetString(new QuickFix.Fields.ClOrdID().Tag) : "",
-                message.IsSetField(new QuickFix.Fields.OrigClOrdID().Tag) ? message.GetString(new QuickFix.Fields.OrigClOrdID().Tag) : "",
-                message.IsSetField(new QuickFix.Fields.Symbol().Tag) ? message.GetString(new QuickFix.Fields.Symbol().Tag) : "",
+                message.IsSetField(new OrderQty().Tag) ? message.GetDecimal(new OrderQty().Tag) : "",
+                message.IsSetField(new CumQty().Tag) ? message.GetDecimal(new CumQty().Tag) : "",
+                message.IsSetField(new ClOrdID().Tag) ? message.GetString(new ClOrdID().Tag) : "",
+                message.IsSetField(new OrigClOrdID().Tag) ? message.GetString(new OrigClOrdID().Tag) : "",
                 message.ToString().Replace("\u0001", "|") //Msg
             };
             if (this.MessagesDg.InvokeRequired)
@@ -377,6 +345,38 @@ namespace FixSimulatorDesktop
             {
                 AcceptorIntervalTxt.Text = StateManager.AcceptorIntervalMilis.ToString();
             }
+        }
+
+        private void InitiatorCleanStoreToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var confirmDialog = MessageBox.Show("Confirma a exclusão de todos os arquivos da Store do Initiator?", "Confirmação", MessageBoxButtons.YesNo);
+            if (confirmDialog == DialogResult.Yes)
+            {
+                FileHelper.DeleteFiles("InitiatorStore\\");
+                InitiatorAppendLog("Arquivos da Store removidos!");
+            }
+        }
+
+        private void InitiatorFixConfigToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var initiatorConfigForm = new FixConfigForm("Initiator");
+            initiatorConfigForm.ShowDialog();
+        }
+
+        private void AcceptorClearStoreToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            var confirmDialog = MessageBox.Show("Confirma a exclusão de todos os arquivos da Store do Acceptor?", "Confirmação", MessageBoxButtons.YesNo);
+            if (confirmDialog == DialogResult.Yes)
+            {
+                FileHelper.DeleteFiles("AcceptorStore\\");
+                AcceptorAppendLog("Arquivos da Store removidos!");
+            }
+        }
+
+        private void AcceptorFixConfigToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            var acceptorConfigForm = new FixConfigForm("Acceptor");
+            acceptorConfigForm.ShowDialog();
         }
     }
 }

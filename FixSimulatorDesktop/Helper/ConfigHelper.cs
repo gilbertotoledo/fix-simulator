@@ -4,6 +4,9 @@ namespace FixSimulatorDesktop.Helper
 {
     public static class ConfigHelper
     {
+        public static char GetChar(string key) =>
+            ConfigurationManager.AppSettings[key][0];
+
         public static string GetString(string key) =>
             ConfigurationManager.AppSettings[key];
 
@@ -13,7 +16,16 @@ namespace FixSimulatorDesktop.Helper
         public static int GetInt(string key) =>
             int.Parse(ConfigurationManager.AppSettings[key]);
 
+        public static decimal GetDecimal(string key) =>
+            decimal.Parse(ConfigurationManager.AppSettings[key]);
+
+        public static void Persist(string key, char value) =>
+            Persist(key, value.ToString());
+
         public static void Persist(string key, int value) =>
+            Persist(key, value.ToString());
+
+        public static void Persist(string key, decimal value) =>
             Persist(key, value.ToString());
 
         public static void Persist(string key, bool value) =>
