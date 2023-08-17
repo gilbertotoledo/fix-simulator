@@ -120,7 +120,7 @@ namespace FixSimulatorDesktop
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Cursor = Cursors.WaitCursor;            
+            Cursor = Cursors.WaitCursor;
             InitiatorStatus.Text = "Encerrando aplicação. Aguarde...";
             AcceptorStatus.Text = "";
 

@@ -52,6 +52,18 @@
             AcceptorMacrosClb = new CheckedListBox();
             GroupBox3 = new GroupBox();
             MessagesDg = new DataGridView();
+            Time = new DataGridViewTextBoxColumn();
+            Direction = new DataGridViewTextBoxColumn();
+            MsgType = new DataGridViewTextBoxColumn();
+            Symbol = new DataGridViewTextBoxColumn();
+            Side = new DataGridViewTextBoxColumn();
+            ExecType = new DataGridViewTextBoxColumn();
+            Status = new DataGridViewTextBoxColumn();
+            OrdQty = new DataGridViewTextBoxColumn();
+            CumQty = new DataGridViewTextBoxColumn();
+            ClOrderId = new DataGridViewTextBoxColumn();
+            OrigClOrderId = new DataGridViewTextBoxColumn();
+            FixMsg = new DataGridViewTextBoxColumn();
             menuStrip1 = new MenuStrip();
             acceptorToolStripMenuItem = new ToolStripMenuItem();
             InitiatorStartToolStripMenuItem = new ToolStripMenuItem();
@@ -70,18 +82,6 @@
             toolStripStatusLabel1 = new ToolStripStatusLabel();
             AcceptorStatus = new ToolStripStatusLabel();
             label1 = new Label();
-            Time = new DataGridViewTextBoxColumn();
-            Direction = new DataGridViewTextBoxColumn();
-            MsgType = new DataGridViewTextBoxColumn();
-            Symbol = new DataGridViewTextBoxColumn();
-            Side = new DataGridViewTextBoxColumn();
-            ExecType = new DataGridViewTextBoxColumn();
-            Status = new DataGridViewTextBoxColumn();
-            OrdQty = new DataGridViewTextBoxColumn();
-            CumQty = new DataGridViewTextBoxColumn();
-            ClOrderId = new DataGridViewTextBoxColumn();
-            OrigClOrderId = new DataGridViewTextBoxColumn();
-            FixMsg = new DataGridViewTextBoxColumn();
             GroupBox1.SuspendLayout();
             groupBox7.SuspendLayout();
             InitiatorLogGroup.SuspendLayout();
@@ -373,7 +373,7 @@
             GroupBox3.Controls.Add(MessagesDg);
             GroupBox3.Location = new Point(12, 488);
             GroupBox3.Name = "GroupBox3";
-            GroupBox3.Size = new Size(1747, 345);
+            GroupBox3.Size = new Size(1748, 345);
             GroupBox3.TabIndex = 1;
             GroupBox3.TabStop = false;
             GroupBox3.Text = "Mensagens";
@@ -391,9 +391,101 @@
             MessagesDg.ReadOnly = true;
             MessagesDg.RowTemplate.Height = 25;
             MessagesDg.ShowEditingIcon = false;
-            MessagesDg.Size = new Size(1735, 316);
+            MessagesDg.Size = new Size(1736, 316);
             MessagesDg.TabIndex = 2;
             MessagesDg.CellDoubleClick += MessagesDg_CellDoubleClick;
+            // 
+            // Time
+            // 
+            Time.HeaderText = "Time";
+            Time.Name = "Time";
+            Time.ReadOnly = true;
+            // 
+            // Direction
+            // 
+            Direction.HeaderText = "Direction";
+            Direction.Name = "Direction";
+            Direction.ReadOnly = true;
+            // 
+            // MsgType
+            // 
+            MsgType.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            MsgType.HeaderText = "MsgType";
+            MsgType.Name = "MsgType";
+            MsgType.ReadOnly = true;
+            MsgType.Width = 79;
+            // 
+            // Symbol
+            // 
+            Symbol.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            Symbol.HeaderText = "Symbol";
+            Symbol.Name = "Symbol";
+            Symbol.ReadOnly = true;
+            Symbol.Width = 72;
+            // 
+            // Side
+            // 
+            Side.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            Side.HeaderText = "Side";
+            Side.Name = "Side";
+            Side.ReadOnly = true;
+            Side.Width = 54;
+            // 
+            // ExecType
+            // 
+            ExecType.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            ExecType.HeaderText = "ExecType";
+            ExecType.Name = "ExecType";
+            ExecType.ReadOnly = true;
+            ExecType.Width = 80;
+            // 
+            // Status
+            // 
+            Status.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            Status.HeaderText = "Status";
+            Status.Name = "Status";
+            Status.ReadOnly = true;
+            Status.Width = 64;
+            // 
+            // OrdQty
+            // 
+            OrdQty.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            OrdQty.HeaderText = "OrdQty";
+            OrdQty.Name = "OrdQty";
+            OrdQty.ReadOnly = true;
+            OrdQty.Width = 71;
+            // 
+            // CumQty
+            // 
+            CumQty.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            CumQty.HeaderText = "CumQty";
+            CumQty.Name = "CumQty";
+            CumQty.ReadOnly = true;
+            CumQty.Width = 77;
+            // 
+            // ClOrderId
+            // 
+            ClOrderId.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            ClOrderId.HeaderText = "ClOrderId";
+            ClOrderId.Name = "ClOrderId";
+            ClOrderId.ReadOnly = true;
+            ClOrderId.Width = 83;
+            // 
+            // OrigClOrderId
+            // 
+            OrigClOrderId.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            OrigClOrderId.HeaderText = "OrigClOrderId";
+            OrigClOrderId.Name = "OrigClOrderId";
+            OrigClOrderId.ReadOnly = true;
+            OrigClOrderId.Width = 106;
+            // 
+            // FixMsg
+            // 
+            FixMsg.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            FixMsg.HeaderText = "FixMsg";
+            FixMsg.MinimumWidth = 1500;
+            FixMsg.Name = "FixMsg";
+            FixMsg.ReadOnly = true;
             // 
             // menuStrip1
             // 
@@ -523,98 +615,6 @@
             label1.Name = "label1";
             label1.Size = new Size(1769, 2);
             label1.TabIndex = 4;
-            // 
-            // Time
-            // 
-            Time.HeaderText = "Time";
-            Time.Name = "Time";
-            Time.ReadOnly = true;
-            // 
-            // Direction
-            // 
-            Direction.HeaderText = "Direction";
-            Direction.Name = "Direction";
-            Direction.ReadOnly = true;
-            // 
-            // MsgType
-            // 
-            MsgType.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            MsgType.HeaderText = "MsgType";
-            MsgType.Name = "MsgType";
-            MsgType.ReadOnly = true;
-            MsgType.Width = 79;
-            // 
-            // Symbol
-            // 
-            Symbol.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            Symbol.HeaderText = "Symbol";
-            Symbol.Name = "Symbol";
-            Symbol.ReadOnly = true;
-            Symbol.Width = 72;
-            // 
-            // Side
-            // 
-            Side.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            Side.HeaderText = "Side";
-            Side.Name = "Side";
-            Side.ReadOnly = true;
-            Side.Width = 54;
-            // 
-            // ExecType
-            // 
-            ExecType.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            ExecType.HeaderText = "ExecType";
-            ExecType.Name = "ExecType";
-            ExecType.ReadOnly = true;
-            ExecType.Width = 80;
-            // 
-            // Status
-            // 
-            Status.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            Status.HeaderText = "Status";
-            Status.Name = "Status";
-            Status.ReadOnly = true;
-            Status.Width = 64;
-            // 
-            // OrdQty
-            // 
-            OrdQty.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            OrdQty.HeaderText = "OrdQty";
-            OrdQty.Name = "OrdQty";
-            OrdQty.ReadOnly = true;
-            OrdQty.Width = 71;
-            // 
-            // CumQty
-            // 
-            CumQty.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            CumQty.HeaderText = "CumQty";
-            CumQty.Name = "CumQty";
-            CumQty.ReadOnly = true;
-            CumQty.Width = 77;
-            // 
-            // ClOrderId
-            // 
-            ClOrderId.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            ClOrderId.HeaderText = "ClOrderId";
-            ClOrderId.Name = "ClOrderId";
-            ClOrderId.ReadOnly = true;
-            ClOrderId.Width = 83;
-            // 
-            // OrigClOrderId
-            // 
-            OrigClOrderId.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            OrigClOrderId.HeaderText = "OrigClOrderId";
-            OrigClOrderId.Name = "OrigClOrderId";
-            OrigClOrderId.ReadOnly = true;
-            OrigClOrderId.Width = 106;
-            // 
-            // FixMsg
-            // 
-            FixMsg.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            FixMsg.HeaderText = "FixMsg";
-            FixMsg.MinimumWidth = 1500;
-            FixMsg.Name = "FixMsg";
-            FixMsg.ReadOnly = true;
             // 
             // MainForm
             // 
