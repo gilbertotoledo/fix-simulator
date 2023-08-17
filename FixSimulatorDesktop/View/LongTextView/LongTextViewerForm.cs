@@ -1,4 +1,4 @@
-﻿namespace FixSimulatorDesktop.View.FixMessageView
+﻿namespace FixSimulatorDesktop.View.LongTextView
 {
     public partial class LongTextViewerForm : Form
     {

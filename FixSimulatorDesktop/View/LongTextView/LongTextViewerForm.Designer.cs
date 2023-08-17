@@ -1,4 +1,4 @@
-﻿namespace FixSimulatorDesktop.View.FixMessageView
+﻿namespace FixSimulatorDesktop.View.LongTextView
 {
     partial class LongTextViewerForm
     {
@@ -49,7 +49,7 @@
             Controls.Add(MessageTxt);
             Name = "LongTextViewerForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "FixMessageViewerForm";
+            Text = "Visualizador de texto";
             ResumeLayout(false);
             PerformLayout();
         }

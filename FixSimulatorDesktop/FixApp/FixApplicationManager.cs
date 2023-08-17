@@ -69,7 +69,7 @@ namespace FixSimulatorDesktop.FixApplication
 
         public void StopInitiator()
         {
-            _socketInitiator?.Stop(true);
+            _socketInitiator?.Stop();
         }
     }
 }

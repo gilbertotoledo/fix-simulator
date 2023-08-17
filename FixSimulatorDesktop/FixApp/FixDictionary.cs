@@ -144,5 +144,26 @@
             QuickFix.Fields.OrdStatus.REPLACED => "REPLACED",
             _ => status.ToString()
         };
+
+        public static string GetSide(char side) => side switch
+        {
+            QuickFix.Fields.Side.BUY => "BUY",
+            QuickFix.Fields.Side.SELL => "SELL",
+            QuickFix.Fields.Side.BUY_MINUS => "BUY_MINUS",
+            QuickFix.Fields.Side.SELL_PLUS => "SELL_PLUS",
+            QuickFix.Fields.Side.SELL_SHORT => "SELL_SHORT",
+            QuickFix.Fields.Side.SELL_SHORT_EXEMPT => "SELL_SHORT_EXEMPT",
+            QuickFix.Fields.Side.UNDISCLOSED => "UNDISCLOSED",
+            QuickFix.Fields.Side.CROSS => "CROSS",
+            QuickFix.Fields.Side.CROSS_SHORT => "CROSS_SHORT",
+            QuickFix.Fields.Side.CROSS_SHORT_EXEMPT => "CROSS_SHORT_EXEMPT",
+            QuickFix.Fields.Side.AS_DEFINED => "AS_DEFINED",
+            QuickFix.Fields.Side.OPPOSITE => "OPPOSITE",
+            QuickFix.Fields.Side.SUBSCRIBE => "SUBSCRIBE",
+            QuickFix.Fields.Side.REDEEM => "REDEEM",
+            QuickFix.Fields.Side.LEND => "F",
+            QuickFix.Fields.Side.BORROW => "BORROW",
+            _ => side.ToString(),
+        };
     }
 }

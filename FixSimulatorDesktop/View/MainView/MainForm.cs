@@ -4,7 +4,7 @@ using FixSimulatorDesktop.FixApplication.Order;
 using FixSimulatorDesktop.Helper;
 using FixSimulatorDesktop.State;
 using FixSimulatorDesktop.View;
-using FixSimulatorDesktop.View.FixMessageView;
+using FixSimulatorDesktop.View.LongTextView;
 using QuickFix.Fields;
 using QuickFix.FIX44;
 
@@ -14,7 +14,7 @@ namespace FixSimulatorDesktop
     {
         delegate void SetAcceptorLogTextDelegatorType(string texto);
         delegate void SetInitiatorLogTextDelegatorType(string texto);
-        delegate void SetOnMessageDelegatorType(object col0, object col1, object col2, object col3, object col4, object col5, object col6, object col7, object col8, object col9, object col10);
+        delegate void SetOnMessageDelegatorType(object col0, object col1, object col2, object col3, object col4, object col5, object col6, object col7, object col8, object col9, object col10, object col11);
 
         private readonly FixApplicationManager _fixManager;
 
@@ -25,7 +25,7 @@ namespace FixSimulatorDesktop
             ToggleInitiatorButtons(false);
             ToggleAcceptorButtons(false);
 
-            _fixManager = new FixApplicationManager(InitiatorAppendLog, AcceptorAppendLog, AddMessageToDataGrid);
+            _fixManager = new FixApplicationManager(InitiatorAppendLog, AcceptorAppendLog, OnMessageReceivedOrSent);
         }
 
         private void LoadState()
@@ -67,17 +67,17 @@ namespace FixSimulatorDesktop
             try
             {
                 text = $"{DateTime.Now:HH:mm:ss.ffff} {text}\r\n".Replace("\u0001", "|");
-                if (this.AcceptorLogTxt.InvokeRequired)
+                if (this.AcceptorLogRTxt.InvokeRequired)
                 {
-                    var del = new SetAcceptorLogTextDelegatorType((string txt) => AcceptorLogTxt?.AppendText(txt));
-                    if (!AcceptorLogTxt.IsDisposed)
+                    var del = new SetAcceptorLogTextDelegatorType((string txt) => AcceptorLogRTxt?.AppendText(txt));
+                    if (!AcceptorLogRTxt.IsDisposed)
                     {
-                        AcceptorLogTxt?.Invoke(del, text);
+                        AcceptorLogRTxt?.Invoke(del, text);
                     }
                 }
                 else
                 {
-                    AcceptorLogTxt?.AppendText(text);
+                    AcceptorLogRTxt?.AppendText(text);
                 }
             }
             catch
@@ -91,20 +91,20 @@ namespace FixSimulatorDesktop
             try
             {
                 text = $"{DateTime.Now:HH:mm:ss.ffff} {text}\r\n".Replace("\u0001", "|");
-                if (this.InitiatorLogTxt.InvokeRequired)
+                if (this.InitiatorLogRTxt.InvokeRequired)
                 {
-                    var del = new SetInitiatorLogTextDelegatorType((string txt) => InitiatorLogTxt?.AppendText(txt));
+                    var del = new SetInitiatorLogTextDelegatorType((string txt) => InitiatorLogRTxt?.AppendText(txt));
 
-                    if (!InitiatorLogTxt.IsDisposed)
+                    if (!InitiatorLogRTxt.IsDisposed)
                     {
 
-                        InitiatorLogTxt?.Invoke(del, text);
+                        InitiatorLogRTxt?.Invoke(del, text);
 
                     }
                 }
                 else
                 {
-                    InitiatorLogTxt?.AppendText(text);
+                    InitiatorLogRTxt?.AppendText(text);
                 }
             }
             catch
@@ -118,63 +118,16 @@ namespace FixSimulatorDesktop
             MessagesDg?.Rows?.Add(values);
         }
 
-        private void InitiatorStartStopBtn_Click(object sender, EventArgs e)
-        {
-            if (StateManager.IsInitiatorRunning)
-            {
-                var confirmDialog = MessageBox.Show("O Initiator está rodando.\r\nTem certeza que gostaria de parar a aplicação?", "Confirmação", MessageBoxButtons.YesNo);
-                if (confirmDialog == DialogResult.Yes)
-                {
-                    _fixManager.StopInitiator();
-                    StateManager.IsInitiatorRunning = false;
-                    InitiatorStartStopBtn.Text = "Ativar";
-                    InitiatorAppendLog("Parando...");
-                    ToggleInitiatorButtons(false);
-                }
-            }
-            else
-            {
-                StateManager.IsInitiatorRunning = _fixManager.StartInitiator();
-                if (StateManager.IsInitiatorRunning)
-                {
-                    InitiatorStartStopBtn.Text = "Desativar";
-                    InitiatorAppendLog("Iniciando...");
-                    ToggleInitiatorButtons(true);
-                }
-            }
-        }
-
-        private void AcceptorStartStopBtn_Click(object sender, EventArgs e)
-        {
-            if (StateManager.IsAcceptorRunning)
-            {
-                var confirmDialog = MessageBox.Show("O Acceptor está rodando.\r\nTem certeza que gostaria de parar a aplicação?", "Confirmação", MessageBoxButtons.YesNo);
-                if (confirmDialog == DialogResult.Yes)
-                {
-                    _fixManager.StopAcceptor();
-                    StateManager.IsAcceptorRunning = false;
-                    AcceptorStartStopBtn.Text = "Ativar";
-                    AcceptorAppendLog("Parando...");
-                    ToggleAcceptorButtons(false);
-                }
-            }
-            else
-            {
-                StateManager.IsAcceptorRunning = _fixManager.StartAcceptor();
-                if (StateManager.IsAcceptorRunning)
-                {
-                    AcceptorStartStopBtn.Text = "Desativar";
-                    AcceptorAppendLog("Iniciando...");
-                    ToggleAcceptorButtons(true);
-                }
-            }
-        }
-
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            _fixManager.StopAcceptor();
+            Cursor = Cursors.WaitCursor;            
+            InitiatorStatus.Text = "Encerrando aplicação. Aguarde...";
+            AcceptorStatus.Text = "";
+
             _fixManager.StopInitiator();
-            Thread.Sleep(2000);
+            Thread.Sleep(100);
+            _fixManager.StopAcceptor();
+            Thread.Sleep(100);
             Application.Exit();
         }
 
@@ -189,7 +142,8 @@ namespace FixSimulatorDesktop
 
         private void InitiatorNewOrderSingleBtn_Click(object sender, EventArgs e)
         {
-            var newOrderSingleForm = new NewOrderSingleForm(() => {
+            var newOrderSingleForm = new NewOrderSingleForm(() =>
+            {
                 Task.Run(() =>
                 {
                     var order = OrderBuilder.NewOrderSingle(StateManager.Account, StateManager.Symbol, StateManager.Side, StateManager.Operation, StateManager.Price, StateManager.Quantity);
@@ -239,7 +193,7 @@ namespace FixSimulatorDesktop
         }
 
 
-        private void AddMessageToDataGrid(QuickFix.Message message)
+        private void OnMessageReceivedOrSent(QuickFix.Message message)
         {
             var senderCompId = message.Header.IsSetField(new SenderCompID().Tag) ? message.Header.GetString(new SenderCompID().Tag) : "";
             var direction = senderCompId.Contains("EXECUTOR") ? "<==" : "==>";
@@ -252,11 +206,15 @@ namespace FixSimulatorDesktop
             var execTypeChar = message.IsSetField(new ExecType().Tag) ? message.GetChar(new ExecType().Tag) : '\0';
             var execTypeString = FixDictionary.GetOrdStatus(execTypeChar);
 
+            var sideChar = message.IsSetField(new Side().Tag) ? message.GetChar(new Side().Tag) : '\0';
+            var sideString = FixDictionary.GetSide(sideChar);
+
             var row = new object[]{
                 message.GetDateTime(new TransactTime().Tag).ToString("HH:mm:ss.ffff"),
                 direction,
                 msgType,
                 message.IsSetField(new Symbol().Tag) ? message.GetString(new Symbol().Tag) : "",
+                sideString,
                 execTypeString,
                 statusString,
                 message.IsSetField(new OrderQty().Tag) ? message.GetDecimal(new OrderQty().Tag) : "",
@@ -268,12 +226,12 @@ namespace FixSimulatorDesktop
             if (this.MessagesDg.InvokeRequired)
             {
                 var del = new SetOnMessageDelegatorType(
-                    (object col0, object col1, object col2, object col3, object col4, object col5, object col6, object col7, object col8, object col9, object col10) =>
+                    (object col0, object col1, object col2, object col3, object col4, object col5, object col6, object col7, object col8, object col9, object col10, object col11) =>
                     {
-                        AddRow(col0, col1, col2, col3, col4, col5, col6, col7, col8, col9, col10);
+                        AddRow(col0, col1, col2, col3, col4, col5, col6, col7, col8, col9, col10, col11);
                         MessagesDg.FirstDisplayedScrollingRowIndex = MessagesDg.RowCount - 1;
                     });
-                MessagesDg?.Invoke(del, row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10]);
+                MessagesDg?.Invoke(del, row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11]);
             }
             else
             {
@@ -284,7 +242,7 @@ namespace FixSimulatorDesktop
 
         private void MessagesDg_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            var messageViewer = new LongTextViewerForm(MessagesDg.Rows[e.RowIndex].Cells[10].Value.ToString());
+            var messageViewer = new LongTextViewerForm(MessagesDg.Rows[e.RowIndex].Cells[MessagesDg.ColumnCount - 1].Value.ToString());
             messageViewer.ShowDialog();
         }
 
@@ -294,7 +252,7 @@ namespace FixSimulatorDesktop
                 .LastOrDefault(m =>
                     m.Header.GetString(new MsgType().Tag) == QuickFix.Fields.MsgType.NEWORDERSINGLE);
 
-            if (lastNewOrderSingle != null )
+            if (lastNewOrderSingle != null)
             {
                 var replaceMessageForm = new ReplaceMessageForm(lastNewOrderSingle,
                     (int newQty, decimal newPrice) =>
@@ -316,18 +274,6 @@ namespace FixSimulatorDesktop
                 var replaceMessage = OrderBuilder.OrderCancelRequest(lastNewOrderSingle);
                 this._fixManager.InitiatorFixApp.Send(replaceMessage);
             }
-        }
-
-        private void InitiatorLogTxt_DoubleClick(object sender, EventArgs e)
-        {
-            var textViewForm = new LongTextViewerForm(InitiatorLogTxt.Text);
-            textViewForm.ShowDialog();
-        }
-
-        private void AcceptorLogTxt_DoubleClick(object sender, EventArgs e)
-        {
-            var textViewForm = new LongTextViewerForm(AcceptorLogTxt.Text);
-            textViewForm.ShowDialog();
         }
 
         private void InitiatorShowReceivedChb_CheckedChanged(object sender, EventArgs e)
@@ -401,13 +347,146 @@ namespace FixSimulatorDesktop
 
         private void ClearLogToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InitiatorLogTxt.Text = string.Empty;
+            InitiatorLogRTxt.Text = string.Empty;
         }
 
         private void AcceptorClearLogToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AcceptorLogTxt.Text = string.Empty;
+            AcceptorLogRTxt.Text = string.Empty;
         }
 
+        private void InitiatorStartToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (StateManager.IsInitiatorRunning)
+            {
+                var confirmDialog = MessageBox.Show("O Initiator está rodando.\r\nTem certeza que gostaria de parar a aplicação?", "Confirmação", MessageBoxButtons.YesNo);
+                if (confirmDialog == DialogResult.Yes)
+                {
+                    _fixManager.StopInitiator();
+                    StateManager.IsInitiatorRunning = false;
+                    InitiatorStartToolStripMenuItem.Text = "Ativar";
+                    InitiatorAppendLog("Parando...");
+                    InitiatorStatus.Text = "Initiator: Parado";
+                    ToggleInitiatorButtons(false);
+                }
+            }
+            else
+            {
+                StateManager.IsInitiatorRunning = _fixManager.StartInitiator();
+                if (StateManager.IsInitiatorRunning)
+                {
+                    InitiatorStartToolStripMenuItem.Text = "Desativar";
+                    InitiatorAppendLog("Iniciando...");
+                    InitiatorStatus.Text = "Initiator: Rodando";
+                    ToggleInitiatorButtons(true);
+                }
+            }
+        }
+
+        private void AcceptorStartToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (StateManager.IsAcceptorRunning)
+            {
+                var confirmDialog = MessageBox.Show("O Acceptor está rodando.\r\nTem certeza que gostaria de parar a aplicação?", "Confirmação", MessageBoxButtons.YesNo);
+                if (confirmDialog == DialogResult.Yes)
+                {
+                    _fixManager.StopAcceptor();
+                    StateManager.IsAcceptorRunning = false;
+                    AcceptorStartToolStripMenuItem.Text = "Ativar";
+                    AcceptorAppendLog("Parando...");
+                    AcceptorStatus.Text = "Acceptor: Parado";
+                    ToggleAcceptorButtons(false);
+                }
+            }
+            else
+            {
+                StateManager.IsAcceptorRunning = _fixManager.StartAcceptor();
+                if (StateManager.IsAcceptorRunning)
+                {
+                    AcceptorStartToolStripMenuItem.Text = "Desativar";
+                    AcceptorAppendLog("Iniciando...");
+                    AcceptorStatus.Text = "Acceptor: Rodando";
+                    ToggleAcceptorButtons(true);
+                }
+            }
+        }
+
+        public void SetAllControlsFont(ControlCollection ctrls, string operation)
+        {
+            foreach (Control ctrl in ctrls)
+            {
+                if (ctrl.Controls != null)
+                    SetAllControlsFont(ctrl.Controls, operation);
+
+                if (operation == "increase" && ctrl.Font.Size < 11)
+                {
+                    ctrl.Font = new Font("Segoe UI", ctrl.Font.Size + 1);
+                }
+                else if (operation == "decrease" && ctrl.Font.Size > 9)
+                {
+                    ctrl.Font = new Font("Segoe UI", ctrl.Font.Size - 1);
+                }
+                else if (operation == "default")
+                {
+                    ctrl.Font = new Font("Segoe UI", 9);
+                }
+            }
+        }
+
+        public void SetAllControlsFont(Control.ControlCollection ctrls, string operation)
+        {
+            foreach (Control ctrl in ctrls)
+            {
+                if (ctrl.Controls != null)
+                    SetAllControlsFont(ctrl.Controls, operation);
+
+                if (operation == "increase" && ctrl.Font.Size < 11)
+                {
+                    ctrl.Font = new Font("Segoe UI", ctrl.Font.Size + 1);
+                }
+                else if (operation == "decrease" && ctrl.Font.Size > 9)
+                {
+                    ctrl.Font = new Font("Segoe UI", ctrl.Font.Size - 1);
+                }
+                else if (operation == "default")
+                {
+                    ctrl.Font = new Font("Segoe UI", 9);
+                }
+
+            }
+        }
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.OemMinus)
+            {
+                e.SuppressKeyPress = true;
+                SetAllControlsFont(this.Controls, "decrease");
+            }
+
+            if (e.Control && e.KeyCode == Keys.Oemplus)
+            {
+                e.SuppressKeyPress = true;
+                SetAllControlsFont(this.Controls, "increase");
+            }
+
+            if (e.Control && e.KeyCode == Keys.D0)
+            {
+                e.SuppressKeyPress = true;
+                SetAllControlsFont(this.Controls, "default");
+            }
+        }
+
+        private void InitiatorLogRTxt_DoubleClick(object sender, EventArgs e)
+        {
+            var textViewForm = new LongTextViewerForm(InitiatorLogRTxt.Text);
+            textViewForm.ShowDialog();
+        }
+
+        private void AcceptorLogRTxt_DoubleClick(object sender, EventArgs e)
+        {
+            var textViewForm = new LongTextViewerForm(AcceptorLogRTxt.Text);
+            textViewForm.ShowDialog();
+        }
     }
 }
