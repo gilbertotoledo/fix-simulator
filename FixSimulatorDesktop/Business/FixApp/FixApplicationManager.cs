@@ -1,8 +1,7 @@
-﻿using FixSimulatorDesktop.FixApp;
-using QuickFix;
+﻿using QuickFix;
 using QuickFix.Transport;
 
-namespace FixSimulatorDesktop.FixApplication
+namespace FixSimulatorDesktop.Business.FixApp
 {
     public class FixApplicationManager
     {

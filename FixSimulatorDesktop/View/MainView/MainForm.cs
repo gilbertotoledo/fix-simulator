@@ -1,10 +1,11 @@
-using FixSimulatorDesktop.FixApp;
-using FixSimulatorDesktop.FixApplication;
-using FixSimulatorDesktop.FixApplication.Order;
+using FixSimulatorDesktop.Business.FixApp;
+using FixSimulatorDesktop.Business.FixApp.Order;
 using FixSimulatorDesktop.Helper;
 using FixSimulatorDesktop.State;
 using FixSimulatorDesktop.View;
 using FixSimulatorDesktop.View.LongTextView;
+using FixSimulatorDesktop.View.MainView;
+using FixSimulatorDesktop.View.Tools.LogFixAnalyzer;
 using QuickFix.Fields;
 using QuickFix.FIX44;
 
@@ -487,6 +488,16 @@ namespace FixSimulatorDesktop
         {
             var textViewForm = new LongTextViewerForm(AcceptorLogRTxt.Text);
             textViewForm.ShowDialog();
+        }
+
+        private void sobreToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new AboutView().ShowDialog();
+        }
+
+        private void analisadorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new LogFixAnalyzerView().ShowDialog();
         }
     }
 }

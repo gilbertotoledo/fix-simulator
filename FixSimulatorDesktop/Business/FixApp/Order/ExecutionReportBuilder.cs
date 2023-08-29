@@ -1,7 +1,7 @@
 ﻿using QuickFix.Fields;
 using QuickFix.FIX44;
 
-namespace FixSimulatorDesktop.FixApplication.Order
+namespace FixSimulatorDesktop.Business.FixApp.Order
 {
     public static class ExecutionReportBuilder
     {
@@ -16,13 +16,24 @@ namespace FixSimulatorDesktop.FixApplication.Order
                 newOrderSingle.Side,
                 new LeavesQty(0),
                 new CumQty(newOrderSingle.OrderQty.getValue()),
-                new AvgPx(newOrderSingle.Price.getValue()))
+                new AvgPx(0))
             {
                 ClOrdID = new ClOrdID(Guid.NewGuid().ToString()),
                 OrigClOrdID = new OrigClOrdID(newOrderSingle.ClOrdID.getValue()),
                 OrderQty = new OrderQty(newOrderSingle.OrderQty.getValue()),
                 TransactTime = new TransactTime(DateTime.Now)
             };
+
+            if (newOrderSingle.GetChar(new OrdType().Tag) == OrdType.MARKET)
+            {
+                exReport.Price = new Price(10);
+                exReport.AvgPx = new AvgPx(10);
+            }
+            else
+            {
+                exReport.Price = new Price(newOrderSingle.Price.getValue());
+                exReport.AvgPx = new AvgPx(newOrderSingle.Price.getValue());
+            }
 
             if (newOrderSingle.IsSetAccount())
                 exReport.SetField(newOrderSingle.Account);
@@ -42,13 +53,24 @@ namespace FixSimulatorDesktop.FixApplication.Order
                 newOrderSingle.Side,
                 new LeavesQty(0),
                 new CumQty(newOrderSingle.OrderQty.getValue()),
-                new AvgPx(newOrderSingle.Price.getValue()))
+                new AvgPx(0))
             {
                 ClOrdID = new ClOrdID(Guid.NewGuid().ToString()),
                 OrigClOrdID = new OrigClOrdID(newOrderSingle.ClOrdID.getValue()),
                 OrderQty = new OrderQty(newOrderSingle.OrderQty.getValue()),
                 TransactTime = new TransactTime(DateTime.Now)
             };
+
+            if (newOrderSingle.GetChar(new OrdType().Tag) == OrdType.MARKET)
+            {
+                exReport.Price = new Price(10);
+                exReport.AvgPx = new AvgPx(10);
+            }
+            else
+            {
+                exReport.Price = new Price(newOrderSingle.Price.getValue());
+                exReport.AvgPx = new AvgPx(newOrderSingle.Price.getValue());
+            }
 
             if (newOrderSingle.IsSetAccount())
                 exReport.SetField(newOrderSingle.Account);

@@ -3,7 +3,7 @@ using QuickFix;
 using QuickFix.FIX44;
 using Message = QuickFix.Message;
 
-namespace FixSimulatorDesktop.FixApp
+namespace FixSimulatorDesktop.Business.FixApp
 {
     public class FixApplicationBase : MessageCracker, IApplication
     {
@@ -35,8 +35,8 @@ namespace FixSimulatorDesktop.FixApp
         {
             _logger.Invoke($"[FROM_APP] NextTargetMsgSeqNum: {_sessions.FirstOrDefault()?.NextTargetMsgSeqNum} | NextSenderMsgSeqNum: {_sessions.FirstOrDefault()?.NextSenderMsgSeqNum}");
 
-            if ((ApplicationType.Equals("acceptor") && StateManager.IsAcceptorShowMessagesReceived) ||
-                 (ApplicationType.Equals("initiator") && StateManager.IsInitiatorShowMessagesReceived))
+            if (ApplicationType.Equals("acceptor") && StateManager.IsAcceptorShowMessagesReceived ||
+                 ApplicationType.Equals("initiator") && StateManager.IsInitiatorShowMessagesReceived)
             {
                 _onMessageHandler(message);
             }
@@ -83,8 +83,8 @@ namespace FixSimulatorDesktop.FixApp
 
         public void ToApp(Message message, SessionID sessionId)
         {
-            if ((ApplicationType.Equals("acceptor") && StateManager.IsAcceptorShowMessagesSent) ||
-                 (ApplicationType.Equals("initiator") && StateManager.IsInitiatorShowMessagesSent))
+            if (ApplicationType.Equals("acceptor") && StateManager.IsAcceptorShowMessagesSent ||
+                 ApplicationType.Equals("initiator") && StateManager.IsInitiatorShowMessagesSent)
             {
                 _onMessageHandler(message);
             }
@@ -118,7 +118,7 @@ namespace FixSimulatorDesktop.FixApp
 
         public IEnumerable<string> GetExecutions(string clOrderId)
         {
-            return this.ReceivedMessages
+            return ReceivedMessages
                     .Where(m =>
                         (m as ExecutionReport).ClOrdID.getValue() == clOrderId)
                 .Select(m => (m as ExecutionReport).ToString().Replace("\u0001", "|"));

@@ -1,10 +1,10 @@
-﻿using FixSimulatorDesktop.FixApplication.Order;
+﻿using FixSimulatorDesktop.Business.FixApp.Order;
 using FixSimulatorDesktop.State;
 using QuickFix;
 using QuickFix.FIX44;
 using Message = QuickFix.Message;
 
-namespace FixSimulatorDesktop.FixApp
+namespace FixSimulatorDesktop.Business.FixApp
 {
     public class AcceptorFixApp : FixApplicationBase
     {

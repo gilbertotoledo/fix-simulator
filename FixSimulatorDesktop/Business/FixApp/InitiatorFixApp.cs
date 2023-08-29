@@ -1,7 +1,7 @@
 ﻿using QuickFix;
 using Message = QuickFix.Message;
 
-namespace FixSimulatorDesktop.FixApp
+namespace FixSimulatorDesktop.Business.FixApp
 {
     public class InitiatorFixApp : FixApplicationBase
     {

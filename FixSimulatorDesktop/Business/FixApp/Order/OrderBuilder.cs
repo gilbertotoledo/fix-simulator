@@ -2,7 +2,7 @@
 using QuickFix.FIX44;
 using Message = QuickFix.FIX44.Message;
 
-namespace FixSimulatorDesktop.FixApplication.Order
+namespace FixSimulatorDesktop.Business.FixApp.Order
 {
     public static class OrderBuilder
     {
@@ -19,7 +19,7 @@ namespace FixSimulatorDesktop.FixApplication.Order
         /// <returns></returns>
         public static NewOrderSingle NewOrderSingle(string account, string symbol, char side, string operation, decimal price, decimal quantity, string text = "FIX_SIMULATOR")
         {
-            var order = new QuickFix.FIX44.NewOrderSingle(
+            var order = new NewOrderSingle(
                 new ClOrdID(Guid.NewGuid().ToString()),
                 new Symbol(symbol),
                 new Side(side),
@@ -36,19 +36,19 @@ namespace FixSimulatorDesktop.FixApplication.Order
                 Text = new Text(text),
             };
             order.SetField(new StringField(10122, operation));
-            order.AddGroup(new QuickFix.FIX44.ExecutionReport.NoPartyIDsGroup()
+            order.AddGroup(new ExecutionReport.NoPartyIDsGroup()
             {
                 PartyRole = new PartyRole(36),
                 PartyID = new PartyID(account),
                 PartyIDSource = new PartyIDSource('D')
             });
-            order.AddGroup(new QuickFix.FIX44.ExecutionReport.NoPartyIDsGroup()
+            order.AddGroup(new ExecutionReport.NoPartyIDsGroup()
             {
                 PartyRole = new PartyRole(7),
                 PartyID = new PartyID("4090"),
                 PartyIDSource = new PartyIDSource('D')
             });
-            order.AddGroup(new QuickFix.FIX44.ExecutionReport.NoPartyIDsGroup()
+            order.AddGroup(new ExecutionReport.NoPartyIDsGroup()
             {
                 PartyRole = new PartyRole(54),
                 PartyID = new PartyID("DMA1"),
@@ -62,7 +62,7 @@ namespace FixSimulatorDesktop.FixApplication.Order
 
         public static OrderCancelReplaceRequest OrderCancelReplaceRequest(Message message, int newQty, decimal newPrice, string text = "FIX_SIMULATOR_REPLACE")
         {
-            var order = new QuickFix.FIX44.OrderCancelReplaceRequest(
+            var order = new OrderCancelReplaceRequest(
                 new OrigClOrdID(message.GetString(new ClOrdID().Tag)),
                 new ClOrdID(Guid.NewGuid().ToString()),
                 new Symbol(message.GetString(new Symbol().Tag)),
@@ -81,19 +81,19 @@ namespace FixSimulatorDesktop.FixApplication.Order
                 Text = new Text(text),
             };
             order.SetField(new StringField(10122, message.GetString(10122)));
-            order.AddGroup(new QuickFix.FIX44.ExecutionReport.NoPartyIDsGroup()
+            order.AddGroup(new ExecutionReport.NoPartyIDsGroup()
             {
                 PartyRole = new PartyRole(36),
                 PartyID = new PartyID(message.GetString(new Account().Tag)),
                 PartyIDSource = new PartyIDSource('D')
             });
-            order.AddGroup(new QuickFix.FIX44.ExecutionReport.NoPartyIDsGroup()
+            order.AddGroup(new ExecutionReport.NoPartyIDsGroup()
             {
                 PartyRole = new PartyRole(7),
                 PartyID = new PartyID("4090"),
                 PartyIDSource = new PartyIDSource('D')
             });
-            order.AddGroup(new QuickFix.FIX44.ExecutionReport.NoPartyIDsGroup()
+            order.AddGroup(new ExecutionReport.NoPartyIDsGroup()
             {
                 PartyRole = new PartyRole(54),
                 PartyID = new PartyID("DMA1"),
@@ -108,7 +108,7 @@ namespace FixSimulatorDesktop.FixApplication.Order
 
         public static OrderCancelRequest OrderCancelRequest(Message message, string text = "FIX_SIMULATOR_CANCEL")
         {
-            var order = new QuickFix.FIX44.OrderCancelRequest(
+            var order = new OrderCancelRequest(
                 new OrigClOrdID(message.GetString(new ClOrdID().Tag)),
                 new ClOrdID(Guid.NewGuid().ToString()),
                 new Symbol(message.GetString(new Symbol().Tag)),
@@ -120,19 +120,19 @@ namespace FixSimulatorDesktop.FixApplication.Order
                 Text = new Text(text),
             };
             order.SetField(new StringField(10122, message.GetString(10122)));
-            order.AddGroup(new QuickFix.FIX44.ExecutionReport.NoPartyIDsGroup()
+            order.AddGroup(new ExecutionReport.NoPartyIDsGroup()
             {
                 PartyRole = new PartyRole(36),
                 PartyID = new PartyID(message.GetString(new Account().Tag)),
                 PartyIDSource = new PartyIDSource('D')
             });
-            order.AddGroup(new QuickFix.FIX44.ExecutionReport.NoPartyIDsGroup()
+            order.AddGroup(new ExecutionReport.NoPartyIDsGroup()
             {
                 PartyRole = new PartyRole(7),
                 PartyID = new PartyID("4090"),
                 PartyIDSource = new PartyIDSource('D')
             });
-            order.AddGroup(new QuickFix.FIX44.ExecutionReport.NoPartyIDsGroup()
+            order.AddGroup(new ExecutionReport.NoPartyIDsGroup()
             {
                 PartyRole = new PartyRole(54),
                 PartyID = new PartyID("DMA1"),

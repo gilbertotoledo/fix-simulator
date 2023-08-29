@@ -28,6 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             GroupBox1 = new GroupBox();
             groupBox7 = new GroupBox();
             InitiatorNewOrderSingleBtn = new Button();
@@ -77,11 +81,16 @@
             AcceptorFixConfigToolStripMenuItem1 = new ToolStripMenuItem();
             mensagensToolStripMenuItem = new ToolStripMenuItem();
             ClearMessageListToolStripMenuItem = new ToolStripMenuItem();
+            análiseToolStripMenuItem = new ToolStripMenuItem();
+            ajudaToolStripMenuItem = new ToolStripMenuItem();
+            mensagensEComportamentosToolStripMenuItem = new ToolStripMenuItem();
+            sobreToolStripMenuItem = new ToolStripMenuItem();
             statusStrip1 = new StatusStrip();
             InitiatorStatus = new ToolStripStatusLabel();
             toolStripStatusLabel1 = new ToolStripStatusLabel();
             AcceptorStatus = new ToolStripStatusLabel();
             label1 = new Label();
+            analisadorToolStripMenuItem = new ToolStripMenuItem();
             GroupBox1.SuspendLayout();
             groupBox7.SuspendLayout();
             InitiatorLogGroup.SuspendLayout();
@@ -384,11 +393,35 @@
             MessagesDg.AllowUserToDeleteRows = false;
             MessagesDg.AllowUserToOrderColumns = true;
             MessagesDg.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            MessagesDg.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             MessagesDg.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             MessagesDg.Columns.AddRange(new DataGridViewColumn[] { Time, Direction, MsgType, Symbol, Side, ExecType, Status, OrdQty, CumQty, ClOrderId, OrigClOrderId, FixMsg });
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            MessagesDg.DefaultCellStyle = dataGridViewCellStyle2;
             MessagesDg.Location = new Point(6, 22);
             MessagesDg.Name = "MessagesDg";
             MessagesDg.ReadOnly = true;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = SystemColors.Control;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            MessagesDg.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             MessagesDg.RowTemplate.Height = 25;
             MessagesDg.ShowEditingIcon = false;
             MessagesDg.Size = new Size(1736, 316);
@@ -489,7 +522,7 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { acceptorToolStripMenuItem, acceptorToolStripMenuItem1, mensagensToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { acceptorToolStripMenuItem, acceptorToolStripMenuItem1, mensagensToolStripMenuItem, análiseToolStripMenuItem, ajudaToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(1771, 24);
@@ -580,6 +613,33 @@
             ClearMessageListToolStripMenuItem.Text = "Limpar lista";
             ClearMessageListToolStripMenuItem.Click += ClearMessageListToolStripMenuItem_Click;
             // 
+            // análiseToolStripMenuItem
+            // 
+            análiseToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { analisadorToolStripMenuItem });
+            análiseToolStripMenuItem.Name = "análiseToolStripMenuItem";
+            análiseToolStripMenuItem.Size = new Size(84, 20);
+            análiseToolStripMenuItem.Text = "Ferramentas";
+            // 
+            // ajudaToolStripMenuItem
+            // 
+            ajudaToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { mensagensEComportamentosToolStripMenuItem, sobreToolStripMenuItem });
+            ajudaToolStripMenuItem.Name = "ajudaToolStripMenuItem";
+            ajudaToolStripMenuItem.Size = new Size(50, 20);
+            ajudaToolStripMenuItem.Text = "Ajuda";
+            // 
+            // mensagensEComportamentosToolStripMenuItem
+            // 
+            mensagensEComportamentosToolStripMenuItem.Name = "mensagensEComportamentosToolStripMenuItem";
+            mensagensEComportamentosToolStripMenuItem.Size = new Size(152, 22);
+            mensagensEComportamentosToolStripMenuItem.Text = "Manual de uso";
+            // 
+            // sobreToolStripMenuItem
+            // 
+            sobreToolStripMenuItem.Name = "sobreToolStripMenuItem";
+            sobreToolStripMenuItem.Size = new Size(152, 22);
+            sobreToolStripMenuItem.Text = "Sobre";
+            sobreToolStripMenuItem.Click += sobreToolStripMenuItem_Click;
+            // 
             // statusStrip1
             // 
             statusStrip1.Items.AddRange(new ToolStripItem[] { InitiatorStatus, toolStripStatusLabel1, AcceptorStatus });
@@ -616,6 +676,13 @@
             label1.Size = new Size(1769, 2);
             label1.TabIndex = 4;
             // 
+            // analisadorToolStripMenuItem
+            // 
+            analisadorToolStripMenuItem.Name = "analisadorToolStripMenuItem";
+            analisadorToolStripMenuItem.Size = new Size(180, 22);
+            analisadorToolStripMenuItem.Text = "Analisar log Fix";
+            analisadorToolStripMenuItem.Click += analisadorToolStripMenuItem_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -627,6 +694,7 @@
             Controls.Add(GroupBox2);
             Controls.Add(GroupBox1);
             Controls.Add(menuStrip1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             ImeMode = ImeMode.Disable;
             KeyPreview = true;
             MainMenuStrip = menuStrip1;
@@ -711,5 +779,10 @@
         private DataGridViewTextBoxColumn ClOrderId;
         private DataGridViewTextBoxColumn OrigClOrderId;
         private DataGridViewTextBoxColumn FixMsg;
+        private ToolStripMenuItem ajudaToolStripMenuItem;
+        private ToolStripMenuItem mensagensEComportamentosToolStripMenuItem;
+        private ToolStripMenuItem sobreToolStripMenuItem;
+        private ToolStripMenuItem análiseToolStripMenuItem;
+        private ToolStripMenuItem analisadorToolStripMenuItem;
     }
 }
