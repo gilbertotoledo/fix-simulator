@@ -100,22 +100,22 @@ namespace Business.FixApp
             });
         }
 
-        public void SendErNewToLastMessage()
+        public async Task SendErNewToLastMessageAsync()
         {
             var er = ExecutionReportBuilder.NewFromNewOrderSingle((NewOrderSingle)ReceivedMessages.LastOrDefault());
-            Send(er, _sessions.FirstOrDefault()?.SessionID);
+            await SendAsync(er);
         }
 
-        public void SendErFilledToLastMessage()
+        public async Task SendErFilledToLastMessageAsync()
         {
             var er = ExecutionReportBuilder.FilledFromNewOrderSingle((NewOrderSingle)ReceivedMessages.LastOrDefault());
-            Send(er, _sessions.FirstOrDefault()?.SessionID);
+            await SendAsync(er);
         }
 
-        public void SendErFilled(NewOrderSingle order, string clOrderId, string status, string applId)
+        public async Task SendErFilledAsync(NewOrderSingle order, string clOrderId, string status, string applId)
         {
             var er = ExecutionReportBuilder.FilledWithClOrderId(order, clOrderId, status, applId);
-            Send(er, _sessions.FirstOrDefault()?.SessionID);
+            await SendAsync(er);
         }
     }
 }

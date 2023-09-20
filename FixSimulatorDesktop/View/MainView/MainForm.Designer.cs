@@ -91,9 +91,9 @@
             InitiatorStatus = new ToolStripStatusLabel();
             toolStripStatusLabel1 = new ToolStripStatusLabel();
             AcceptorStatus = new ToolStripStatusLabel();
-            label1 = new Label();
-            TipStripStatusLabel = new ToolStripStatusLabel();
             toolStripStatusLabel2 = new ToolStripStatusLabel();
+            TipStripStatusLabel = new ToolStripStatusLabel();
+            label1 = new Label();
             GroupBox1.SuspendLayout();
             groupBox7.SuspendLayout();
             InitiatorLogGroup.SuspendLayout();
@@ -612,28 +612,28 @@
             // AcceptorStartToolStripMenuItem
             // 
             AcceptorStartToolStripMenuItem.Name = "AcceptorStartToolStripMenuItem";
-            AcceptorStartToolStripMenuItem.Size = new Size(169, 22);
+            AcceptorStartToolStripMenuItem.Size = new Size(180, 22);
             AcceptorStartToolStripMenuItem.Text = "Iniciar";
             AcceptorStartToolStripMenuItem.Click += AcceptorStartToolStripMenuItem_Click;
             // 
             // AcceptorClearLogToolStripMenuItem
             // 
             AcceptorClearLogToolStripMenuItem.Name = "AcceptorClearLogToolStripMenuItem";
-            AcceptorClearLogToolStripMenuItem.Size = new Size(169, 22);
+            AcceptorClearLogToolStripMenuItem.Size = new Size(180, 22);
             AcceptorClearLogToolStripMenuItem.Text = "Limpar log";
             AcceptorClearLogToolStripMenuItem.Click += AcceptorClearLogToolStripMenuItem_Click;
             // 
             // AcceptorClearStoreToolStripMenuItem1
             // 
             AcceptorClearStoreToolStripMenuItem1.Name = "AcceptorClearStoreToolStripMenuItem1";
-            AcceptorClearStoreToolStripMenuItem1.Size = new Size(169, 22);
+            AcceptorClearStoreToolStripMenuItem1.Size = new Size(180, 22);
             AcceptorClearStoreToolStripMenuItem1.Text = "Limpar store";
             AcceptorClearStoreToolStripMenuItem1.Click += AcceptorClearStoreToolStripMenuItem1_Click;
             // 
             // AcceptorFixConfigToolStripMenuItem1
             // 
             AcceptorFixConfigToolStripMenuItem1.Name = "AcceptorFixConfigToolStripMenuItem1";
-            AcceptorFixConfigToolStripMenuItem1.Size = new Size(169, 22);
+            AcceptorFixConfigToolStripMenuItem1.Size = new Size(180, 22);
             AcceptorFixConfigToolStripMenuItem1.Text = "Configurações Fix";
             AcceptorFixConfigToolStripMenuItem1.Click += AcceptorFixConfigToolStripMenuItem1_Click;
             // 
@@ -647,7 +647,7 @@
             // ClearMessageListToolStripMenuItem
             // 
             ClearMessageListToolStripMenuItem.Name = "ClearMessageListToolStripMenuItem";
-            ClearMessageListToolStripMenuItem.Size = new Size(135, 22);
+            ClearMessageListToolStripMenuItem.Size = new Size(180, 22);
             ClearMessageListToolStripMenuItem.Text = "Limpar lista";
             ClearMessageListToolStripMenuItem.Click += ClearMessageListToolStripMenuItem_Click;
             // 
@@ -661,7 +661,7 @@
             // AnalisadorToolStripMenuItem
             // 
             AnalisadorToolStripMenuItem.Name = "AnalisadorToolStripMenuItem";
-            AnalisadorToolStripMenuItem.Size = new Size(154, 22);
+            AnalisadorToolStripMenuItem.Size = new Size(180, 22);
             AnalisadorToolStripMenuItem.Text = "Analisar log Fix";
             AnalisadorToolStripMenuItem.Click += AnalisadorToolStripMenuItem_Click;
             // 
@@ -675,7 +675,7 @@
             // mensagensEComportamentosToolStripMenuItem
             // 
             mensagensEComportamentosToolStripMenuItem.Name = "mensagensEComportamentosToolStripMenuItem";
-            mensagensEComportamentosToolStripMenuItem.Size = new Size(152, 22);
+            mensagensEComportamentosToolStripMenuItem.Size = new Size(180, 22);
             mensagensEComportamentosToolStripMenuItem.Text = "Manual de uso";
             // 
             // statusStrip1
@@ -705,6 +705,18 @@
             AcceptorStatus.Size = new Size(98, 17);
             AcceptorStatus.Text = "Acceptor: Parado";
             // 
+            // toolStripStatusLabel2
+            // 
+            toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            toolStripStatusLabel2.Size = new Size(10, 17);
+            toolStripStatusLabel2.Text = "|";
+            // 
+            // TipStripStatusLabel
+            // 
+            TipStripStatusLabel.Name = "TipStripStatusLabel";
+            TipStripStatusLabel.Size = new Size(16, 17);
+            TipStripStatusLabel.Text = "...";
+            // 
             // label1
             // 
             label1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
@@ -713,18 +725,6 @@
             label1.Name = "label1";
             label1.Size = new Size(1769, 2);
             label1.TabIndex = 4;
-            // 
-            // TipStripStatusLabel
-            // 
-            TipStripStatusLabel.Name = "TipStripStatusLabel";
-            TipStripStatusLabel.Size = new Size(16, 17);
-            TipStripStatusLabel.Text = "...";
-            // 
-            // toolStripStatusLabel2
-            // 
-            toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            toolStripStatusLabel2.Size = new Size(10, 17);
-            toolStripStatusLabel2.Text = "|";
             // 
             // MainForm
             // 

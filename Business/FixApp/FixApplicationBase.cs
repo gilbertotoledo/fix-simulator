@@ -1,4 +1,5 @@
-﻿using Business.State;
+﻿using Business.FixApp.Order;
+using Business.State;
 using QuickFix;
 using QuickFix.FIX44;
 using Message = QuickFix.Message;
@@ -93,11 +94,18 @@ namespace Business.FixApp
             _logger.Invoke($"ToApp {message}");
         }
 
-        public void Send(Message message)
+        public async Task SendAsync(Message message)
         {
-            _logger.Invoke($"[ANTES] NextTargetMsgSeqNum: {_sessions.FirstOrDefault()?.NextTargetMsgSeqNum} | NextSenderMsgSeqNum: {_sessions.FirstOrDefault()?.NextSenderMsgSeqNum}");
-            Send(message, _sessions.FirstOrDefault()?.SessionID);
-            _logger.Invoke($"[DEPOIS] NextTargetMsgSeqNum: {_sessions.FirstOrDefault()?.NextTargetMsgSeqNum} | NextSenderMsgSeqNum: {_sessions.FirstOrDefault()?.NextSenderMsgSeqNum}");
+            await Task.Run(() =>
+            {
+                _logger.Invoke($"[ANTES] NextTargetMsgSeqNum: {_sessions.FirstOrDefault()?.NextTargetMsgSeqNum} | NextSenderMsgSeqNum: {_sessions.FirstOrDefault()?.NextSenderMsgSeqNum}");
+                _sessions.ForEach(session =>
+                {
+                    Send(message, session.SessionID);
+                });
+                _logger.Invoke($"[DEPOIS] NextTargetMsgSeqNum: {_sessions.FirstOrDefault()?.NextTargetMsgSeqNum} | NextSenderMsgSeqNum: {_sessions.FirstOrDefault()?.NextSenderMsgSeqNum}");
+            });
+
         }
 
         public void Send(Message message, SessionID sessionID)

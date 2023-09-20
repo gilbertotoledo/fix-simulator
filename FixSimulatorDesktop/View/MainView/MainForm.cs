@@ -136,40 +136,28 @@ namespace FixSimulatorDesktop
 
         private void InitiatorNewOrderSingleFastBtn_Click(object sender, EventArgs e)
         {
-            Task.Run(() =>
-            {
-                var order = OrderBuilder.NewOrderSingle(StateManager.Account, StateManager.Symbol, StateManager.Side, StateManager.Operation, StateManager.Price, StateManager.Quantity);
-                _fixManager.InitiatorFixApp.Send(order);
-            });
+            var order = OrderBuilder.NewOrderSingle(StateManager.Account, StateManager.Symbol, StateManager.Side, StateManager.Operation, StateManager.Price, StateManager.Quantity);
+            _ = _fixManager.InitiatorFixApp.SendAsync(order);
         }
 
         private void InitiatorNewOrderSingleBtn_Click(object sender, EventArgs e)
         {
             var newOrderSingleForm = new NewOrderSingleForm(() =>
             {
-                Task.Run(() =>
-                {
-                    var order = OrderBuilder.NewOrderSingle(StateManager.Account, StateManager.Symbol, StateManager.Side, StateManager.Operation, StateManager.Price, StateManager.Quantity);
-                    _fixManager.InitiatorFixApp.Send(order);
-                });
+                var order = OrderBuilder.NewOrderSingle(StateManager.Account, StateManager.Symbol, StateManager.Side, StateManager.Operation, StateManager.Price, StateManager.Quantity);
+                _ = _fixManager.InitiatorFixApp.SendAsync(order);
             });
             newOrderSingleForm.ShowDialog();
         }
 
         private void ExecutionReportBtn_Click(object sender, EventArgs e)
         {
-            Task.Run(() =>
-            {
-                _fixManager.AcceptorFixApp.SendErNewToLastMessage();
-            });
+            _ = _fixManager.AcceptorFixApp.SendErNewToLastMessageAsync();
         }
 
         private void ExecutionReportFilledBtn_Click(object sender, EventArgs e)
         {
-            Task.Run(() =>
-            {
-                _fixManager.AcceptorFixApp.SendErFilledToLastMessage();
-            });
+            _ = _fixManager.AcceptorFixApp.SendErFilledToLastMessageAsync();
         }
 
         private void AcceptorMacrosClb_ItemCheck(object sender, ItemCheckEventArgs e)
@@ -194,7 +182,6 @@ namespace FixSimulatorDesktop
                     StateManager.AcceptorMacroExecutionReportCancelReject = e.NewValue == CheckState.Checked; break;
             }
         }
-
 
         private void OnMessageReceivedOrSent(QuickFix.Message message)
         {
@@ -261,7 +248,7 @@ namespace FixSimulatorDesktop
                     (int newQty, decimal newPrice) =>
                 {
                     var replaceMessage = OrderBuilder.OrderCancelReplaceRequest(lastNewOrderSingle, newQty, newPrice);
-                    this._fixManager.InitiatorFixApp.Send(replaceMessage);
+                    _ = this._fixManager.InitiatorFixApp.SendAsync(replaceMessage);
                 });
                 replaceMessageForm.ShowDialog();
             }
@@ -275,7 +262,7 @@ namespace FixSimulatorDesktop
             if (lastNewOrderSingle != null)
             {
                 var replaceMessage = OrderBuilder.OrderCancelRequest(lastNewOrderSingle);
-                this._fixManager.InitiatorFixApp.Send(replaceMessage);
+                _ = this._fixManager.InitiatorFixApp.SendAsync(replaceMessage);
             }
         }
 
@@ -501,11 +488,8 @@ namespace FixSimulatorDesktop
         {
             new ExecutionReportView((string clOrderId, string status, string applId) =>
             {
-                Task.Run(() =>
-                {
-                    var order = OrderBuilder.NewOrderSingle(StateManager.Account, StateManager.Symbol, StateManager.Side, StateManager.Operation, StateManager.Price, StateManager.Quantity);
-                    _fixManager.AcceptorFixApp.SendErFilled(order, clOrderId, status, applId);
-                });
+                var order = OrderBuilder.NewOrderSingle(StateManager.Account, StateManager.Symbol, StateManager.Side, StateManager.Operation, StateManager.Price, StateManager.Quantity);
+                _ = _fixManager.AcceptorFixApp.SendErFilledAsync(order, clOrderId, status, applId);
             }).ShowDialog();
         }
     }
