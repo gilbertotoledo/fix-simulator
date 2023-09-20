@@ -1,10 +1,10 @@
-using FixSimulatorDesktop.Business.FixApp;
-using FixSimulatorDesktop.Business.FixApp.Order;
-using FixSimulatorDesktop.Helper;
-using FixSimulatorDesktop.State;
+using Business.FixApp;
+using Business.FixApp.Order;
+using Business.Helper;
+using Business.State;
 using FixSimulatorDesktop.View;
+using FixSimulatorDesktop.View.ExecutionReportView;
 using FixSimulatorDesktop.View.LongTextView;
-using FixSimulatorDesktop.View.MainView;
 using FixSimulatorDesktop.View.Tools.LogFixAnalyzer;
 using QuickFix.Fields;
 using QuickFix.FIX44;
@@ -26,6 +26,7 @@ namespace FixSimulatorDesktop
             ToggleInitiatorButtons(false);
             ToggleAcceptorButtons(false);
 
+            TipStripStatusLabel.Text = "Dica: Utilize Ctrl+ ou Ctrl- para aumentar/diminuir a fonte";
             _fixManager = new FixApplicationManager(InitiatorAppendLog, AcceptorAppendLog, OnMessageReceivedOrSent);
         }
 
@@ -61,6 +62,7 @@ namespace FixSimulatorDesktop
             AcceptorClearStoreToolStripMenuItem1.Enabled = !isRunning;
             ExecutionReportNewBtn.Enabled = isRunning;
             ExecutionReportFilledBtn.Enabled = isRunning;
+            ExecutionReportPersonalBtn.Enabled = isRunning;
         }
 
         private void AcceptorAppendLog(string text)
@@ -490,14 +492,21 @@ namespace FixSimulatorDesktop
             textViewForm.ShowDialog();
         }
 
-        private void sobreToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            new AboutView().ShowDialog();
-        }
-
-        private void analisadorToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AnalisadorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new LogFixAnalyzerView().ShowDialog();
+        }
+
+        private void ErPersonalBtn_Click(object sender, EventArgs e)
+        {
+            new ExecutionReportView((string clOrderId, string status, string applId) =>
+            {
+                Task.Run(() =>
+                {
+                    var order = OrderBuilder.NewOrderSingle(StateManager.Account, StateManager.Symbol, StateManager.Side, StateManager.Operation, StateManager.Price, StateManager.Quantity);
+                    _fixManager.AcceptorFixApp.SendErFilled(order, clOrderId, status, applId);
+                });
+            }).ShowDialog();
         }
     }
 }

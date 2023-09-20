@@ -1,10 +1,10 @@
-﻿using FixSimulatorDesktop.Business.FixApp.Order;
-using FixSimulatorDesktop.State;
+﻿using Business.FixApp.Order;
+using Business.State;
 using QuickFix;
 using QuickFix.FIX44;
 using Message = QuickFix.Message;
 
-namespace FixSimulatorDesktop.Business.FixApp
+namespace Business.FixApp
 {
     public class AcceptorFixApp : FixApplicationBase
     {
@@ -109,6 +109,12 @@ namespace FixSimulatorDesktop.Business.FixApp
         public void SendErFilledToLastMessage()
         {
             var er = ExecutionReportBuilder.FilledFromNewOrderSingle((NewOrderSingle)ReceivedMessages.LastOrDefault());
+            Send(er, _sessions.FirstOrDefault()?.SessionID);
+        }
+
+        public void SendErFilled(NewOrderSingle order, string clOrderId, string status, string applId)
+        {
+            var er = ExecutionReportBuilder.FilledWithClOrderId(order, clOrderId, status, applId);
             Send(er, _sessions.FirstOrDefault()?.SessionID);
         }
     }

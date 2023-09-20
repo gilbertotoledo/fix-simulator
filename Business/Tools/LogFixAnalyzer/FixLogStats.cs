@@ -1,8 +1,6 @@
-﻿using QuickFix.Fields;
-using System.Runtime.CompilerServices;
-using System.Text;
+﻿using System.Text;
 
-namespace FixSimulatorDesktop.Business.Tools.LogFixAnalyzer
+namespace Business.Tools.LogFixAnalyzer
 {
     public class FixLogStats
     {
@@ -23,22 +21,27 @@ namespace FixSimulatorDesktop.Business.Tools.LogFixAnalyzer
                     <tbody>{lines}</tbody>
                 </table>
             </body>
-            </html>";
-
-        
+            </html>";        
 
         public void ProcessText(string text)
         {
-            var start = text.IndexOf("8=FIX.4.4");
-            var message = text[start..];
-            var tags = message.Split("\u0001").ToList();
+            try
+            {
+                var start = text.IndexOf("8=FIX.4.4");
+                var message = text[start..];
+                var tags = message.Split("\u0001").ToList();
 
-            AddMessageStats(tags);
+                AddMessageStats(tags);
+            }
+            catch
+            {
+                //do nothing
+            }
         }
 
         private void AddMessageStats(List<string> tags)
         {
-            var msgType = GetTagValue(tags, "35");
+            var msgType = GetTagValue(tags, "35") ?? string.Empty;
 
             var mt = Messages.FirstOrDefault(p => p.MsgType == msgType);
             if (mt is null)
@@ -53,7 +56,7 @@ namespace FixSimulatorDesktop.Business.Tools.LogFixAnalyzer
 
         private static string GetTagValue(List<string> tags, string tag)
         {
-            return tags.Find(t => t.StartsWith($"{tag}="))?.Replace($"{tag}=", "");
+            return tags?.Find(t => t.StartsWith($"{tag}="))?.Replace($"{tag}=", "");
         }
 
         public string GenerateReport(string path)

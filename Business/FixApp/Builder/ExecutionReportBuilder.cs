@@ -1,11 +1,12 @@
-﻿using QuickFix.Fields;
+﻿using Business.FixApp.Builder;
+using QuickFix.Fields;
 using QuickFix.FIX44;
 
-namespace FixSimulatorDesktop.Business.FixApp.Order
+namespace Business.FixApp.Order
 {
     public static class ExecutionReportBuilder
     {
-        public static ExecutionReport NewFromNewOrderSingle(NewOrderSingle newOrderSingle)
+        public static ExecutionReport NewFromNewOrderSingle(NewOrderSingle newOrderSingle, string applId = null)
         {
             var exReport = new ExecutionReport(
                 new OrderID(Guid.NewGuid().ToString()),
@@ -18,11 +19,15 @@ namespace FixSimulatorDesktop.Business.FixApp.Order
                 new CumQty(newOrderSingle.OrderQty.getValue()),
                 new AvgPx(0))
             {
+                Account = newOrderSingle.Account,
                 ClOrdID = new ClOrdID(Guid.NewGuid().ToString()),
                 OrigClOrdID = new OrigClOrdID(newOrderSingle.ClOrdID.getValue()),
                 OrderQty = new OrderQty(newOrderSingle.OrderQty.getValue()),
                 TransactTime = new TransactTime(DateTime.Now)
             };
+
+            exReport.SetApplId(applId);
+            exReport.AddDefaultGroups(newOrderSingle.Account.getValue());
 
             if (newOrderSingle.GetChar(new OrdType().Tag) == OrdType.MARKET)
             {
@@ -35,14 +40,10 @@ namespace FixSimulatorDesktop.Business.FixApp.Order
                 exReport.AvgPx = new AvgPx(newOrderSingle.Price.getValue());
             }
 
-            if (newOrderSingle.IsSetAccount())
-                exReport.SetField(newOrderSingle.Account);
-
-            exReport.NoPartyIDs = new NoPartyIDs(0);
             return exReport;
         }
 
-        public static ExecutionReport FilledFromNewOrderSingle(NewOrderSingle newOrderSingle)
+        public static ExecutionReport FilledFromNewOrderSingle(NewOrderSingle newOrderSingle, string applId = null)
         {
             var exReport = new ExecutionReport(
                 new OrderID(Guid.NewGuid().ToString()),
@@ -55,11 +56,15 @@ namespace FixSimulatorDesktop.Business.FixApp.Order
                 new CumQty(newOrderSingle.OrderQty.getValue()),
                 new AvgPx(0))
             {
+                Account = newOrderSingle.Account,
                 ClOrdID = new ClOrdID(Guid.NewGuid().ToString()),
                 OrigClOrdID = new OrigClOrdID(newOrderSingle.ClOrdID.getValue()),
                 OrderQty = new OrderQty(newOrderSingle.OrderQty.getValue()),
                 TransactTime = new TransactTime(DateTime.Now)
             };
+
+            exReport.SetApplId(applId);
+            exReport.AddDefaultGroups(newOrderSingle.Account.getValue());
 
             if (newOrderSingle.GetChar(new OrdType().Tag) == OrdType.MARKET)
             {
@@ -72,14 +77,47 @@ namespace FixSimulatorDesktop.Business.FixApp.Order
                 exReport.AvgPx = new AvgPx(newOrderSingle.Price.getValue());
             }
 
-            if (newOrderSingle.IsSetAccount())
-                exReport.SetField(newOrderSingle.Account);
-
-            exReport.NoPartyIDs = new NoPartyIDs(0);
             return exReport;
         }
 
-        public static ExecutionReport PartiallyFilledFromNewOrderSingle(NewOrderSingle newOrderSingle, decimal qty)
+        public static ExecutionReport FilledWithClOrderId(NewOrderSingle newOrderSingle, string clOrderId, string status, string applId = null)
+        {
+            var exReport = new ExecutionReport(
+                new OrderID(Guid.NewGuid().ToString()),
+                new ExecID(Guid.NewGuid().ToString()),
+                new ExecType(status == "New" ? ExecType.NEW : ExecType.FILL),
+                new OrdStatus(status == "New" ? OrdStatus.NEW : OrdStatus.FILLED),
+                newOrderSingle.Symbol,
+                newOrderSingle.Side,
+                new LeavesQty(0),
+                new CumQty(newOrderSingle.OrderQty.getValue()),
+                new AvgPx(0))
+            {
+                Account = newOrderSingle.Account,
+                ClOrdID = new ClOrdID(clOrderId),
+                OrigClOrdID = new OrigClOrdID(clOrderId),
+                OrderQty = new OrderQty(newOrderSingle.OrderQty.getValue()),
+                TransactTime = new TransactTime(DateTime.Now)
+            };
+
+            exReport.SetApplId(applId);
+            exReport.AddDefaultGroups(newOrderSingle.Account.getValue());
+
+            if (newOrderSingle.GetChar(new OrdType().Tag) == OrdType.MARKET)
+            {
+                exReport.Price = new Price(10);
+                exReport.AvgPx = new AvgPx(10);
+            }
+            else
+            {
+                exReport.Price = new Price(newOrderSingle.Price.getValue());
+                exReport.AvgPx = new AvgPx(newOrderSingle.Price.getValue());
+            }
+
+            return exReport;
+        }
+
+        public static ExecutionReport PartiallyFilledFromNewOrderSingle(NewOrderSingle newOrderSingle, decimal qty, string applId = null)
         {
             var exReport = new ExecutionReport(
                 new OrderID(Guid.NewGuid().ToString()),
@@ -92,20 +130,20 @@ namespace FixSimulatorDesktop.Business.FixApp.Order
                 new CumQty(qty),
                 new AvgPx(newOrderSingle.Price.getValue()))
             {
+                Account = newOrderSingle.Account,
                 ClOrdID = new ClOrdID(Guid.NewGuid().ToString()),
                 OrigClOrdID = new OrigClOrdID(newOrderSingle.ClOrdID.getValue()),
                 OrderQty = new OrderQty(newOrderSingle.OrderQty.getValue()),
                 TransactTime = new TransactTime(DateTime.Now)
             };
 
-            if (newOrderSingle.IsSetAccount())
-                exReport.SetField(newOrderSingle.Account);
-
-            exReport.NoPartyIDs = new NoPartyIDs(0);
+            exReport.SetApplId(applId);
+            exReport.AddDefaultGroups(newOrderSingle.Account.getValue());
+            
             return exReport;
         }
 
-        public static ExecutionReport ReplacedFromCancelReplaceRequest(OrderCancelReplaceRequest orderCancelReplaceRequest)
+        public static ExecutionReport ReplacedFromCancelReplaceRequest(OrderCancelReplaceRequest orderCancelReplaceRequest, string applId = null)
         {
             var exReport = new ExecutionReport(
                 new OrderID(Guid.NewGuid().ToString()),
@@ -118,20 +156,20 @@ namespace FixSimulatorDesktop.Business.FixApp.Order
                 new CumQty(orderCancelReplaceRequest.OrderQty.getValue()),
                 new AvgPx(orderCancelReplaceRequest.Price.getValue()))
             {
+                Account = orderCancelReplaceRequest.Account,
                 ClOrdID = new ClOrdID(Guid.NewGuid().ToString()),
                 OrigClOrdID = new OrigClOrdID(orderCancelReplaceRequest.ClOrdID.getValue()),
                 OrderQty = new OrderQty(orderCancelReplaceRequest.OrderQty.getValue()),
                 TransactTime = new TransactTime(DateTime.Now)
             };
 
-            if (orderCancelReplaceRequest.IsSetAccount())
-                exReport.SetField(orderCancelReplaceRequest.Account);
+            exReport.SetApplId(applId);
+            exReport.AddDefaultGroups(orderCancelReplaceRequest.Account.getValue());
 
-            exReport.NoPartyIDs = new NoPartyIDs(0);
             return exReport;
         }
 
-        public static ExecutionReport ReplaceRejectionFromCancelReplaceRequest(OrderCancelReplaceRequest orderCancelReplaceRequest)
+        public static ExecutionReport ReplaceRejectionFromCancelReplaceRequest(OrderCancelReplaceRequest orderCancelReplaceRequest, string applId = null)
         {
             var exReport = new ExecutionReport(
                 new OrderID(Guid.NewGuid().ToString()),
@@ -144,20 +182,20 @@ namespace FixSimulatorDesktop.Business.FixApp.Order
                 new CumQty(orderCancelReplaceRequest.OrderQty.getValue()),
                 new AvgPx(orderCancelReplaceRequest.Price.getValue()))
             {
+                Account = orderCancelReplaceRequest.Account,
                 ClOrdID = new ClOrdID(Guid.NewGuid().ToString()),
                 OrigClOrdID = new OrigClOrdID(orderCancelReplaceRequest.ClOrdID.getValue()),
                 OrderQty = new OrderQty(orderCancelReplaceRequest.OrderQty.getValue()),
                 TransactTime = new TransactTime(DateTime.Now)
             };
 
-            if (orderCancelReplaceRequest.IsSetAccount())
-                exReport.SetField(orderCancelReplaceRequest.Account);
+            exReport.SetApplId(applId);
+            exReport.AddDefaultGroups(orderCancelReplaceRequest.Account.getValue());
 
-            exReport.NoPartyIDs = new NoPartyIDs(0);
             return exReport;
         }
 
-        public static ExecutionReport CanceledFromCancelRequest(OrderCancelRequest orderCancelRequest)
+        public static ExecutionReport CanceledFromCancelRequest(OrderCancelRequest orderCancelRequest, string applId = null)
         {
             var exReport = new ExecutionReport(
                 new OrderID(Guid.NewGuid().ToString()),
@@ -170,20 +208,20 @@ namespace FixSimulatorDesktop.Business.FixApp.Order
                 new CumQty(orderCancelRequest.OrderQty.getValue()),
                 new AvgPx(0))
             {
+                Account = orderCancelRequest.Account,
                 ClOrdID = new ClOrdID(Guid.NewGuid().ToString()),
                 OrigClOrdID = new OrigClOrdID(orderCancelRequest.ClOrdID.getValue()),
                 OrderQty = new OrderQty(orderCancelRequest.OrderQty.getValue()),
                 TransactTime = new TransactTime(DateTime.Now)
             };
 
-            if (orderCancelRequest.IsSetAccount())
-                exReport.SetField(orderCancelRequest.Account);
+            exReport.SetApplId(applId);
+            exReport.AddDefaultGroups(orderCancelRequest.Account.getValue());
 
-            exReport.NoPartyIDs = new NoPartyIDs(0);
             return exReport;
         }
 
-        public static ExecutionReport CancelRejectionFromCancelRequest(OrderCancelRequest orderCancelRequest)
+        public static ExecutionReport CancelRejectionFromCancelRequest(OrderCancelRequest orderCancelRequest, string applId = null)
         {
             var exReport = new ExecutionReport(
                 new OrderID(Guid.NewGuid().ToString()),
@@ -196,16 +234,16 @@ namespace FixSimulatorDesktop.Business.FixApp.Order
                 new CumQty(orderCancelRequest.OrderQty.getValue()),
                 new AvgPx(0))
             {
+                Account = orderCancelRequest.Account,
                 ClOrdID = new ClOrdID(Guid.NewGuid().ToString()),
                 OrigClOrdID = new OrigClOrdID(orderCancelRequest.ClOrdID.getValue()),
                 OrderQty = new OrderQty(orderCancelRequest.OrderQty.getValue()),
                 TransactTime = new TransactTime(DateTime.Now)
             };
 
-            if (orderCancelRequest.IsSetAccount())
-                exReport.SetField(orderCancelRequest.Account);
+            exReport.SetApplId(applId);
+            exReport.AddDefaultGroups(orderCancelRequest.Account.getValue());
 
-            exReport.NoPartyIDs = new NoPartyIDs(0);
             return exReport;
         }
     }

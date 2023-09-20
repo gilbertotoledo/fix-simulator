@@ -1,6 +1,6 @@
-﻿using FixSimulatorDesktop.Helper;
+﻿using Business.Helper;
 
-namespace FixSimulatorDesktop.State
+namespace Business.State
 {
     public static class StateManager
     {

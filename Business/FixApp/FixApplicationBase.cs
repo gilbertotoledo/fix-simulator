@@ -1,9 +1,9 @@
-﻿using FixSimulatorDesktop.State;
+﻿using Business.State;
 using QuickFix;
 using QuickFix.FIX44;
 using Message = QuickFix.Message;
 
-namespace FixSimulatorDesktop.Business.FixApp
+namespace Business.FixApp
 {
     public class FixApplicationBase : MessageCracker, IApplication
     {

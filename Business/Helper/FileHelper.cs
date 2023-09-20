@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace FixSimulatorDesktop.Helper
+namespace Business.Helper
 {
     public static class FileHelper
     {

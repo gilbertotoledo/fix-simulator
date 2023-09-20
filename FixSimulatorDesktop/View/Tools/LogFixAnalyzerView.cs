@@ -1,4 +1,4 @@
-﻿using FixSimulatorDesktop.Business.Tools.LogFixAnalyzer;
+﻿using Business.Tools.LogFixAnalyzer;
 using System.Diagnostics;
 using System.Text;
 
@@ -57,10 +57,12 @@ namespace FixSimulatorDesktop.View.Tools.LogFixAnalyzer
                 string reportFile = FixLogStats.GenerateReport(@"C:\temp");
                 if (reportFile != null)
                 {
-                    var p = new Process();
-                    p.StartInfo = new ProcessStartInfo(reportFile)
+                    var p = new Process()
                     {
-                        UseShellExecute = true
+                        StartInfo = new ProcessStartInfo(reportFile)
+                        {
+                            UseShellExecute = true
+                        }
                     };
                     p.Start();
                 }

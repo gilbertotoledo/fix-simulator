@@ -1,4 +1,4 @@
-﻿namespace FixSimulatorDesktop.Business.FixApp
+﻿namespace Business.FixApp
 {
     public static class FixDictionary
     {

@@ -1,7 +1,7 @@
 ﻿using System.Configuration;
 using System.Globalization;
 
-namespace FixSimulatorDesktop.Helper
+namespace Business.Helper
 {
     public static class ConfigHelper
     {

@@ -42,8 +42,10 @@
             InitiatorNewOrderSingleFastBtn = new Button();
             InitiatorLogGroup = new GroupBox();
             InitiatorLogRTxt = new RichTextBox();
+            splitContainer1 = new SplitContainer();
             GroupBox2 = new GroupBox();
             groupBox8 = new GroupBox();
+            ExecutionReportPersonalBtn = new Button();
             AcceptorShowSentChb = new CheckBox();
             ExecutionReportFilledBtn = new Button();
             AcceptorShowReceivedChb = new CheckBox();
@@ -68,50 +70,55 @@
             ClOrderId = new DataGridViewTextBoxColumn();
             OrigClOrderId = new DataGridViewTextBoxColumn();
             FixMsg = new DataGridViewTextBoxColumn();
-            menuStrip1 = new MenuStrip();
-            acceptorToolStripMenuItem = new ToolStripMenuItem();
+            MenuStrip = new MenuStrip();
+            InitiatorToolStripMenuItem = new ToolStripMenuItem();
             InitiatorStartToolStripMenuItem = new ToolStripMenuItem();
             InitiatorClearLogToolStripMenuItem = new ToolStripMenuItem();
             InitiatorCleanStoreToolStripMenuItem = new ToolStripMenuItem();
             InitiatorFixConfigToolStripMenuItem = new ToolStripMenuItem();
-            acceptorToolStripMenuItem1 = new ToolStripMenuItem();
+            AcceptorToolStripMenuItem = new ToolStripMenuItem();
             AcceptorStartToolStripMenuItem = new ToolStripMenuItem();
             AcceptorClearLogToolStripMenuItem = new ToolStripMenuItem();
             AcceptorClearStoreToolStripMenuItem1 = new ToolStripMenuItem();
             AcceptorFixConfigToolStripMenuItem1 = new ToolStripMenuItem();
-            mensagensToolStripMenuItem = new ToolStripMenuItem();
+            MessagesToolStripMenuItem = new ToolStripMenuItem();
             ClearMessageListToolStripMenuItem = new ToolStripMenuItem();
-            análiseToolStripMenuItem = new ToolStripMenuItem();
+            ToolsToolStripMenuItem = new ToolStripMenuItem();
+            AnalisadorToolStripMenuItem = new ToolStripMenuItem();
             ajudaToolStripMenuItem = new ToolStripMenuItem();
             mensagensEComportamentosToolStripMenuItem = new ToolStripMenuItem();
-            sobreToolStripMenuItem = new ToolStripMenuItem();
             statusStrip1 = new StatusStrip();
             InitiatorStatus = new ToolStripStatusLabel();
             toolStripStatusLabel1 = new ToolStripStatusLabel();
             AcceptorStatus = new ToolStripStatusLabel();
             label1 = new Label();
-            analisadorToolStripMenuItem = new ToolStripMenuItem();
+            TipStripStatusLabel = new ToolStripStatusLabel();
+            toolStripStatusLabel2 = new ToolStripStatusLabel();
             GroupBox1.SuspendLayout();
             groupBox7.SuspendLayout();
             InitiatorLogGroup.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
+            splitContainer1.Panel1.SuspendLayout();
+            splitContainer1.Panel2.SuspendLayout();
+            splitContainer1.SuspendLayout();
             GroupBox2.SuspendLayout();
             groupBox8.SuspendLayout();
             AcceptorLogGroup.SuspendLayout();
             AcceptorMacros.SuspendLayout();
             GroupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)MessagesDg).BeginInit();
-            menuStrip1.SuspendLayout();
+            MenuStrip.SuspendLayout();
             statusStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // GroupBox1
             // 
-            GroupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            GroupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             GroupBox1.Controls.Add(groupBox7);
             GroupBox1.Controls.Add(InitiatorLogGroup);
-            GroupBox1.Location = new Point(12, 34);
+            GroupBox1.Location = new Point(3, 3);
             GroupBox1.Name = "GroupBox1";
-            GroupBox1.Size = new Size(881, 448);
+            GroupBox1.Size = new Size(865, 442);
             GroupBox1.TabIndex = 0;
             GroupBox1.TabStop = false;
             GroupBox1.Text = "Initiator";
@@ -127,7 +134,7 @@
             groupBox7.Controls.Add(InitiatorNewOrderSingleFastBtn);
             groupBox7.Location = new Point(12, 22);
             groupBox7.Name = "groupBox7";
-            groupBox7.Size = new Size(863, 86);
+            groupBox7.Size = new Size(847, 86);
             groupBox7.TabIndex = 10;
             groupBox7.TabStop = false;
             groupBox7.Text = "Mensagens";
@@ -214,7 +221,7 @@
             InitiatorLogGroup.Controls.Add(InitiatorLogRTxt);
             InitiatorLogGroup.Location = new Point(12, 114);
             InitiatorLogGroup.Name = "InitiatorLogGroup";
-            InitiatorLogGroup.Size = new Size(863, 328);
+            InitiatorLogGroup.Size = new Size(847, 322);
             InitiatorLogGroup.TabIndex = 6;
             InitiatorLogGroup.TabStop = false;
             InitiatorLogGroup.Text = "Log";
@@ -225,10 +232,27 @@
             InitiatorLogRTxt.Location = new Point(6, 22);
             InitiatorLogRTxt.Name = "InitiatorLogRTxt";
             InitiatorLogRTxt.ReadOnly = true;
-            InitiatorLogRTxt.Size = new Size(851, 300);
+            InitiatorLogRTxt.Size = new Size(835, 294);
             InitiatorLogRTxt.TabIndex = 5;
             InitiatorLogRTxt.Text = "";
             InitiatorLogRTxt.DoubleClick += InitiatorLogRTxt_DoubleClick;
+            // 
+            // splitContainer1
+            // 
+            splitContainer1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            splitContainer1.Location = new Point(12, 34);
+            splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            splitContainer1.Panel1.Controls.Add(GroupBox1);
+            // 
+            // splitContainer1.Panel2
+            // 
+            splitContainer1.Panel2.Controls.Add(GroupBox2);
+            splitContainer1.Size = new Size(1748, 448);
+            splitContainer1.SplitterDistance = 871;
+            splitContainer1.TabIndex = 5;
             // 
             // GroupBox2
             // 
@@ -236,9 +260,9 @@
             GroupBox2.Controls.Add(groupBox8);
             GroupBox2.Controls.Add(AcceptorLogGroup);
             GroupBox2.Controls.Add(AcceptorMacros);
-            GroupBox2.Location = new Point(899, 34);
+            GroupBox2.Location = new Point(3, 3);
             GroupBox2.Name = "GroupBox2";
-            GroupBox2.Size = new Size(860, 448);
+            GroupBox2.Size = new Size(864, 442);
             GroupBox2.TabIndex = 1;
             GroupBox2.TabStop = false;
             GroupBox2.Text = "Acceptor";
@@ -246,16 +270,30 @@
             // groupBox8
             // 
             groupBox8.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            groupBox8.Controls.Add(ExecutionReportPersonalBtn);
             groupBox8.Controls.Add(AcceptorShowSentChb);
             groupBox8.Controls.Add(ExecutionReportFilledBtn);
             groupBox8.Controls.Add(AcceptorShowReceivedChb);
             groupBox8.Controls.Add(ExecutionReportNewBtn);
             groupBox8.Location = new Point(6, 22);
             groupBox8.Name = "groupBox8";
-            groupBox8.Size = new Size(842, 86);
+            groupBox8.Size = new Size(846, 86);
             groupBox8.TabIndex = 13;
             groupBox8.TabStop = false;
             groupBox8.Text = "Mensagens";
+            // 
+            // ExecutionReportPersonalBtn
+            // 
+            ExecutionReportPersonalBtn.AutoSize = true;
+            ExecutionReportPersonalBtn.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            ExecutionReportPersonalBtn.Location = new Point(382, 48);
+            ExecutionReportPersonalBtn.Name = "ExecutionReportPersonalBtn";
+            ExecutionReportPersonalBtn.Padding = new Padding(10, 0, 10, 0);
+            ExecutionReportPersonalBtn.Size = new Size(200, 25);
+            ExecutionReportPersonalBtn.TabIndex = 12;
+            ExecutionReportPersonalBtn.Text = "ExecutionReport Personalizado";
+            ExecutionReportPersonalBtn.UseVisualStyleBackColor = true;
+            ExecutionReportPersonalBtn.Click += ErPersonalBtn_Click;
             // 
             // AcceptorShowSentChb
             // 
@@ -313,7 +351,7 @@
             AcceptorLogGroup.Controls.Add(AcceptorLogRTxt);
             AcceptorLogGroup.Location = new Point(6, 114);
             AcceptorLogGroup.Name = "AcceptorLogGroup";
-            AcceptorLogGroup.Size = new Size(442, 328);
+            AcceptorLogGroup.Size = new Size(446, 322);
             AcceptorLogGroup.TabIndex = 7;
             AcceptorLogGroup.TabStop = false;
             AcceptorLogGroup.Text = "Log";
@@ -324,7 +362,7 @@
             AcceptorLogRTxt.Location = new Point(6, 22);
             AcceptorLogRTxt.Name = "AcceptorLogRTxt";
             AcceptorLogRTxt.ReadOnly = true;
-            AcceptorLogRTxt.Size = new Size(430, 300);
+            AcceptorLogRTxt.Size = new Size(434, 294);
             AcceptorLogRTxt.TabIndex = 6;
             AcceptorLogRTxt.Text = "";
             AcceptorLogRTxt.DoubleClick += AcceptorLogRTxt_DoubleClick;
@@ -335,9 +373,9 @@
             AcceptorMacros.Controls.Add(AcceptorIntervalTxt);
             AcceptorMacros.Controls.Add(label7);
             AcceptorMacros.Controls.Add(AcceptorMacrosClb);
-            AcceptorMacros.Location = new Point(454, 114);
+            AcceptorMacros.Location = new Point(458, 114);
             AcceptorMacros.Name = "AcceptorMacros";
-            AcceptorMacros.Size = new Size(400, 328);
+            AcceptorMacros.Size = new Size(400, 322);
             AcceptorMacros.TabIndex = 3;
             AcceptorMacros.TabStop = false;
             AcceptorMacros.Text = "Macros";
@@ -371,7 +409,7 @@
             AcceptorMacrosClb.Location = new Point(6, 48);
             AcceptorMacrosClb.Name = "AcceptorMacrosClb";
             AcceptorMacrosClb.ScrollAlwaysVisible = true;
-            AcceptorMacrosClb.Size = new Size(388, 274);
+            AcceptorMacrosClb.Size = new Size(388, 256);
             AcceptorMacrosClb.TabIndex = 2;
             AcceptorMacrosClb.ItemCheck += AcceptorMacrosClb_ItemCheck;
             // 
@@ -520,21 +558,21 @@
             FixMsg.Name = "FixMsg";
             FixMsg.ReadOnly = true;
             // 
-            // menuStrip1
+            // MenuStrip
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { acceptorToolStripMenuItem, acceptorToolStripMenuItem1, mensagensToolStripMenuItem, análiseToolStripMenuItem, ajudaToolStripMenuItem });
-            menuStrip1.Location = new Point(0, 0);
-            menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1771, 24);
-            menuStrip1.TabIndex = 2;
-            menuStrip1.Text = "menuStrip1";
+            MenuStrip.Items.AddRange(new ToolStripItem[] { InitiatorToolStripMenuItem, AcceptorToolStripMenuItem, MessagesToolStripMenuItem, ToolsToolStripMenuItem, ajudaToolStripMenuItem });
+            MenuStrip.Location = new Point(0, 0);
+            MenuStrip.Name = "MenuStrip";
+            MenuStrip.Size = new Size(1771, 24);
+            MenuStrip.TabIndex = 2;
+            MenuStrip.Text = "MainMenuStrip";
             // 
-            // acceptorToolStripMenuItem
+            // InitiatorToolStripMenuItem
             // 
-            acceptorToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { InitiatorStartToolStripMenuItem, InitiatorClearLogToolStripMenuItem, InitiatorCleanStoreToolStripMenuItem, InitiatorFixConfigToolStripMenuItem });
-            acceptorToolStripMenuItem.Name = "acceptorToolStripMenuItem";
-            acceptorToolStripMenuItem.Size = new Size(60, 20);
-            acceptorToolStripMenuItem.Text = "Initiator";
+            InitiatorToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { InitiatorStartToolStripMenuItem, InitiatorClearLogToolStripMenuItem, InitiatorCleanStoreToolStripMenuItem, InitiatorFixConfigToolStripMenuItem });
+            InitiatorToolStripMenuItem.Name = "InitiatorToolStripMenuItem";
+            InitiatorToolStripMenuItem.Size = new Size(60, 20);
+            InitiatorToolStripMenuItem.Text = "Initiator";
             // 
             // InitiatorStartToolStripMenuItem
             // 
@@ -564,12 +602,12 @@
             InitiatorFixConfigToolStripMenuItem.Text = "Configurações Fix";
             InitiatorFixConfigToolStripMenuItem.Click += InitiatorFixConfigToolStripMenuItem_Click;
             // 
-            // acceptorToolStripMenuItem1
+            // AcceptorToolStripMenuItem
             // 
-            acceptorToolStripMenuItem1.DropDownItems.AddRange(new ToolStripItem[] { AcceptorStartToolStripMenuItem, AcceptorClearLogToolStripMenuItem, AcceptorClearStoreToolStripMenuItem1, AcceptorFixConfigToolStripMenuItem1 });
-            acceptorToolStripMenuItem1.Name = "acceptorToolStripMenuItem1";
-            acceptorToolStripMenuItem1.Size = new Size(67, 20);
-            acceptorToolStripMenuItem1.Text = "Acceptor";
+            AcceptorToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { AcceptorStartToolStripMenuItem, AcceptorClearLogToolStripMenuItem, AcceptorClearStoreToolStripMenuItem1, AcceptorFixConfigToolStripMenuItem1 });
+            AcceptorToolStripMenuItem.Name = "AcceptorToolStripMenuItem";
+            AcceptorToolStripMenuItem.Size = new Size(67, 20);
+            AcceptorToolStripMenuItem.Text = "Acceptor";
             // 
             // AcceptorStartToolStripMenuItem
             // 
@@ -599,12 +637,12 @@
             AcceptorFixConfigToolStripMenuItem1.Text = "Configurações Fix";
             AcceptorFixConfigToolStripMenuItem1.Click += AcceptorFixConfigToolStripMenuItem1_Click;
             // 
-            // mensagensToolStripMenuItem
+            // MessagesToolStripMenuItem
             // 
-            mensagensToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ClearMessageListToolStripMenuItem });
-            mensagensToolStripMenuItem.Name = "mensagensToolStripMenuItem";
-            mensagensToolStripMenuItem.Size = new Size(79, 20);
-            mensagensToolStripMenuItem.Text = "Mensagens";
+            MessagesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ClearMessageListToolStripMenuItem });
+            MessagesToolStripMenuItem.Name = "MessagesToolStripMenuItem";
+            MessagesToolStripMenuItem.Size = new Size(79, 20);
+            MessagesToolStripMenuItem.Text = "Mensagens";
             // 
             // ClearMessageListToolStripMenuItem
             // 
@@ -613,16 +651,23 @@
             ClearMessageListToolStripMenuItem.Text = "Limpar lista";
             ClearMessageListToolStripMenuItem.Click += ClearMessageListToolStripMenuItem_Click;
             // 
-            // análiseToolStripMenuItem
+            // ToolsToolStripMenuItem
             // 
-            análiseToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { analisadorToolStripMenuItem });
-            análiseToolStripMenuItem.Name = "análiseToolStripMenuItem";
-            análiseToolStripMenuItem.Size = new Size(84, 20);
-            análiseToolStripMenuItem.Text = "Ferramentas";
+            ToolsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { AnalisadorToolStripMenuItem });
+            ToolsToolStripMenuItem.Name = "ToolsToolStripMenuItem";
+            ToolsToolStripMenuItem.Size = new Size(84, 20);
+            ToolsToolStripMenuItem.Text = "Ferramentas";
+            // 
+            // AnalisadorToolStripMenuItem
+            // 
+            AnalisadorToolStripMenuItem.Name = "AnalisadorToolStripMenuItem";
+            AnalisadorToolStripMenuItem.Size = new Size(154, 22);
+            AnalisadorToolStripMenuItem.Text = "Analisar log Fix";
+            AnalisadorToolStripMenuItem.Click += AnalisadorToolStripMenuItem_Click;
             // 
             // ajudaToolStripMenuItem
             // 
-            ajudaToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { mensagensEComportamentosToolStripMenuItem, sobreToolStripMenuItem });
+            ajudaToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { mensagensEComportamentosToolStripMenuItem });
             ajudaToolStripMenuItem.Name = "ajudaToolStripMenuItem";
             ajudaToolStripMenuItem.Size = new Size(50, 20);
             ajudaToolStripMenuItem.Text = "Ajuda";
@@ -633,16 +678,9 @@
             mensagensEComportamentosToolStripMenuItem.Size = new Size(152, 22);
             mensagensEComportamentosToolStripMenuItem.Text = "Manual de uso";
             // 
-            // sobreToolStripMenuItem
-            // 
-            sobreToolStripMenuItem.Name = "sobreToolStripMenuItem";
-            sobreToolStripMenuItem.Size = new Size(152, 22);
-            sobreToolStripMenuItem.Text = "Sobre";
-            sobreToolStripMenuItem.Click += sobreToolStripMenuItem_Click;
-            // 
             // statusStrip1
             // 
-            statusStrip1.Items.AddRange(new ToolStripItem[] { InitiatorStatus, toolStripStatusLabel1, AcceptorStatus });
+            statusStrip1.Items.AddRange(new ToolStripItem[] { InitiatorStatus, toolStripStatusLabel1, AcceptorStatus, toolStripStatusLabel2, TipStripStatusLabel });
             statusStrip1.Location = new Point(0, 836);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Size = new Size(1771, 22);
@@ -676,28 +714,32 @@
             label1.Size = new Size(1769, 2);
             label1.TabIndex = 4;
             // 
-            // analisadorToolStripMenuItem
+            // TipStripStatusLabel
             // 
-            analisadorToolStripMenuItem.Name = "analisadorToolStripMenuItem";
-            analisadorToolStripMenuItem.Size = new Size(180, 22);
-            analisadorToolStripMenuItem.Text = "Analisar log Fix";
-            analisadorToolStripMenuItem.Click += analisadorToolStripMenuItem_Click;
+            TipStripStatusLabel.Name = "TipStripStatusLabel";
+            TipStripStatusLabel.Size = new Size(16, 17);
+            TipStripStatusLabel.Text = "...";
+            // 
+            // toolStripStatusLabel2
+            // 
+            toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            toolStripStatusLabel2.Size = new Size(10, 17);
+            toolStripStatusLabel2.Text = "|";
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1771, 858);
+            Controls.Add(splitContainer1);
             Controls.Add(label1);
             Controls.Add(statusStrip1);
             Controls.Add(GroupBox3);
-            Controls.Add(GroupBox2);
-            Controls.Add(GroupBox1);
-            Controls.Add(menuStrip1);
+            Controls.Add(MenuStrip);
             Icon = (Icon)resources.GetObject("$this.Icon");
             ImeMode = ImeMode.Disable;
             KeyPreview = true;
-            MainMenuStrip = menuStrip1;
+            MainMenuStrip = MenuStrip;
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FixSimulatorDesktop";
@@ -707,6 +749,10 @@
             groupBox7.ResumeLayout(false);
             groupBox7.PerformLayout();
             InitiatorLogGroup.ResumeLayout(false);
+            splitContainer1.Panel1.ResumeLayout(false);
+            splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
+            splitContainer1.ResumeLayout(false);
             GroupBox2.ResumeLayout(false);
             groupBox8.ResumeLayout(false);
             groupBox8.PerformLayout();
@@ -715,8 +761,8 @@
             AcceptorMacros.PerformLayout();
             GroupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)MessagesDg).EndInit();
-            menuStrip1.ResumeLayout(false);
-            menuStrip1.PerformLayout();
+            MenuStrip.ResumeLayout(false);
+            MenuStrip.PerformLayout();
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
             ResumeLayout(false);
@@ -746,14 +792,14 @@
         private CheckBox AcceptorShowReceivedChb;
         private TextBox AcceptorIntervalTxt;
         private Label label7;
-        private MenuStrip menuStrip1;
-        private ToolStripMenuItem acceptorToolStripMenuItem;
+        private MenuStrip MenuStrip;
+        private ToolStripMenuItem InitiatorToolStripMenuItem;
         private ToolStripMenuItem InitiatorCleanStoreToolStripMenuItem;
         private ToolStripMenuItem InitiatorFixConfigToolStripMenuItem;
-        private ToolStripMenuItem acceptorToolStripMenuItem1;
+        private ToolStripMenuItem AcceptorToolStripMenuItem;
         private ToolStripMenuItem AcceptorClearStoreToolStripMenuItem1;
         private ToolStripMenuItem AcceptorFixConfigToolStripMenuItem1;
-        private ToolStripMenuItem mensagensToolStripMenuItem;
+        private ToolStripMenuItem MessagesToolStripMenuItem;
         private ToolStripMenuItem ClearMessageListToolStripMenuItem;
         private ToolStripMenuItem InitiatorClearLogToolStripMenuItem;
         private ToolStripMenuItem AcceptorClearLogToolStripMenuItem;
@@ -781,8 +827,11 @@
         private DataGridViewTextBoxColumn FixMsg;
         private ToolStripMenuItem ajudaToolStripMenuItem;
         private ToolStripMenuItem mensagensEComportamentosToolStripMenuItem;
-        private ToolStripMenuItem sobreToolStripMenuItem;
-        private ToolStripMenuItem análiseToolStripMenuItem;
-        private ToolStripMenuItem analisadorToolStripMenuItem;
+        private ToolStripMenuItem ToolsToolStripMenuItem;
+        private ToolStripMenuItem AnalisadorToolStripMenuItem;
+        private Button ExecutionReportPersonalBtn;
+        private SplitContainer splitContainer1;
+        private ToolStripStatusLabel toolStripStatusLabel2;
+        private ToolStripStatusLabel TipStripStatusLabel;
     }
 }

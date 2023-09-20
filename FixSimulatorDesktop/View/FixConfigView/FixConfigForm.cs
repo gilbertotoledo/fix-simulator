@@ -1,4 +1,4 @@
-﻿using FixSimulatorDesktop.Helper;
+﻿using Business.Helper;
 
 namespace FixSimulatorDesktop.View
 {

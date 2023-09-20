@@ -45,8 +45,8 @@
             CancelBtn.BackColor = SystemColors.Control;
             CancelBtn.Location = new Point(23, 88);
             CancelBtn.Name = "CancelBtn";
-            CancelBtn.Size = new Size(163, 23);
-            CancelBtn.TabIndex = 0;
+            CancelBtn.Size = new Size(194, 23);
+            CancelBtn.TabIndex = 4;
             CancelBtn.Text = "Cancelar";
             CancelBtn.UseVisualStyleBackColor = false;
             CancelBtn.Click += CancelBtn_Click;
@@ -56,8 +56,8 @@
             ConfirmBtn.Location = new Point(223, 87);
             ConfirmBtn.Name = "ConfirmBtn";
             ConfirmBtn.Size = new Size(163, 23);
-            ConfirmBtn.TabIndex = 1;
-            ConfirmBtn.Text = "Confirmar";
+            ConfirmBtn.TabIndex = 3;
+            ConfirmBtn.Text = "Executar";
             ConfirmBtn.UseVisualStyleBackColor = true;
             ConfirmBtn.Click += ConfirmBtn_Click;
             // 
@@ -86,7 +86,7 @@
             NewPriceTxt.Location = new Point(94, 45);
             NewPriceTxt.Name = "NewPriceTxt";
             NewPriceTxt.Size = new Size(100, 23);
-            NewPriceTxt.TabIndex = 4;
+            NewPriceTxt.TabIndex = 1;
             // 
             // CurrentPriceTxt
             // 
@@ -109,7 +109,7 @@
             NewQtyTxt.Location = new Point(286, 45);
             NewQtyTxt.Name = "NewQtyTxt";
             NewQtyTxt.Size = new Size(100, 23);
-            NewQtyTxt.TabIndex = 8;
+            NewQtyTxt.TabIndex = 2;
             // 
             // label3
             // 
@@ -149,7 +149,7 @@
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "ReplaceMessageForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "ReplaceMessageForm";
+            Text = "Editar Ordem";
             ResumeLayout(false);
             PerformLayout();
         }

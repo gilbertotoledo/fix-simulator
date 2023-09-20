@@ -1,6 +1,6 @@
-﻿using FixSimulatorDesktop.Business.FixApp;
+﻿using Business.FixApp;
 
-namespace FixSimulatorDesktop.Business.Tools.LogFixAnalyzer
+namespace Business.Tools.LogFixAnalyzer
 {
     public class MessageStats
     {

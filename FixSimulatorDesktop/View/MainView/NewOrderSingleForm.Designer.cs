@@ -51,7 +51,7 @@
             CancelBtn.Location = new Point(23, 115);
             CancelBtn.Name = "CancelBtn";
             CancelBtn.Size = new Size(204, 23);
-            CancelBtn.TabIndex = 9;
+            CancelBtn.TabIndex = 8;
             CancelBtn.Text = "Cancelar";
             CancelBtn.UseVisualStyleBackColor = true;
             CancelBtn.Click += CancelBtn_Click;
@@ -61,7 +61,7 @@
             ExecuteBtn.Location = new Point(233, 116);
             ExecuteBtn.Name = "ExecuteBtn";
             ExecuteBtn.Size = new Size(295, 23);
-            ExecuteBtn.TabIndex = 8;
+            ExecuteBtn.TabIndex = 7;
             ExecuteBtn.Text = "Executar";
             ExecuteBtn.UseVisualStyleBackColor = true;
             ExecuteBtn.Click += ExecuteBtn_Click;
@@ -107,7 +107,7 @@
             OperationCb.Location = new Point(71, 70);
             OperationCb.Name = "OperationCb";
             OperationCb.Size = new Size(100, 23);
-            OperationCb.TabIndex = 7;
+            OperationCb.TabIndex = 6;
             OperationCb.SelectedIndexChanged += OperationCb_SelectedIndexChanged;
             // 
             // label3
@@ -160,7 +160,7 @@
             SideBuyRb.Location = new Point(3, 3);
             SideBuyRb.Name = "SideBuyRb";
             SideBuyRb.Size = new Size(68, 19);
-            SideBuyRb.TabIndex = 5;
+            SideBuyRb.TabIndex = 20;
             SideBuyRb.TabStop = true;
             SideBuyRb.Text = "Compra";
             SideBuyRb.UseVisualStyleBackColor = true;
@@ -172,7 +172,7 @@
             SideSellRb.Location = new Point(72, 3);
             SideSellRb.Name = "SideSellRb";
             SideSellRb.Size = new Size(57, 19);
-            SideSellRb.TabIndex = 6;
+            SideSellRb.TabIndex = 21;
             SideSellRb.Text = "Venda";
             SideSellRb.UseVisualStyleBackColor = true;
             SideSellRb.CheckedChanged += SideSellRb_CheckedChanged;
@@ -181,10 +181,10 @@
             // 
             panel1.Controls.Add(SideBuyRb);
             panel1.Controls.Add(SideSellRb);
-            panel1.Location = new Point(198, 48);
+            panel1.Location = new Point(192, 41);
             panel1.Name = "panel1";
             panel1.Size = new Size(144, 30);
-            panel1.TabIndex = 11;
+            panel1.TabIndex = 5;
             // 
             // NewOrderSingleForm
             // 
@@ -192,7 +192,7 @@
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             CancelButton = CancelBtn;
-            ClientSize = new Size(545, 153);
+            ClientSize = new Size(545, 152);
             Controls.Add(panel1);
             Controls.Add(PriceTxt);
             Controls.Add(label5);

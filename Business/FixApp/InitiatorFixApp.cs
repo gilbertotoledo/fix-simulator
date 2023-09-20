@@ -1,7 +1,7 @@
 ﻿using QuickFix;
 using Message = QuickFix.Message;
 
-namespace FixSimulatorDesktop.Business.FixApp
+namespace Business.FixApp
 {
     public class InitiatorFixApp : FixApplicationBase
     {
@@ -11,7 +11,7 @@ namespace FixSimulatorDesktop.Business.FixApp
 
         public void OnMessage(QuickFix.FIX44.ExecutionReport executionReport, SessionID sessionID)
         {
-            _logger.Invoke($"OnMessage_ExecutionReport {executionReport}");
+            _logger.Invoke($"OnMessage_ExecutionReport | {sessionID} | {executionReport}");
         }
     }
 }
