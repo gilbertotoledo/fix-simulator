@@ -3,7 +3,7 @@ using QuickFix.Transport;
 
 namespace Business.FixApp
 {
-    public class FixApplicationManager
+    public class FixApplicationManager : IDisposable
     {
         private IAcceptor _socketAcceptor = null;
         private IInitiator _socketInitiator = null;
@@ -69,6 +69,13 @@ namespace Business.FixApp
         public void StopInitiator()
         {
             _socketInitiator?.Stop();
+        }
+
+        public void Dispose()
+        {
+            _socketAcceptor?.Dispose();
+            _socketInitiator?.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

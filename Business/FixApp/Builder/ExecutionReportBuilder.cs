@@ -230,14 +230,14 @@ namespace Business.FixApp.Order
                 new OrdStatus(OrdStatus.NEW),
                 orderCancelRequest.Symbol,
                 orderCancelRequest.Side,
-                new LeavesQty(orderCancelRequest.OrderQty.getValue()),
-                new CumQty(orderCancelRequest.OrderQty.getValue()),
+                new LeavesQty(0),
+                new CumQty(0),
                 new AvgPx(0))
             {
                 Account = orderCancelRequest.Account,
                 ClOrdID = new ClOrdID(Guid.NewGuid().ToString()),
                 OrigClOrdID = new OrigClOrdID(orderCancelRequest.ClOrdID.getValue()),
-                OrderQty = new OrderQty(orderCancelRequest.OrderQty.getValue()),
+                OrderQty = new OrderQty(0),
                 TransactTime = new TransactTime(DateTime.Now)
             };
 

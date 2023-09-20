@@ -1,6 +1,5 @@
 ﻿using Business.State;
 using QuickFix;
-using QuickFix.FIX44;
 using Message = QuickFix.Message;
 
 namespace Business.FixApp
@@ -93,6 +92,11 @@ namespace Business.FixApp
             _logger.Invoke($"ToApp {message}");
         }
 
+        /// <summary>
+        /// Send a message to all sessions connected
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public async Task SendAsync(Message message)
         {
             await Task.Run(() =>
@@ -121,14 +125,6 @@ namespace Business.FixApp
             {
                 _logger.Invoke($"EXCEPTION | {ex}");
             }
-        }
-
-        public IEnumerable<string> GetExecutions(string clOrderId)
-        {
-            return ReceivedMessages
-                    .Where(m =>
-                        (m as ExecutionReport).ClOrdID.getValue() == clOrderId)
-                .Select(m => (m as ExecutionReport).ToString().Replace("\u0001", "|"));
         }
     }
 }

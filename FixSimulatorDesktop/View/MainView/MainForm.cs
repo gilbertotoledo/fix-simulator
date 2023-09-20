@@ -60,9 +60,9 @@ namespace FixSimulatorDesktop
         private void ToggleAcceptorButtons(bool isRunning)
         {
             AcceptorClearStoreToolStripMenuItem1.Enabled = !isRunning;
-            ExecutionReportNewBtn.Enabled = isRunning;
-            ExecutionReportFilledBtn.Enabled = isRunning;
-            ExecutionReportPersonalBtn.Enabled = isRunning;
+            AcceptorExecutionReportFastNewBtn.Enabled = isRunning;
+            AcceptorExecutionReportFastFilledBtn.Enabled = isRunning;
+            AcceptorExecutionReportBtn.Enabled = isRunning;
         }
 
         private void AcceptorAppendLog(string text)
@@ -126,33 +126,26 @@ namespace FixSimulatorDesktop
             Thread.Sleep(100);
             _fixManager.StopAcceptor();
             Thread.Sleep(100);
-            System.Windows.Forms.Application.Exit();
+            Application.Exit();
         }
 
-        private void InitiatorNewOrderSingleFastBtn_Click(object sender, EventArgs e)
-        {
-            var order = OrderBuilder.NewOrderSingle(StateManager.Account, StateManager.Symbol, StateManager.Side, StateManager.Operation, StateManager.Price, StateManager.Quantity);
-            _ = _fixManager.InitiatorFixApp.SendAsync(order);
-        }
-
-        private void InitiatorNewOrderSingleBtn_Click(object sender, EventArgs e)
-        {
-            var newOrderSingleForm = new NewOrderSingleForm(() =>
-            {
-                var order = OrderBuilder.NewOrderSingle(StateManager.Account, StateManager.Symbol, StateManager.Side, StateManager.Operation, StateManager.Price, StateManager.Quantity);
-                _ = _fixManager.InitiatorFixApp.SendAsync(order);
-            });
-            newOrderSingleForm.ShowDialog();
-        }
-
-        private void ExecutionReportBtn_Click(object sender, EventArgs e)
+        private void AcceptorExecutionReportFastNewBtn_Click(object sender, EventArgs e)
         {
             _ = _fixManager.AcceptorFixApp.SendErNewToLastMessageAsync();
         }
 
-        private void ExecutionReportFilledBtn_Click(object sender, EventArgs e)
+        private void AcceptorExecutionReportFastFilledBtn_Click(object sender, EventArgs e)
         {
             _ = _fixManager.AcceptorFixApp.SendErFilledToLastMessageAsync();
+        }
+
+        private void AcceptorExecutionReportBtn_Click(object sender, EventArgs e)
+        {
+            new ExecutionReportView((string clOrderId, string status, string applId) =>
+            {
+                var order = OrderBuilder.NewOrderSingle(StateManager.Account, StateManager.Symbol, StateManager.Side, StateManager.Operation, StateManager.Price, StateManager.Quantity);
+                _ = _fixManager.AcceptorFixApp.SendErAsync(order, clOrderId, status, applId);
+            }).ShowDialog();
         }
 
         private void AcceptorMacrosClb_ItemCheck(object sender, ItemCheckEventArgs e)
@@ -229,6 +222,22 @@ namespace FixSimulatorDesktop
         {
             var messageViewer = new LongTextViewerForm(MessagesDg.Rows[e.RowIndex].Cells[MessagesDg.ColumnCount - 1].Value.ToString());
             messageViewer.ShowDialog();
+        }
+
+        private void InitiatorNewOrderSingleFastBtn_Click(object sender, EventArgs e)
+        {
+            var order = OrderBuilder.NewOrderSingle(StateManager.Account, StateManager.Symbol, StateManager.Side, StateManager.Operation, StateManager.Price, StateManager.Quantity);
+            _ = _fixManager.InitiatorFixApp.SendAsync(order);
+        }
+
+        private void InitiatorNewOrderSingleBtn_Click(object sender, EventArgs e)
+        {
+            var newOrderSingleForm = new NewOrderSingleForm(() =>
+            {
+                var order = OrderBuilder.NewOrderSingle(StateManager.Account, StateManager.Symbol, StateManager.Side, StateManager.Operation, StateManager.Price, StateManager.Quantity);
+                _ = _fixManager.InitiatorFixApp.SendAsync(order);
+            });
+            newOrderSingleForm.ShowDialog();
         }
 
         private void InitiatorOrderReplaceBtn_Click(object sender, EventArgs e)
@@ -344,7 +353,7 @@ namespace FixSimulatorDesktop
         {
             if (StateManager.IsInitiatorRunning)
             {
-                var confirmDialog = MessageBox.Show("O Initiator está rodando.\r\nTem certeza que gostaria de parar a aplicação?", "Confirmação", MessageBoxButtons.YesNo);
+                var confirmDialog = MessageBox.Show("O Initiator está executando.\r\nTem certeza que gostaria de parar a aplicação?", "Confirmação", MessageBoxButtons.YesNo);
                 if (confirmDialog == DialogResult.Yes)
                 {
                     _fixManager.StopInitiator();
@@ -361,8 +370,8 @@ namespace FixSimulatorDesktop
                 if (StateManager.IsInitiatorRunning)
                 {
                     InitiatorStartToolStripMenuItem.Text = "Desativar";
-                    InitiatorAppendLog("Iniciando...");
-                    InitiatorStatus.Text = "Initiator: Rodando";
+                    InitiatorStatus.Text = "Initiator: Executando";
+                    InitiatorAppendLog("Executando...");
                     ToggleInitiatorButtons(true);
                 }
             }
@@ -372,7 +381,7 @@ namespace FixSimulatorDesktop
         {
             if (StateManager.IsAcceptorRunning)
             {
-                var confirmDialog = MessageBox.Show("O Acceptor está rodando.\r\nTem certeza que gostaria de parar a aplicação?", "Confirmação", MessageBoxButtons.YesNo);
+                var confirmDialog = MessageBox.Show("O Acceptor está executando.\r\nTem certeza que gostaria de parar a aplicação?", "Confirmação", MessageBoxButtons.YesNo);
                 if (confirmDialog == DialogResult.Yes)
                 {
                     _fixManager.StopAcceptor();
@@ -389,8 +398,8 @@ namespace FixSimulatorDesktop
                 if (StateManager.IsAcceptorRunning)
                 {
                     AcceptorStartToolStripMenuItem.Text = "Desativar";
-                    AcceptorAppendLog("Iniciando...");
-                    AcceptorStatus.Text = "Acceptor: Rodando";
+                    AcceptorStatus.Text = "Acceptor: Executando";
+                    AcceptorAppendLog("Executando...");
                     ToggleAcceptorButtons(true);
                 }
             }
@@ -477,15 +486,6 @@ namespace FixSimulatorDesktop
         private void AnalisadorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new LogFixAnalyzerView().ShowDialog();
-        }
-
-        private void ErPersonalBtn_Click(object sender, EventArgs e)
-        {
-            new ExecutionReportView((string clOrderId, string status, string applId) =>
-            {
-                var order = OrderBuilder.NewOrderSingle(StateManager.Account, StateManager.Symbol, StateManager.Side, StateManager.Operation, StateManager.Price, StateManager.Quantity);
-                _ = _fixManager.AcceptorFixApp.SendErFilledAsync(order, clOrderId, status, applId);
-            }).ShowDialog();
         }
     }
 }

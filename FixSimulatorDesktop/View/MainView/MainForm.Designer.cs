@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             GroupBox1 = new GroupBox();
             groupBox7 = new GroupBox();
@@ -45,11 +45,11 @@
             splitContainer1 = new SplitContainer();
             GroupBox2 = new GroupBox();
             groupBox8 = new GroupBox();
-            ExecutionReportPersonalBtn = new Button();
+            AcceptorExecutionReportBtn = new Button();
             AcceptorShowSentChb = new CheckBox();
-            ExecutionReportFilledBtn = new Button();
+            AcceptorExecutionReportFastFilledBtn = new Button();
             AcceptorShowReceivedChb = new CheckBox();
-            ExecutionReportNewBtn = new Button();
+            AcceptorExecutionReportFastNewBtn = new Button();
             AcceptorLogGroup = new GroupBox();
             AcceptorLogRTxt = new RichTextBox();
             AcceptorMacros = new GroupBox();
@@ -270,11 +270,11 @@
             // groupBox8
             // 
             groupBox8.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            groupBox8.Controls.Add(ExecutionReportPersonalBtn);
+            groupBox8.Controls.Add(AcceptorExecutionReportBtn);
             groupBox8.Controls.Add(AcceptorShowSentChb);
-            groupBox8.Controls.Add(ExecutionReportFilledBtn);
+            groupBox8.Controls.Add(AcceptorExecutionReportFastFilledBtn);
             groupBox8.Controls.Add(AcceptorShowReceivedChb);
-            groupBox8.Controls.Add(ExecutionReportNewBtn);
+            groupBox8.Controls.Add(AcceptorExecutionReportFastNewBtn);
             groupBox8.Location = new Point(6, 22);
             groupBox8.Name = "groupBox8";
             groupBox8.Size = new Size(846, 86);
@@ -282,18 +282,18 @@
             groupBox8.TabStop = false;
             groupBox8.Text = "Mensagens";
             // 
-            // ExecutionReportPersonalBtn
+            // AcceptorExecutionReportBtn
             // 
-            ExecutionReportPersonalBtn.AutoSize = true;
-            ExecutionReportPersonalBtn.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            ExecutionReportPersonalBtn.Location = new Point(382, 48);
-            ExecutionReportPersonalBtn.Name = "ExecutionReportPersonalBtn";
-            ExecutionReportPersonalBtn.Padding = new Padding(10, 0, 10, 0);
-            ExecutionReportPersonalBtn.Size = new Size(200, 25);
-            ExecutionReportPersonalBtn.TabIndex = 12;
-            ExecutionReportPersonalBtn.Text = "ExecutionReport Personalizado";
-            ExecutionReportPersonalBtn.UseVisualStyleBackColor = true;
-            ExecutionReportPersonalBtn.Click += ErPersonalBtn_Click;
+            AcceptorExecutionReportBtn.AutoSize = true;
+            AcceptorExecutionReportBtn.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            AcceptorExecutionReportBtn.Location = new Point(382, 48);
+            AcceptorExecutionReportBtn.Name = "AcceptorExecutionReportBtn";
+            AcceptorExecutionReportBtn.Padding = new Padding(10, 0, 10, 0);
+            AcceptorExecutionReportBtn.Size = new Size(200, 25);
+            AcceptorExecutionReportBtn.TabIndex = 12;
+            AcceptorExecutionReportBtn.Text = "ExecutionReport Personalizado";
+            AcceptorExecutionReportBtn.UseVisualStyleBackColor = true;
+            AcceptorExecutionReportBtn.Click += AcceptorExecutionReportBtn_Click;
             // 
             // AcceptorShowSentChb
             // 
@@ -306,18 +306,18 @@
             AcceptorShowSentChb.UseVisualStyleBackColor = true;
             AcceptorShowSentChb.CheckedChanged += AcceptorShowSentChb_CheckedChanged;
             // 
-            // ExecutionReportFilledBtn
+            // AcceptorExecutionReportFastFilledBtn
             // 
-            ExecutionReportFilledBtn.AutoSize = true;
-            ExecutionReportFilledBtn.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            ExecutionReportFilledBtn.Location = new Point(202, 48);
-            ExecutionReportFilledBtn.Name = "ExecutionReportFilledBtn";
-            ExecutionReportFilledBtn.Padding = new Padding(10, 0, 10, 0);
-            ExecutionReportFilledBtn.Size = new Size(163, 25);
-            ExecutionReportFilledBtn.TabIndex = 11;
-            ExecutionReportFilledBtn.Text = "ExecutionReport - Filled";
-            ExecutionReportFilledBtn.UseVisualStyleBackColor = true;
-            ExecutionReportFilledBtn.Click += ExecutionReportFilledBtn_Click;
+            AcceptorExecutionReportFastFilledBtn.AutoSize = true;
+            AcceptorExecutionReportFastFilledBtn.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            AcceptorExecutionReportFastFilledBtn.Location = new Point(202, 48);
+            AcceptorExecutionReportFastFilledBtn.Name = "AcceptorExecutionReportFastFilledBtn";
+            AcceptorExecutionReportFastFilledBtn.Padding = new Padding(10, 0, 10, 0);
+            AcceptorExecutionReportFastFilledBtn.Size = new Size(163, 25);
+            AcceptorExecutionReportFastFilledBtn.TabIndex = 11;
+            AcceptorExecutionReportFastFilledBtn.Text = "ExecutionReport - Filled";
+            AcceptorExecutionReportFastFilledBtn.UseVisualStyleBackColor = true;
+            AcceptorExecutionReportFastFilledBtn.Click += AcceptorExecutionReportFastFilledBtn_Click;
             // 
             // AcceptorShowReceivedChb
             // 
@@ -332,18 +332,18 @@
             AcceptorShowReceivedChb.UseVisualStyleBackColor = true;
             AcceptorShowReceivedChb.CheckedChanged += AcceptorShowReceivedChb_CheckedChanged;
             // 
-            // ExecutionReportNewBtn
+            // AcceptorExecutionReportFastNewBtn
             // 
-            ExecutionReportNewBtn.AutoSize = true;
-            ExecutionReportNewBtn.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            ExecutionReportNewBtn.Location = new Point(11, 48);
-            ExecutionReportNewBtn.Name = "ExecutionReportNewBtn";
-            ExecutionReportNewBtn.Padding = new Padding(10, 0, 10, 0);
-            ExecutionReportNewBtn.Size = new Size(159, 25);
-            ExecutionReportNewBtn.TabIndex = 10;
-            ExecutionReportNewBtn.Text = "ExecutionReport - New";
-            ExecutionReportNewBtn.UseVisualStyleBackColor = true;
-            ExecutionReportNewBtn.Click += ExecutionReportBtn_Click;
+            AcceptorExecutionReportFastNewBtn.AutoSize = true;
+            AcceptorExecutionReportFastNewBtn.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            AcceptorExecutionReportFastNewBtn.Location = new Point(11, 48);
+            AcceptorExecutionReportFastNewBtn.Name = "AcceptorExecutionReportFastNewBtn";
+            AcceptorExecutionReportFastNewBtn.Padding = new Padding(10, 0, 10, 0);
+            AcceptorExecutionReportFastNewBtn.Size = new Size(159, 25);
+            AcceptorExecutionReportFastNewBtn.TabIndex = 10;
+            AcceptorExecutionReportFastNewBtn.Text = "ExecutionReport - New";
+            AcceptorExecutionReportFastNewBtn.UseVisualStyleBackColor = true;
+            AcceptorExecutionReportFastNewBtn.Click += AcceptorExecutionReportFastNewBtn_Click;
             // 
             // AcceptorLogGroup
             // 
@@ -431,35 +431,35 @@
             MessagesDg.AllowUserToDeleteRows = false;
             MessagesDg.AllowUserToOrderColumns = true;
             MessagesDg.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            MessagesDg.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.Control;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            MessagesDg.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             MessagesDg.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             MessagesDg.Columns.AddRange(new DataGridViewColumn[] { Time, Direction, MsgType, Symbol, Side, ExecType, Status, OrdQty, CumQty, ClOrderId, OrigClOrderId, FixMsg });
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            MessagesDg.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = SystemColors.Window;
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle5.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
+            MessagesDg.DefaultCellStyle = dataGridViewCellStyle5;
             MessagesDg.Location = new Point(6, 22);
             MessagesDg.Name = "MessagesDg";
             MessagesDg.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = SystemColors.Control;
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            MessagesDg.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = SystemColors.Control;
+            dataGridViewCellStyle6.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle6.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
+            MessagesDg.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             MessagesDg.RowTemplate.Height = 25;
             MessagesDg.ShowEditingIcon = false;
             MessagesDg.Size = new Size(1736, 316);
@@ -612,28 +612,28 @@
             // AcceptorStartToolStripMenuItem
             // 
             AcceptorStartToolStripMenuItem.Name = "AcceptorStartToolStripMenuItem";
-            AcceptorStartToolStripMenuItem.Size = new Size(180, 22);
+            AcceptorStartToolStripMenuItem.Size = new Size(169, 22);
             AcceptorStartToolStripMenuItem.Text = "Iniciar";
             AcceptorStartToolStripMenuItem.Click += AcceptorStartToolStripMenuItem_Click;
             // 
             // AcceptorClearLogToolStripMenuItem
             // 
             AcceptorClearLogToolStripMenuItem.Name = "AcceptorClearLogToolStripMenuItem";
-            AcceptorClearLogToolStripMenuItem.Size = new Size(180, 22);
+            AcceptorClearLogToolStripMenuItem.Size = new Size(169, 22);
             AcceptorClearLogToolStripMenuItem.Text = "Limpar log";
             AcceptorClearLogToolStripMenuItem.Click += AcceptorClearLogToolStripMenuItem_Click;
             // 
             // AcceptorClearStoreToolStripMenuItem1
             // 
             AcceptorClearStoreToolStripMenuItem1.Name = "AcceptorClearStoreToolStripMenuItem1";
-            AcceptorClearStoreToolStripMenuItem1.Size = new Size(180, 22);
+            AcceptorClearStoreToolStripMenuItem1.Size = new Size(169, 22);
             AcceptorClearStoreToolStripMenuItem1.Text = "Limpar store";
             AcceptorClearStoreToolStripMenuItem1.Click += AcceptorClearStoreToolStripMenuItem1_Click;
             // 
             // AcceptorFixConfigToolStripMenuItem1
             // 
             AcceptorFixConfigToolStripMenuItem1.Name = "AcceptorFixConfigToolStripMenuItem1";
-            AcceptorFixConfigToolStripMenuItem1.Size = new Size(180, 22);
+            AcceptorFixConfigToolStripMenuItem1.Size = new Size(169, 22);
             AcceptorFixConfigToolStripMenuItem1.Text = "Configurações Fix";
             AcceptorFixConfigToolStripMenuItem1.Click += AcceptorFixConfigToolStripMenuItem1_Click;
             // 
@@ -647,7 +647,7 @@
             // ClearMessageListToolStripMenuItem
             // 
             ClearMessageListToolStripMenuItem.Name = "ClearMessageListToolStripMenuItem";
-            ClearMessageListToolStripMenuItem.Size = new Size(180, 22);
+            ClearMessageListToolStripMenuItem.Size = new Size(135, 22);
             ClearMessageListToolStripMenuItem.Text = "Limpar lista";
             ClearMessageListToolStripMenuItem.Click += ClearMessageListToolStripMenuItem_Click;
             // 
@@ -661,7 +661,7 @@
             // AnalisadorToolStripMenuItem
             // 
             AnalisadorToolStripMenuItem.Name = "AnalisadorToolStripMenuItem";
-            AnalisadorToolStripMenuItem.Size = new Size(180, 22);
+            AnalisadorToolStripMenuItem.Size = new Size(154, 22);
             AnalisadorToolStripMenuItem.Text = "Analisar log Fix";
             AnalisadorToolStripMenuItem.Click += AnalisadorToolStripMenuItem_Click;
             // 
@@ -675,7 +675,7 @@
             // mensagensEComportamentosToolStripMenuItem
             // 
             mensagensEComportamentosToolStripMenuItem.Name = "mensagensEComportamentosToolStripMenuItem";
-            mensagensEComportamentosToolStripMenuItem.Size = new Size(180, 22);
+            mensagensEComportamentosToolStripMenuItem.Size = new Size(152, 22);
             mensagensEComportamentosToolStripMenuItem.Text = "Manual de uso";
             // 
             // statusStrip1
@@ -782,8 +782,8 @@
         private GroupBox InitiatorLogGroup;
         private GroupBox AcceptorLogGroup;
         private DataGridView MessagesDg;
-        private Button ExecutionReportNewBtn;
-        private Button ExecutionReportFilledBtn;
+        private Button AcceptorExecutionReportFastNewBtn;
+        private Button AcceptorExecutionReportFastFilledBtn;
         private GroupBox groupBox7;
         private CheckBox InitiatorShowSentChb;
         private CheckBox InitiatorShowReceivedChb;
@@ -829,7 +829,7 @@
         private ToolStripMenuItem mensagensEComportamentosToolStripMenuItem;
         private ToolStripMenuItem ToolsToolStripMenuItem;
         private ToolStripMenuItem AnalisadorToolStripMenuItem;
-        private Button ExecutionReportPersonalBtn;
+        private Button AcceptorExecutionReportBtn;
         private SplitContainer splitContainer1;
         private ToolStripStatusLabel toolStripStatusLabel2;
         private ToolStripStatusLabel TipStripStatusLabel;

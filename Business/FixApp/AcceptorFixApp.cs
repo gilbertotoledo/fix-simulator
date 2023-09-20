@@ -112,7 +112,7 @@ namespace Business.FixApp
             await SendAsync(er);
         }
 
-        public async Task SendErFilledAsync(NewOrderSingle order, string clOrderId, string status, string applId)
+        public async Task SendErAsync(NewOrderSingle order, string clOrderId, string status, string applId)
         {
             var er = ExecutionReportBuilder.FilledWithClOrderId(order, clOrderId, status, applId);
             await SendAsync(er);
