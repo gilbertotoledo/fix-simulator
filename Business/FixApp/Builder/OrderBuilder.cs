@@ -26,7 +26,7 @@ namespace Business.FixApp.Order
                 Text = new Text(text),
             };
             order.SetField(new StringField(10122, operation));
-            
+
             order.AddDefaultGroups(account);
             order.SetBodyLenght();
             order.SetCheckSum();
@@ -81,7 +81,7 @@ namespace Business.FixApp.Order
             order.AddDefaultGroups(message.GetString(new Account().Tag));
             order.SetBodyLenght();
             order.SetCheckSum();
-            
+
             return order;
         }
     }

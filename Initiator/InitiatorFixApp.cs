@@ -24,7 +24,7 @@ namespace Initiator
             if (message.Header.GetString(35) == "0")
                 return;
 
-            _logger.Warning("[FROM_ADMIN] NextTargetMsgSeqNum: {target} | NextSenderMsgSeqNum: {sender}", 
+            _logger.Warning("[FROM_ADMIN] NextTargetMsgSeqNum: {target} | NextSenderMsgSeqNum: {sender}",
                 _sessions.FirstOrDefault()?.NextTargetMsgSeqNum, _sessions.FirstOrDefault()?.NextSenderMsgSeqNum);
 
             _logger.Information($"FromAdmin {message}");
@@ -33,7 +33,7 @@ namespace Initiator
         public void FromApp(Message message, SessionID sessionID)
         {
             //_logger.Information($"FromApp {message}");
-            _logger.Warning("[FROM_APP] NextTargetMsgSeqNum: {target} | NextSenderMsgSeqNum: {sender}", 
+            _logger.Warning("[FROM_APP] NextTargetMsgSeqNum: {target} | NextSenderMsgSeqNum: {sender}",
                 _sessions.FirstOrDefault()?.NextTargetMsgSeqNum, _sessions.FirstOrDefault()?.NextSenderMsgSeqNum);
             Crack(message, sessionID);
         }
@@ -47,7 +47,7 @@ namespace Initiator
                 session.Logon();
                 _sessions.Add(session);
 
-                _logger.Warning("[ON_CREATE] NextTargetMsgSeqNum: {target} | NextSenderMsgSeqNum: {sender}", 
+                _logger.Warning("[ON_CREATE] NextTargetMsgSeqNum: {target} | NextSenderMsgSeqNum: {sender}",
                     _sessions.FirstOrDefault()?.NextTargetMsgSeqNum, _sessions.FirstOrDefault()?.NextSenderMsgSeqNum);
             }
             catch (Exception e)
@@ -71,15 +71,15 @@ namespace Initiator
             if (message.Header.GetString(35) == "0")
                 return;
 
-            _logger.Warning("[TO_ADMIN] NextTargetMsgSeqNum: {target} | NextSenderMsgSeqNum: {sender}", 
-                _sessions.FirstOrDefault()?.NextTargetMsgSeqNum, 
+            _logger.Warning("[TO_ADMIN] NextTargetMsgSeqNum: {target} | NextSenderMsgSeqNum: {sender}",
+                _sessions.FirstOrDefault()?.NextTargetMsgSeqNum,
                 _sessions.FirstOrDefault()?.NextSenderMsgSeqNum);
             _logger.Information($"ToAdmin {message}");
         }
 
         public void ToApp(Message message, SessionID sessionId)
         {
-            _logger.Warning("[TO_APP] NextTargetMsgSeqNum: {target} | NextSenderMsgSeqNum: {sender}", 
+            _logger.Warning("[TO_APP] NextTargetMsgSeqNum: {target} | NextSenderMsgSeqNum: {sender}",
                 _sessions.FirstOrDefault()?.NextTargetMsgSeqNum,
                 _sessions.FirstOrDefault()?.NextSenderMsgSeqNum);
             _logger.Information($"ToApp {message}");
@@ -102,12 +102,12 @@ namespace Initiator
             {
                 try
                 {
-                    _logger.Warning("[ANTES] NextTargetMsgSeqNum: {target} | NextSenderMsgSeqNum: {sender}", 
+                    _logger.Warning("[ANTES] NextTargetMsgSeqNum: {target} | NextSenderMsgSeqNum: {sender}",
                         _sessions.FirstOrDefault()?.NextTargetMsgSeqNum, _sessions.FirstOrDefault()?.NextSenderMsgSeqNum);
 
                     session.Send(message);
 
-                    _logger.Warning("[DEPOIS] NextTargetMsgSeqNum: {target} | NextSenderMsgSeqNum: {sender}", 
+                    _logger.Warning("[DEPOIS] NextTargetMsgSeqNum: {target} | NextSenderMsgSeqNum: {sender}",
                         _sessions.FirstOrDefault()?.NextTargetMsgSeqNum, _sessions.FirstOrDefault()?.NextSenderMsgSeqNum);
                 }
                 catch (Exception e)

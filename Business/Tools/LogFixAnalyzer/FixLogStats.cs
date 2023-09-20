@@ -21,7 +21,7 @@ namespace Business.Tools.LogFixAnalyzer
                     <tbody>{lines}</tbody>
                 </table>
             </body>
-            </html>";        
+            </html>";
 
         public void ProcessText(string text)
         {
@@ -71,7 +71,7 @@ namespace Business.Tools.LogFixAnalyzer
             var report = _reportTemplate;
 
             var lines = new StringBuilder();
-            
+
             foreach (var messageStats in Messages)
             {
                 lines.Append(@$"<tr>

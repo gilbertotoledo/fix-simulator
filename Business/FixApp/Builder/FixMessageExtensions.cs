@@ -5,7 +5,7 @@ namespace Business.FixApp.Builder
 {
     public static class FixMessageExtensions
     {
-        public static void SetApplId(this Message message,  string applId)
+        public static void SetApplId(this Message message, string applId)
         {
             if (!string.IsNullOrEmpty(applId))
             {

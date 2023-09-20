@@ -1,5 +1,4 @@
-﻿using Business.FixApp.Order;
-using Business.State;
+﻿using Business.State;
 using QuickFix;
 using QuickFix.FIX44;
 using Message = QuickFix.Message;

@@ -47,7 +47,7 @@ namespace Initiator
 
         public override Task StopAsync(CancellationToken cancellationToken)
         {
-            if(_socketInitiator != null && !_socketInitiator.IsStopped)
+            if (_socketInitiator != null && !_socketInitiator.IsStopped)
             {
                 _socketInitiator.Stop();
                 _logger.Information("Initiator stopped...");

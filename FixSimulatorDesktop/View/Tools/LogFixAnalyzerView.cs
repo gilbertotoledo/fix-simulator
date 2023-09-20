@@ -7,7 +7,7 @@ namespace FixSimulatorDesktop.View.Tools.LogFixAnalyzer
     public partial class LogFixAnalyzerView : Form
     {
         delegate void SetStatusTextDelegatorType(string texto);
-        
+
         public FixLogStats FixLogStats { get; set; }
 
         public string SelectedFilePath { get; set; }

@@ -116,11 +116,6 @@ namespace FixSimulatorDesktop
             }
         }
 
-        public void AddRow(params object[] values)
-        {
-            MessagesDg?.Rows?.Add(values);
-        }
-
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Cursor = Cursors.WaitCursor;
@@ -131,7 +126,7 @@ namespace FixSimulatorDesktop
             Thread.Sleep(100);
             _fixManager.StopAcceptor();
             Thread.Sleep(100);
-            Application.Exit();
+            System.Windows.Forms.Application.Exit();
         }
 
         private void InitiatorNewOrderSingleFastBtn_Click(object sender, EventArgs e)
@@ -218,14 +213,14 @@ namespace FixSimulatorDesktop
                 var del = new SetOnMessageDelegatorType(
                     (object col0, object col1, object col2, object col3, object col4, object col5, object col6, object col7, object col8, object col9, object col10, object col11) =>
                     {
-                        AddRow(col0, col1, col2, col3, col4, col5, col6, col7, col8, col9, col10, col11);
+                        MessagesDg?.Rows?.Add(col0, col1, col2, col3, col4, col5, col6, col7, col8, col9, col10, col11);
                         MessagesDg.FirstDisplayedScrollingRowIndex = MessagesDg.RowCount - 1;
                     });
                 MessagesDg?.Invoke(del, row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11]);
             }
             else
             {
-                AddRow(row);
+                MessagesDg?.Rows?.Add(row);
                 MessagesDg.FirstDisplayedScrollingRowIndex = MessagesDg.RowCount - 1;
             }
         }

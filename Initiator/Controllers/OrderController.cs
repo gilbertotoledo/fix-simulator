@@ -15,7 +15,7 @@ namespace Initiator.Controllers
     {
         private readonly ILogger _logger;
         private readonly IApplication _application;
-        
+
         public OrderController(ILogger logger, IApplication application)
         {
             _logger = logger;
@@ -63,7 +63,7 @@ namespace Initiator.Controllers
                 Price = new Price(2),
                 TransactTime = new TransactTime(DateTime.Now),
                 ClOrdID = new ClOrdID(Guid.NewGuid().ToString()),
-                NoPartyIDs = new NoPartyIDs(1),                
+                NoPartyIDs = new NoPartyIDs(1),
                 TimeInForce = new TimeInForce(TimeInForce.DAY),
                 ExpireDate = new ExpireDate(DateTime.Now.ToString("yyyyMMdd")),
                 TradeDate = new TradeDate(DateTime.Now.ToString("yyyyMMdd")),
@@ -75,7 +75,7 @@ namespace Initiator.Controllers
                 PartyID = new PartyID("840862")
             });
 
-            for(int i = 1; i <= qty; i++)
+            for (int i = 1; i <= qty; i++)
             {
                 order.ClOrdID = new ClOrdID($"{i}");
                 ((InitiatorFixApp)_application).SendMessageToAllSessions(order);

@@ -139,7 +139,7 @@ namespace Business.FixApp.Order
 
             exReport.SetApplId(applId);
             exReport.AddDefaultGroups(newOrderSingle.Account.getValue());
-            
+
             return exReport;
         }
 
