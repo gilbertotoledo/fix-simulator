@@ -9,12 +9,12 @@ namespace Business.FixApp
         private IInitiator _socketInitiator = null;
         private readonly Action<string> _initiatorLoggerHandler;
         private readonly Action<string> _acceptorLoggerHandler;
-        private readonly Action<QuickFix.Message> _onMessageHandler;
+        private readonly Action<Message> _onMessageHandler;
 
         public AcceptorFixApp AcceptorFixApp { get; private set; }
         public InitiatorFixApp InitiatorFixApp { get; private set; }
 
-        public FixApplicationManager(Action<string> initiatorLoggerHandler, Action<string> acceptorLoggerHandler, Action<QuickFix.Message> onMessageHandler)
+        public FixApplicationManager(Action<string> initiatorLoggerHandler, Action<string> acceptorLoggerHandler, Action<Message> onMessageHandler)
         {
             _initiatorLoggerHandler = initiatorLoggerHandler;
             _acceptorLoggerHandler = acceptorLoggerHandler;
